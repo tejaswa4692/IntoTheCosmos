@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://jmmg3uvn4ina"]
+
+[ext_resource type="Script" uid="uid://bsns3h58fm4oi" path="res://Objects/rocket.gd" id="1_ijyl3"]
+[ext_resource type="PackedScene" uid="uid://c88cunaohbg7l" path="res://Assets/RocketMesh/Rocket.blend" id="2_ijyl3"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ijyl3"]
+radius = 0.2265625
+
+[sub_resource type="Gradient" id="Gradient_5icsd"]
+offsets = PackedFloat32Array(0.0032680035, 0.09477124, 0.50653595)
+colors = PackedColorArray(5.968213e-06, 0.6415341, 0.92883384, 1, 0.92137975, 0.5451868, 3.85046e-07, 1, 1, 0.30744457, 0.42862478, 1)
+metadata/_snap_count = 2
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ijyl3"]
+gradient = SubResource("Gradient_5icsd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5icsd"]
+emission_shape = 3
+emission_box_extents = Vector3(0.17, -0.035, 0.165)
+direction = Vector3(0, -1, 0)
+spread = 4.125
+initial_velocity_min = 10.45
+initial_velocity_max = 10.45
+color_ramp = SubResource("GradientTexture1D_ijyl3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5icsd"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ijyl3"]
+material = SubResource("StandardMaterial3D_5icsd")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ijyl3"]
+size = Vector3(1.479248, 1, 1.5148926)
+
+[node name="Rocket" type="RigidBody3D" unique_id=1263267957]
+script = ExtResource("1_ijyl3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1589436198]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9457128, 2.0612031e-05)
+shape = SubResource("CylinderShape3D_ijyl3")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=270841146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11144817, 0)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_5icsd")
+draw_pass_1 = SubResource("BoxMesh_ijyl3")
+
+[node name="Rocket" parent="." unique_id=1411899876 instance=ExtResource("2_ijyl3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0048399568, -0.0034334958, -0.00036096573)
+
+[node name="LandingGearCollision" type="CollisionShape3D" parent="." unique_id=239659071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010620117, 0.22979212, -0.006713867)
+shape = SubResource("BoxShape3D_ijyl3")
+disabled = true

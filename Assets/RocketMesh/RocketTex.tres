@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://by6eww21n36os"]
+
+[ext_resource type="Texture2D" uid="uid://c7c82th7y30eu" path="res://Assets/RocketMesh/RocketTex.png" id="1_63rjx"]
+
+[resource]
+cull_mode = 2
+diffuse_mode = 3
+albedo_texture = ExtResource("1_63rjx")
