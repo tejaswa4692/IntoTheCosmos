@@ -2,55 +2,192 @@
 
 [ext_resource type="Script" uid="uid://bsns3h58fm4oi" path="res://Objects/rocket.gd" id="1_ijyl3"]
 [ext_resource type="PackedScene" uid="uid://c88cunaohbg7l" path="res://Assets/RocketMesh/Rocket.blend" id="2_ijyl3"]
+[ext_resource type="PackedScene" uid="uid://b3r7iwfkoxmju" path="res://Assets/Explosion/Explosion.blend" id="3_07b4d"]
+[ext_resource type="Shader" uid="uid://edva3yswm4fr" path="res://Objects/rocket.gdshader" id="4_d4paf"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ijyl3"]
+height = 3.1152344
 radius = 0.2265625
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ijyl3"]
+size = Vector3(1.479248, 1, 1.5148926)
+
 [sub_resource type="Gradient" id="Gradient_5icsd"]
-offsets = PackedFloat32Array(0.0032680035, 0.09477124, 0.50653595)
-colors = PackedColorArray(5.968213e-06, 0.6415341, 0.92883384, 1, 0.92137975, 0.5451868, 3.85046e-07, 1, 1, 0.30744457, 0.42862478, 1)
+offsets = PackedFloat32Array(0.83986926, 1)
+colors = PackedColorArray(0.75611395, 3.3691526e-06, 7.70092e-07, 1, 1, 0.07450981, 0, 1)
 metadata/_snap_count = 2
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ijyl3"]
 gradient = SubResource("Gradient_5icsd")
 
+[sub_resource type="Curve" id="Curve_07b4d"]
+_limits = [0.0, 1.0, 0.0, 1.9]
+_data = [Vector2(0, 0.28411627), 0.0, 0.0, 0, 0, Vector2(0.92956984, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_d4paf"]
+curve = SubResource("Curve_07b4d")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5icsd"]
-emission_shape = 3
-emission_box_extents = Vector3(0.17, -0.035, 0.165)
-direction = Vector3(0, -1, 0)
-spread = 4.125
-initial_velocity_min = 10.45
-initial_velocity_max = 10.45
+emission_shape_scale = Vector3(0, 0, 0)
+direction = Vector3(1, 1, 1)
+spread = 180.0
+flatness = 0.63
+initial_velocity_min = 10.75
+initial_velocity_max = 10.75
+gravity = Vector3(0, -3, 0)
+scale_min = 0.0
+scale_max = 7.08
+scale_curve = SubResource("CurveTexture_d4paf")
 color_ramp = SubResource("GradientTexture1D_ijyl3")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5icsd"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07b4d"]
 vertex_color_use_as_albedo = true
 
-[sub_resource type="BoxMesh" id="BoxMesh_ijyl3"]
-material = SubResource("StandardMaterial3D_5icsd")
-size = Vector3(0.2, 0.2, 0.2)
+[sub_resource type="SphereMesh" id="SphereMesh_d4paf"]
+material = SubResource("StandardMaterial3D_07b4d")
+radius = 0.25
+height = 0.5
+radial_segments = 10
+rings = 9
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ijyl3"]
-size = Vector3(1.479248, 1, 1.5148926)
+[sub_resource type="ImageTexture" id="ImageTexture_d4paf"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_ortt4"]
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_a1xkk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4paf"]
+bg_color = Color(0.58042115, 0.5756893, 0.57686716, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.25565886, 0.2556588, 0.2556586, 1)
+corner_detail = 20
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ortt4"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
+expand_margin_left = 15.0
+expand_margin_top = 10.0
+expand_margin_right = 15.0
+shadow_color = Color(0.21950102, 0.21950102, 0.21950102, 0.6)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d4paf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ortt4"]
+render_priority = 0
+shader = ExtResource("4_d4paf")
+shader_parameter/model_height = 5.00000023424012
+shader_parameter/dissolve_start = 0.0
+shader_parameter/dissolve_length = 1.0
+shader_parameter/gradient_bias = 3.96500018507762
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_d4paf")
+shader_parameter/noise_speed = 5.0
+shader_parameter/noise_strength = 0.170000008075
+shader_parameter/stretch_factor = 2.0
+shader_parameter/noise_direction = Vector2(0, 1)
+shader_parameter/_color = Color(0.36677703, 0.66902655, 0.8386173, 1)
+shader_parameter/power_factor = 1.0
+shader_parameter/fresnel_factor = 1.44500006537762
+shader_parameter/fresnel_amplification = 1.5
+shader_parameter/fresnel_power = 1.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_07b4d"]
+material = SubResource("ShaderMaterial_ortt4")
+top_radius = 0.06
+bottom_radius = 0.15
+height = 5.0
+radial_segments = 7
+rings = 0
+cap_top = false
+cap_bottom = false
 
 [node name="Rocket" type="RigidBody3D" unique_id=1263267957]
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_ijyl3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1589436198]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9457128, 2.0612031e-05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6973494, 2.0612031e-05)
 shape = SubResource("CylinderShape3D_ijyl3")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=270841146]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11144817, 0)
-emitting = false
-amount = 100
-process_material = SubResource("ParticleProcessMaterial_5icsd")
-draw_pass_1 = SubResource("BoxMesh_ijyl3")
-
-[node name="Rocket" parent="." unique_id=1411899876 instance=ExtResource("2_ijyl3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0048399568, -0.0034334958, -0.00036096573)
+[node name="Rocket" parent="." unique_id=1376873060 instance=ExtResource("2_ijyl3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0048399568, -0.809414, -0.00036096573)
 
 [node name="LandingGearCollision" type="CollisionShape3D" parent="." unique_id=239659071]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010620117, 0.22979212, -0.006713867)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010620117, -0.57618845, -0.006713867)
 shape = SubResource("BoxShape3D_ijyl3")
 disabled = true
+
+[node name="Explosion2" parent="." unique_id=1620987180 instance=ExtResource("3_07b4d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23903131, 0)
+
+[node name="ExplosionParticle" type="GPUParticles3D" parent="." unique_id=134490174]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2949072, 0)
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_5icsd")
+draw_pass_1 = SubResource("SphereMesh_d4paf")
+
+[node name="Control" type="Control" parent="." unique_id=1946425534]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="YouDied" type="RichTextLabel" parent="Control" unique_id=1203395196]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 61
+text = "You Died press \"R\" to revive"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Control" unique_id=1294768241]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 27
+text = "Speed"
+
+[node name="VSlider" type="VSlider" parent="Control" unique_id=728927366]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9480001
+anchor_top = 0.47300002
+anchor_right = 0.97200006
+anchor_bottom = 0.957
+offset_left = -0.096069336
+offset_top = 0.4960022
+offset_right = -0.096069336
+offset_bottom = 0.49597168
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_icons/grabber = SubResource("ImageTexture_d4paf")
+theme_override_icons/grabber_highlight = SubResource("ImageTexture_ortt4")
+theme_override_icons/grabber_disabled = SubResource("PortableCompressedTexture2D_a1xkk")
+theme_override_styles/slider = SubResource("StyleBoxFlat_d4paf")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ortt4")
+max_value = 1.0
+step = 0.03
+
+[node name="ThrustCone" type="MeshInstance3D" parent="." unique_id=515889379]
+transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -3.32062, 0)
+mesh = SubResource("CylinderMesh_07b4d")
+surface_material_override/0 = SubResource("ShaderMaterial_ortt4")
+
+[connection signal="body_entered" from="." to="." method="collision_impact"]

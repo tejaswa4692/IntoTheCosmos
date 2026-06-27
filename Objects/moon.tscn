@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cjhfy18oycnhq"]
+
+[ext_resource type="PackedScene" uid="uid://dvkxxxotaygu4" path="res://Assets/moon/moon.blend" id="1_yuepg"]
+[ext_resource type="PackedScene" uid="uid://jmmg3uvn4ina" path="res://Objects/rocket.tscn" id="2_ng7hd"]
+[ext_resource type="Script" uid="uid://dqoodcniemx37" path="res://Objects/camera_rig.gd" id="3_2nu43"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4mi14"]
+radius = 0.3
+
+[node name="Moon" type="Node3D" unique_id=1885073656]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1260625826]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="moon" parent="." unique_id=174286875 instance=ExtResource("1_yuepg")]
+
+[node name="Rocket" parent="." unique_id=1263267957 instance=ExtResource("2_ng7hd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.954153, 5.6119404, 8.11524)
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=1500973427 node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.954153, 7.921338, 11.110203)
+script = ExtResource("3_2nu43")
+target = NodePath("../Rocket")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig" unique_id=2067016851]
+shape = SubResource("SphereShape3D_4mi14")
+spring_length = 6.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D" unique_id=1022371325]

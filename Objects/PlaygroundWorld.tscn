@@ -3,19 +3,31 @@
 [ext_resource type="Script" uid="uid://cnfapuavi5wru" path="res://Objects/playground_world.gd" id="1_78x0b"]
 [ext_resource type="PackedScene" uid="uid://jmmg3uvn4ina" path="res://Objects/rocket.tscn" id="1_arduf"]
 [ext_resource type="Texture2D" uid="uid://cno2m2wd1hlhb" path="res://Assets/kenney_prototype-textures (1)/PNG/Dark/texture_04.png" id="1_lgna4"]
+[ext_resource type="Script" uid="uid://btbun1t27m14m" path="res://Objects/gravity_source.gd" id="3_xv3hj"]
 [ext_resource type="Script" uid="uid://dqoodcniemx37" path="res://Objects/camera_rig.gd" id="4_78x0b"]
+[ext_resource type="AudioStream" uid="uid://ctk2enmyhj364" path="res://Assets/Music/Cosmos1.mp3" id="6_ol3l7"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_arduf"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol3l7"]
+sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
+sky_horizon_color = Color(0.3281188, 0.33780026, 0.35069966, 1)
+sky_curve = 0.058843866
+sky_cover_modulate = Color(0.31061712, 0.31061712, 0.3106171, 1)
+ground_bottom_color = Color(0.11414019, 0.111464344, 0.100763954, 1)
+ground_horizon_color = Color(0.29174888, 0.30064216, 0.31249082, 1)
+ground_curve = 0.07210023
+energy_multiplier = 0.6
 
 [sub_resource type="Sky" id="Sky_qjien"]
-sky_material = SubResource("ProceduralSkyMaterial_arduf")
+sky_material = SubResource("ProceduralSkyMaterial_ol3l7")
+radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_78x0b"]
 background_mode = 2
+background_color = Color(0.20871013, 0.20871016, 0.20871007, 1)
 sky = SubResource("Sky_qjien")
-tonemap_mode = 2
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 1
+tonemap_exposure = 2.0
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xv3hj"]
@@ -36,16 +48,11 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1373864999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 52.147667, 0)
 use_collision = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=872079740]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4621582, 0.11682129, 3.0792236)
-material_override = SubResource("StandardMaterial3D_xv3hj")
-size = Vector3(32.529785, 0.7663574, 31.260986)
-material = SubResource("StandardMaterial3D_xv3hj")
-
 [node name="CSGTorus3D" type="CSGTorus3D" parent="CSGCombiner3D" unique_id=900739725]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 8.635818, -8.917347)
+transform = Transform3D(1, 0, 0, 0, -0.576632, -0.817004, 0, 0.817004, -0.576632, 0, 17.286499, -8.917347)
 inner_radius = 2.8821692
 outer_radius = 4.3045306
 sides = 27
@@ -53,7 +60,9 @@ ring_sides = 19
 material = SubResource("StandardMaterial3D_xv3hj")
 
 [node name="Rocket" parent="." unique_id=1263267957 instance=ExtResource("1_arduf")]
-transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, -2.0861626e-07, 2.0164337, 1.4901161e-07)
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, -2.0861626e-07, 14.678879, 1.4901161e-07)
+mass = 1.2
+gravity_scale = 1.0
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=1000938322 node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3093975, 2.9949632)
@@ -65,3 +74,42 @@ shape = SubResource("SphereShape3D_xv3hj")
 spring_length = 6.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D" unique_id=994309216]
+
+[node name="Planet-Earth" type="Node3D" parent="." unique_id=2078065892]
+script = ExtResource("3_xv3hj")
+mass = 500.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth" unique_id=1847823647]
+use_collision = true
+radius = 12.887762
+radial_segments = 70
+rings = 86
+material = SubResource("StandardMaterial3D_xv3hj")
+
+[node name="Planet-Earth2" type="Node3D" parent="." unique_id=1415959898]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1054.52)
+script = ExtResource("3_xv3hj")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth2" unique_id=2056927064]
+use_collision = true
+radius = 12.887762
+radial_segments = 70
+rings = 86
+material = SubResource("StandardMaterial3D_xv3hj")
+
+[node name="Planet-Earth3" type="Node3D" parent="." unique_id=1430132568]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1283.1575, 0, 1837.416)
+script = ExtResource("3_xv3hj")
+gravity_strength = 120.0
+mass = 10000.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth3" unique_id=1581939822]
+use_collision = true
+radius = 88.9308
+radial_segments = 70
+rings = 86
+material = SubResource("StandardMaterial3D_xv3hj")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=662722076]
+stream = ExtResource("6_ol3l7")
+autoplay = true
