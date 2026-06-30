@@ -6,6 +6,9 @@
   <img src="iamges/Screenshot_20260630_190956.png" width="800">
 </p>
 
+[Click here to watch the gameplay video on YouTube](https://youtu.be/EsZQD3edJl4) |
+[Click here to view all the devlogs related to this project](https://stardance.hackclub.com/projects/25109)
+
 ## Download
 
 Download the latest release from the GitHub Releases page and launch the executable.
