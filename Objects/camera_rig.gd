@@ -1,12 +1,8 @@
 extends Node3D
 
-
-
-@export var target: Node3D                   
 @export var mouse_sensitivity: float = 0.005
-@export var min_pitch: float = -60.0          
-@export var max_pitch: float = 60.0           
-
+@export var min_pitch: float = -60.0
+@export var max_pitch: float = 60.0
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 
 var yaw: float = 0.0
@@ -25,8 +21,13 @@ func _input(event: InputEvent) -> void:
 			Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 			else Input.MOUSE_MODE_CAPTURED
 		)
+	elif event is InputEventKey:
+		for i in CameraManager.targets.size():
+			if event.is_action_pressed("cam_" + str(i + 1)):
+				CameraManager.switch_to(i)
 
 func _physics_process(_delta: float) -> void:
+	var target = CameraManager.get_current()
 	if not target:
 		return
 	global_position = target.global_position

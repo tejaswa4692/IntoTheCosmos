@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://cqik5bcb3xa8a"]
+
+[ext_resource type="Script" uid="uid://cvu7dp6tm1qi2" path="res://Objects/sattelite.gd" id="1_sjyr3"]
+[ext_resource type="PackedScene" uid="uid://d2kfkv08mawf8" path="res://Assets/sattelite/scene.gltf" id="2_o4cw8"]
+[ext_resource type="Shader" uid="uid://edva3yswm4fr" path="res://Objects/rocket.gdshader" id="3_yrafc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sjyr3"]
+size = Vector3(2.4590454, 1, 0.8186188)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kfs5e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_33n3e"]
+render_priority = 0
+shader = ExtResource("3_yrafc")
+shader_parameter/model_height = 0.38000001479012
+shader_parameter/dissolve_start = 0.0
+shader_parameter/dissolve_length = 1.0
+shader_parameter/gradient_bias = 3.00500013947762
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_kfs5e")
+shader_parameter/noise_speed = 5.0
+shader_parameter/noise_strength = 0.2400000114
+shader_parameter/stretch_factor = 2.0
+shader_parameter/noise_direction = Vector2(0, 1)
+shader_parameter/_color = Color(0.4602576, 0.6125884, 1, 1)
+shader_parameter/power_factor = 1.0
+shader_parameter/fresnel_factor = 1.44500006537762
+shader_parameter/fresnel_amplification = 1.5
+shader_parameter/fresnel_power = 1.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4dm1w"]
+material = SubResource("ShaderMaterial_33n3e")
+top_radius = 0.0
+bottom_radius = 0.02
+height = 0.395
+radial_segments = 7
+rings = 0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ImageTexture" id="ImageTexture_yrafc"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_lof0m"]
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_27mrd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4dm1w"]
+bg_color = Color(0.58042115, 0.5756893, 0.57686716, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.25565886, 0.2556588, 0.2556586, 1)
+corner_detail = 20
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kfs5e"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
+expand_margin_left = 15.0
+expand_margin_top = 10.0
+expand_margin_right = 15.0
+shadow_color = Color(0.21950102, 0.21950102, 0.21950102, 0.6)
+shadow_size = 2
+shadow_offset = Vector2(2, 2)
+
+[node name="Sattelite" type="RigidBody3D" unique_id=1623321927]
+collision_layer = 2
+collision_mask = 2
+mass = 50.0
+gravity_scale = 0.0
+script = ExtResource("1_sjyr3")
+rcs_force = 60.0
+thrust_force = 150.0
+pitch_torque = 20.0
+yaw_torque = 20.0
+roll_torque = 20.0
+stabilization_strength = 20.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=451088010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010564804, 0.4634397, 0.1842472)
+shape = SubResource("BoxShape3D_sjyr3")
+
+[node name="Sketchfab_Scene" parent="." unique_id=502575782 instance=ExtResource("2_o4cw8")]
+transform = Transform3D(-6.556708e-10, 0, 0.015, 0, 0.015, 0, -0.015, 0, -6.556708e-10, 0.26724803, -0.220267, -0.033187896)
+
+[node name="ThrustCone" type="MeshInstance3D" parent="." unique_id=647962985]
+transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, -0.0025044382, -0.19738135, -0.10792266)
+mesh = SubResource("CylinderMesh_4dm1w")
+surface_material_override/0 = SubResource("ShaderMaterial_33n3e")
+
+[node name="ThrustCone" type="MeshInstance3D" parent="ThrustCone" unique_id=410656685]
+transform = Transform3D(-1, -8.742278e-08, -1.5285484e-14, -8.742278e-08, 1, 2.6226832e-07, -7.642742e-15, 2.6226832e-07, -1, -0.07416746, 0.0040950477, -0.1639604)
+mesh = SubResource("CylinderMesh_4dm1w")
+surface_material_override/0 = SubResource("ShaderMaterial_33n3e")
+
+[node name="ThrustCone2" type="MeshInstance3D" parent="ThrustCone" unique_id=841665144]
+transform = Transform3D(1, 0, 0, 0, 1, 1.7484554e-07, 0, -1.7484554e-07, 1, 0.074704885, 0, -0.16556785)
+mesh = SubResource("CylinderMesh_4dm1w")
+surface_material_override/0 = SubResource("ShaderMaterial_33n3e")
+
+[node name="Control" type="Control" parent="." unique_id=566903583]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSlider" type="VSlider" parent="Control" unique_id=328264195]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9480001
+anchor_top = 0.47300002
+anchor_right = 0.97200006
+anchor_bottom = 0.957
+offset_left = -0.096069336
+offset_top = 0.4960022
+offset_right = -0.096069336
+offset_bottom = 0.49597168
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_icons/grabber = SubResource("ImageTexture_yrafc")
+theme_override_icons/grabber_highlight = SubResource("ImageTexture_lof0m")
+theme_override_icons/grabber_disabled = SubResource("PortableCompressedTexture2D_27mrd")
+theme_override_styles/slider = SubResource("StyleBoxFlat_4dm1w")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_kfs5e")
+max_value = 1.0
+step = 0.03

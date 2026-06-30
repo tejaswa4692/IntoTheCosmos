@@ -10,6 +10,9 @@ var landing_gear: bool = false
 
 @onready var thruster = $ThrustCone
 
+var satellite_scene = preload("res://Objects/sattelite.tscn")
+var satellite: RigidBody3D
+
 const ACTION_PITCH_UP    = "forward"
 const ACTION_PITCH_DOWN  = "back"
 const ACTION_YAW_LEFT    = "left"
@@ -21,6 +24,9 @@ var canmove: bool = true
 
 var current_bias: float = 0.0
 
+@onready var RCS_Thrusters_left = [$"RCS-Left/RCS-back", $"RCS-Left/RCS-Down", $"RCS-Left/RCS-forward", $"RCS-Left/RCS-Up", $"RCS-Left/RCS-left", $"RCS-Left/RCS-right"]
+@onready var RCS_Thrusters_right = [$"RCS-Right/RCS-back", $"RCS-Right/RCS-Down", $"RCS-Right/RCS-forward", $"RCS-Right/RCS-Up", $"RCS-Right/RCS-left", $"RCS-Right/RCS-right"]
+
 @onready var throttleslider = $Control/VSlider
 
 @export var rcs_force: float = 5.0
@@ -31,23 +37,34 @@ const ACTION_RCS_RIGHT = "rcs_right"
 const ACTION_RCS_FORWARD = "rcs_forward"
 const ACTION_RCS_BACK    = "rcs_back"
 
+var curent_help = 0
 
 func _ready() -> void:
+	CameraManager.register(self)
 	linear_damp = 0
 	gravity_scale = 0
 	$Control/YouDied.hide()
 	set_thrust_gradient_bias(throttleslider.value)
+	setup_sattelite()
+	$Control/Help.hide()
+	for i in RCS_Thrusters_left:
+		i.hide()
+	for i in RCS_Thrusters_right:
+		i.hide()
 
 func _physics_process(_delta: float) -> void:
-	if canmove: 
+	if canmove:
 		_handle_gravity()
-		_handle_rotation()
-		_handle_thrust()
-		_handle_rcs()
-		_handle_landing_gear()
-		_update_thrust_visual(_delta)
-		#print("speed: ", linear_velocity.length(), " | altitude: ", (global_position - source.global_position).length())
-		
+		if CameraManager.get_current() == self:
+			$Control.show()
+			_handle_rotation()
+			_handle_thrust()
+			_handle_rcs()
+			_handle_landing_gear()
+			_update_thrust_visual(_delta)
+		else:
+			$Control.hide()
+			set_thrust_gradient_bias(0)
 	else:
 		set_thrust_gradient_bias(0)
 		$Control/YouDied.show()
@@ -57,7 +74,13 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if !canmove:
 			if Input.is_action_just_pressed("R"):
+				CameraManager.reset()
 				get_tree().reload_current_scene()
+		if Input.is_action_just_pressed("eject"):
+			eject_satellite()
+		if Input.is_action_just_pressed("help-open"):
+			handle_help()
+			
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			throttleslider.value += throttleslider.step
@@ -66,21 +89,42 @@ func _input(event: InputEvent) -> void:
 
 func _handle_rcs() -> void:
 	var local_force := Vector3.ZERO
+	for i in RCS_Thrusters_left:
+		i.hide()
+	for i in RCS_Thrusters_right:
+		i.hide()
+	
 	if Input.is_action_pressed(ACTION_RCS_UP):
+		RCS_Thrusters_left[2].show()
+		RCS_Thrusters_right[2].show()
 		local_force.z -= 1.0
 	if Input.is_action_pressed(ACTION_RCS_DOWN):
+		RCS_Thrusters_left[0].show()
+		RCS_Thrusters_right[0].show()
 		local_force.z += 1.0
 	if Input.is_action_pressed(ACTION_RCS_LEFT):
+		RCS_Thrusters_left[5].show()
+		RCS_Thrusters_right[5].show()
 		local_force.x -= 1.0
 	if Input.is_action_pressed(ACTION_RCS_RIGHT):
+		RCS_Thrusters_left[4].show()
+		RCS_Thrusters_right[4].show()
 		local_force.x += 1.0
 	if Input.is_action_pressed(ACTION_RCS_FORWARD):
+		RCS_Thrusters_left[1].show()
+		RCS_Thrusters_right[1].show()
 		local_force.y += 1.0
 	if Input.is_action_pressed(ACTION_RCS_BACK):
+		RCS_Thrusters_left[3].show()
+		RCS_Thrusters_right[3].show()
 		local_force.y -= 1.0
-	
+		
 	if local_force != Vector3.ZERO:
 		apply_central_force(global_transform.basis * local_force * rcs_force)
+		if !$Rcs_audio.playing:
+			$Rcs_audio.play()
+	else:
+		$Rcs_audio.stop()
 
 func set_thrust_gradient_bias(value: float):
 	var mat = thruster.mesh.surface_get_material(0) as ShaderMaterial
@@ -111,6 +155,23 @@ func _handle_gravity() -> void:
 		var altitude = (global_position - GravityManager.sources[0].global_position).length()
 		$Control/Label.text = "Speed: " + str(int(linear_velocity.length())) + "Alt: " + str(int(altitude))
 
+func setup_sattelite():
+	var sattelite_instance = satellite_scene.instantiate()
+	sattelite_instance.position = $Marker3D.position
+	sattelite_instance.freeze = true
+	add_child(sattelite_instance)
+	satellite = sattelite_instance
+
+func eject_satellite():
+	if satellite == null or !satellite.freeze:
+		return
+	var world_transform = satellite.global_transform
+	remove_child(satellite)
+	get_parent().add_child(satellite)
+	satellite.global_transform = world_transform
+	satellite.freeze = false
+	satellite.linear_velocity = linear_velocity
+	satellite.angular_velocity = angular_velocity
 
 
 func _handle_rotation() -> void:
@@ -174,8 +235,25 @@ func _handle_thrust() -> void:
 
 func collision_impact(body: Node) -> void:
 	if abs(linear_velocity.y) > impact_velocity_threshold or abs(linear_velocity.x) > 5 or abs(linear_velocity.z) > 5:
-		$ExplosionParticle.emitting = false
-		print("Impact with ", body.name, " at ", linear_velocity.length())
-		$ExplosionParticle.emitting = true
 		canmove = false
+		$Explosion.explode()
+		await get_tree().create_timer(0.5).timeout
+		$Explosion3.explode()
+		await get_tree().create_timer(0.5).timeout
+		$Explosion4.explode()
+		print("Impact with ", body.name, " at ", linear_velocity.length())
 		
+		
+func handle_help() -> void:
+	if curent_help == 0:
+		$Control/Help.visible = true
+		$Control/Help/Help1.show()
+		curent_help = 1
+	elif curent_help == 1:
+		$Control/Help/Help2.show()
+		$Control/Help/Help1.hide()
+		curent_help = 2
+	elif curent_help == 2:
+		$Control/Help/Help2.hide()
+		$Control/Help.hide()
+		curent_help = 0

@@ -30,12 +30,12 @@ reflected_light_source = 1
 tonemap_exposure = 2.0
 glow_enabled = true
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_xv3hj"]
+radius = 0.3
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xv3hj"]
 albedo_texture = ExtResource("1_lgna4")
 uv1_triplanar = true
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_xv3hj"]
-radius = 0.3
 
 [node name="Node3D" type="Node3D" unique_id=914275524]
 script = ExtResource("1_78x0b")
@@ -47,27 +47,14 @@ environment = SubResource("Environment_78x0b")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1373864999]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 52.147667, 0)
-use_collision = true
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="CSGCombiner3D" unique_id=900739725]
-transform = Transform3D(1, 0, 0, 0, -0.576632, -0.817004, 0, 0.817004, -0.576632, 0, 17.286499, -8.917347)
-inner_radius = 2.8821692
-outer_radius = 4.3045306
-sides = 27
-ring_sides = 19
-material = SubResource("StandardMaterial3D_xv3hj")
-
 [node name="Rocket" parent="." unique_id=1263267957 instance=ExtResource("1_arduf")]
-transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, -2.0861626e-07, 14.678879, 1.4901161e-07)
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, 0, 56.941673, 0)
 mass = 1.2
 gravity_scale = 1.0
 
-[node name="CameraRig" type="Node3D" parent="." unique_id=1000938322 node_paths=PackedStringArray("target")]
+[node name="CameraRig" type="Node3D" parent="." unique_id=1000938322]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3093975, 2.9949632)
 script = ExtResource("4_78x0b")
-target = NodePath("../Rocket")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig" unique_id=2138654543]
 shape = SubResource("SphereShape3D_xv3hj")
@@ -77,34 +64,28 @@ spring_length = 6.0
 
 [node name="Planet-Earth" type="Node3D" parent="." unique_id=2078065892]
 script = ExtResource("3_xv3hj")
-mass = 500.0
+gravity_strength = 100.0
+mass = 600.0
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth" unique_id=1847823647]
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth" unique_id=2056927064]
 use_collision = true
-radius = 12.887762
-radial_segments = 70
-rings = 86
-material = SubResource("StandardMaterial3D_xv3hj")
-
-[node name="Planet-Earth2" type="Node3D" parent="." unique_id=1415959898]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1054.52)
-script = ExtResource("3_xv3hj")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth2" unique_id=2056927064]
-use_collision = true
-radius = 12.887762
+collision_layer = 3
+collision_mask = 3
+radius = 56.051727
 radial_segments = 70
 rings = 86
 material = SubResource("StandardMaterial3D_xv3hj")
 
 [node name="Planet-Earth3" type="Node3D" parent="." unique_id=1430132568]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1283.1575, 0, 1837.416)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1283.1575, -475.6587, 1837.416)
 script = ExtResource("3_xv3hj")
-gravity_strength = 120.0
-mass = 10000.0
+gravity_strength = 60.0
+mass = 5000.0
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth3" unique_id=1581939822]
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 radius = 88.9308
 radial_segments = 70
 rings = 86
@@ -113,3 +94,18 @@ material = SubResource("StandardMaterial3D_xv3hj")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=662722076]
 stream = ExtResource("6_ol3l7")
 autoplay = true
+
+[node name="Planet-Earth4" type="Node3D" parent="." unique_id=747630384]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 290.20795, 2109.04)
+script = ExtResource("3_xv3hj")
+gravity_strength = 30.0
+mass = 3000.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth4" unique_id=1080678764]
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+radius = 80.31296
+radial_segments = 70
+rings = 86
+material = SubResource("StandardMaterial3D_xv3hj")

@@ -3,7 +3,11 @@
 [ext_resource type="Script" uid="uid://bsns3h58fm4oi" path="res://Objects/rocket.gd" id="1_ijyl3"]
 [ext_resource type="PackedScene" uid="uid://c88cunaohbg7l" path="res://Assets/RocketMesh/Rocket.blend" id="2_ijyl3"]
 [ext_resource type="PackedScene" uid="uid://b3r7iwfkoxmju" path="res://Assets/Explosion/Explosion.blend" id="3_07b4d"]
+[ext_resource type="Texture2D" uid="uid://dk0kvj6al2m0e" path="res://Assets/Help/Help1.png" id="4_567k3"]
 [ext_resource type="Shader" uid="uid://edva3yswm4fr" path="res://Objects/rocket.gdshader" id="4_d4paf"]
+[ext_resource type="Texture2D" uid="uid://byk0qghd0ajya" path="res://Assets/Help/Help2.png" id="5_ojypr"]
+[ext_resource type="PackedScene" uid="uid://ddkvsfssgnohj" path="res://Objects/explosion.tscn" id="5_ortt4"]
+[ext_resource type="AudioStream" uid="uid://bq8q1xaymda7h" path="res://Assets/Music/RcsColdGas.mp3" id="6_a1xkk"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ijyl3"]
 height = 3.1152344
@@ -11,45 +15,6 @@ radius = 0.2265625
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ijyl3"]
 size = Vector3(1.479248, 1, 1.5148926)
-
-[sub_resource type="Gradient" id="Gradient_5icsd"]
-offsets = PackedFloat32Array(0.83986926, 1)
-colors = PackedColorArray(0.75611395, 3.3691526e-06, 7.70092e-07, 1, 1, 0.07450981, 0, 1)
-metadata/_snap_count = 2
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ijyl3"]
-gradient = SubResource("Gradient_5icsd")
-
-[sub_resource type="Curve" id="Curve_07b4d"]
-_limits = [0.0, 1.0, 0.0, 1.9]
-_data = [Vector2(0, 0.28411627), 0.0, 0.0, 0, 0, Vector2(0.92956984, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_d4paf"]
-curve = SubResource("Curve_07b4d")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5icsd"]
-emission_shape_scale = Vector3(0, 0, 0)
-direction = Vector3(1, 1, 1)
-spread = 180.0
-flatness = 0.63
-initial_velocity_min = 10.75
-initial_velocity_max = 10.75
-gravity = Vector3(0, -3, 0)
-scale_min = 0.0
-scale_max = 7.08
-scale_curve = SubResource("CurveTexture_d4paf")
-color_ramp = SubResource("GradientTexture1D_ijyl3")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07b4d"]
-vertex_color_use_as_albedo = true
-
-[sub_resource type="SphereMesh" id="SphereMesh_d4paf"]
-material = SubResource("StandardMaterial3D_07b4d")
-radius = 0.25
-height = 0.5
-radial_segments = 10
-rings = 9
 
 [sub_resource type="ImageTexture" id="ImageTexture_d4paf"]
 
@@ -77,7 +42,7 @@ shadow_color = Color(0.21950102, 0.21950102, 0.21950102, 0.6)
 shadow_size = 2
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d4paf"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_567k3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ortt4"]
 render_priority = 0
@@ -86,12 +51,12 @@ shader_parameter/model_height = 5.00000023424012
 shader_parameter/dissolve_start = 0.0
 shader_parameter/dissolve_length = 1.0
 shader_parameter/gradient_bias = 3.96500018507762
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_d4paf")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_567k3")
 shader_parameter/noise_speed = 5.0
 shader_parameter/noise_strength = 0.170000008075
 shader_parameter/stretch_factor = 2.0
 shader_parameter/noise_direction = Vector2(0, 1)
-shader_parameter/_color = Color(0.36677703, 0.66902655, 0.8386173, 1)
+shader_parameter/_color = Color(0.4602576, 0.6125884, 1, 1)
 shader_parameter/power_factor = 1.0
 shader_parameter/fresnel_factor = 1.44500006537762
 shader_parameter/fresnel_amplification = 1.5
@@ -107,17 +72,48 @@ rings = 0
 cap_top = false
 cap_bottom = false
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_d4paf"]
+top_radius = 0.075
+bottom_radius = 0.02
+height = 0.85
+radial_segments = 7
+rings = 0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ortt4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a1xkk"]
+render_priority = 0
+shader = ExtResource("4_d4paf")
+shader_parameter/model_height = 0.50000002049012
+shader_parameter/dissolve_start = 0.0
+shader_parameter/dissolve_length = 1.0
+shader_parameter/gradient_bias = 0.94500004162762
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_ortt4")
+shader_parameter/noise_speed = 5.0
+shader_parameter/noise_strength = 0.170000008075
+shader_parameter/stretch_factor = 2.0
+shader_parameter/noise_direction = Vector2(0, 1)
+shader_parameter/_color = Color(1.4439225e-06, 0.69136286, 0.8267325, 1)
+shader_parameter/power_factor = 1.0
+shader_parameter/fresnel_factor = 2.0
+shader_parameter/fresnel_amplification = 1.5
+shader_parameter/fresnel_power = 1.5
+
 [node name="Rocket" type="RigidBody3D" unique_id=1263267957]
+mass = 100.0
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_ijyl3")
+thrust_force = 60.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1589436198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6973494, 2.0612031e-05)
 shape = SubResource("CylinderShape3D_ijyl3")
 
-[node name="Rocket" parent="." unique_id=1376873060 instance=ExtResource("2_ijyl3")]
+[node name="Rocket" parent="." unique_id=362476159 instance=ExtResource("2_ijyl3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0048399568, -0.809414, -0.00036096573)
 
 [node name="LandingGearCollision" type="CollisionShape3D" parent="." unique_id=239659071]
@@ -127,15 +123,6 @@ disabled = true
 
 [node name="Explosion2" parent="." unique_id=1620987180 instance=ExtResource("3_07b4d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23903131, 0)
-
-[node name="ExplosionParticle" type="GPUParticles3D" parent="." unique_id=134490174]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2949072, 0)
-emitting = false
-amount = 100
-one_shot = true
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_5icsd")
-draw_pass_1 = SubResource("SphereMesh_d4paf")
 
 [node name="Control" type="Control" parent="." unique_id=1946425534]
 layout_mode = 3
@@ -164,6 +151,17 @@ offset_bottom = 23.0
 theme_override_font_sizes/font_size = 27
 text = "Speed"
 
+[node name="Help-Key-Indicator" type="Label" parent="Control" unique_id=609158629]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -37.0
+offset_right = 80.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 27
+text = " to open help press H (important)"
+
 [node name="VSlider" type="VSlider" parent="Control" unique_id=728927366]
 layout_mode = 1
 anchors_preset = -1
@@ -185,9 +183,119 @@ theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ortt4")
 max_value = 1.0
 step = 0.03
 
+[node name="Label2" type="Label" parent="Control" unique_id=927922030]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Help menu: "
+
+[node name="Help" type="Control" parent="Control" unique_id=1310952967]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Help1" type="Sprite2D" parent="Control/Help" unique_id=259122847]
+visible = false
+texture = ExtResource("4_567k3")
+
+[node name="Help2" type="Sprite2D" parent="Control/Help" unique_id=477709507]
+visible = false
+texture = ExtResource("5_ojypr")
+
 [node name="ThrustCone" type="MeshInstance3D" parent="." unique_id=515889379]
 transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -3.32062, 0)
 mesh = SubResource("CylinderMesh_07b4d")
 surface_material_override/0 = SubResource("ShaderMaterial_ortt4")
+
+[node name="RCS-Left" type="Node3D" parent="." unique_id=1040655934]
+
+[node name="RCS-Down" type="MeshInstance3D" parent="RCS-Left" unique_id=1813619831]
+transform = Transform3D(-1, 8.742278e-08, 1.5285484e-14, -8.742278e-08, -1, -1.7484555e-07, 0, -1.7484555e-07, 1, 0.22761804, 0.5439061, -0.0049063372)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-Up" type="MeshInstance3D" parent="RCS-Left" unique_id=774041864]
+transform = Transform3D(-1, 8.742278e-08, 1.5285484e-14, 8.742278e-08, 1, 2.6226832e-07, 7.642742e-15, 2.6226832e-07, -1, 0.22761804, 1.5915886, -0.0049063372)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-forward" type="MeshInstance3D" parent="RCS-Left" unique_id=513810095]
+transform = Transform3D(-1, 8.742278e-08, 1.5285484e-14, -1.1464121e-14, -3.059797e-07, 1, 8.742278e-08, 1, 3.059797e-07, 0.22761804, 1.0824896, 0.5049597)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-back" type="MeshInstance3D" parent="RCS-Left" unique_id=796984627]
+transform = Transform3D(-1, 8.742278e-08, 1.5285484e-14, 3.821379e-15, 2.1855693e-07, -1, -8.742278e-08, -1, -2.1855693e-07, 0.22761804, 1.0754038, -0.5250618)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-left" type="MeshInstance3D" parent="RCS-Left" unique_id=449725530]
+transform = Transform3D(-1.3113416e-07, -1, -1.3113416e-07, 8.742278e-08, 1.3113417e-07, -1, 1, -1.3113419e-07, 8.742278e-08, -0.5150104, 1.0782462, -0.24596119)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-right" type="MeshInstance3D" parent="RCS-Left" unique_id=2055022650]
+transform = Transform3D(4.371138e-08, 1, 4.3711406e-08, 8.742278e-08, -4.371141e-08, 1, 1, -4.3711392e-08, -8.742272e-08, 0.51501083, 1.0853323, -0.24596122)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-Right" type="Node3D" parent="." unique_id=1093417136]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48338434, 0, 0)
+
+[node name="RCS-Down" type="MeshInstance3D" parent="RCS-Right" unique_id=1979459968]
+transform = Transform3D(-1, 8.742278e-08, 1.5285484e-14, -8.742278e-08, -1, -1.7484555e-07, 0, -1.7484555e-07, 1, 0.22761804, 0.5439061, -0.0049063372)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-Up" type="MeshInstance3D" parent="RCS-Right" unique_id=513560563]
+transform = Transform3D(-1, 8.742278e-08, 1.5285484e-14, 8.742278e-08, 1, 2.6226832e-07, 7.642742e-15, 2.6226832e-07, -1, 0.22761804, 1.5915886, -0.0049063372)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-forward" type="MeshInstance3D" parent="RCS-Right" unique_id=1197219661]
+transform = Transform3D(-1, 8.742278e-08, 1.5285484e-14, -1.1464121e-14, -3.059797e-07, 1, 8.742278e-08, 1, 3.059797e-07, 0.22761804, 1.0824896, 0.5049597)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-back" type="MeshInstance3D" parent="RCS-Right" unique_id=916098314]
+transform = Transform3D(-1, 8.742278e-08, 1.5285484e-14, 3.821379e-15, 2.1855693e-07, -1, -8.742278e-08, -1, -2.1855693e-07, 0.22761804, 1.0754038, -0.5250618)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-left" type="MeshInstance3D" parent="RCS-Right" unique_id=1479760842]
+transform = Transform3D(-1.3113417e-07, -1, -8.742279e-08, -1, 1.3113419e-07, -8.742275e-08, 8.742283e-08, 8.7422805e-08, -1, -0.020630747, 1.0854551, 0.24306184)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="RCS-right" type="MeshInstance3D" parent="RCS-Right" unique_id=1476202623]
+transform = Transform3D(4.3711363e-08, 1, -4.677048e-21, -1, 4.3711378e-08, 8.742278e-08, 8.742278e-08, -2.5973716e-14, 1, 1.0093907, 1.0854551, 0.25014806)
+mesh = SubResource("CylinderMesh_d4paf")
+surface_material_override/0 = SubResource("ShaderMaterial_a1xkk")
+
+[node name="Explosion" parent="." unique_id=587047002 instance=ExtResource("5_ortt4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14990714, 1.5549898, 0)
+
+[node name="Explosion3" parent="." unique_id=2091529443 instance=ExtResource("5_ortt4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12492275, 0.5556091, 0)
+
+[node name="Explosion4" parent="." unique_id=911575831 instance=ExtResource("5_ortt4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17988852, -0.2538892, 0)
+
+[node name="Rcs_audio" type="AudioStreamPlayer3D" parent="." unique_id=256537329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0893248, 0)
+stream = ExtResource("6_a1xkk")
+volume_db = -20.0
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=895849147]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2853837, 0)
 
 [connection signal="body_entered" from="." to="." method="collision_impact"]
