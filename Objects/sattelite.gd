@@ -6,6 +6,8 @@ extends RigidBody3D
 @onready var thruster = $ThrustCone
 @onready var throttleslider = $Control/VSlider
 
+@export var satellite_name := "Explorer I"
+
 const ACTION_THRUST       = "thrust"
 const ACTION_RCS_UP       = "rcs_up"
 const ACTION_RCS_DOWN     = "rcs_down"
@@ -13,6 +15,8 @@ const ACTION_RCS_LEFT     = "rcs_left"
 const ACTION_RCS_RIGHT    = "rcs_right"
 const ACTION_RCS_FORWARD  = "rcs_forward"
 const ACTION_RCS_BACK     = "rcs_back"
+
+var has_player = false
 
 @export var pitch_torque: float = 1.0
 @export var yaw_torque: float = 1.0
@@ -30,7 +34,8 @@ const ACTION_ROLL_RIGHT = "roll_right"
 
 var current_bias: float = 0.0
 
-func _ready() -> void:
+func _ready():
+	SatelliteManager.satellites.append(self)
 	CameraManager.register(self)
 	linear_damp = 0
 	angular_damp = 0
@@ -145,3 +150,7 @@ func _handle_rotation() -> void:
 		local_torque.z -= local_angular_velocity.z * stabilization_strength
 		
 	apply_torque(global_transform.basis * local_torque)
+
+
+func can_unmount() -> bool:
+	return true

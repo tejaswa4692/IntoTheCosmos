@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b6lcvfg0warq3"]
+
+[ext_resource type="Script" uid="uid://c33leqj4kdxw8" path="res://Objects/boney.gd" id="1_b5u8h"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3ig0"]
+radius = 0.10449219
+height = 0.44250488
+
+[node name="Boney" type="CharacterBody3D" unique_id=666712437]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_b5u8h")
+move_speed = 2.0
+jump_velocity = 3.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829888483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21643144, 0)
+shape = SubResource("CapsuleShape3D_s3ig0")
+
+[node name="Head" type="Node3D" parent="." unique_id=170090906]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4951616, -0.11133814)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=450379822]

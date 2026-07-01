@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://btbun1t27m14m" path="res://Objects/gravity_source.gd" id="3_xv3hj"]
 [ext_resource type="Script" uid="uid://dqoodcniemx37" path="res://Objects/camera_rig.gd" id="4_78x0b"]
 [ext_resource type="AudioStream" uid="uid://ctk2enmyhj364" path="res://Assets/Music/Cosmos1.mp3" id="6_ol3l7"]
+[ext_resource type="PackedScene" uid="uid://bihi88ppsh3m7" path="res://Objects/observatory.tscn" id="8_0o5du"]
+[ext_resource type="PackedScene" uid="uid://b6lcvfg0warq3" path="res://Objects/boney.tscn" id="8_x7w41"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol3l7"]
 sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
@@ -25,7 +27,9 @@ radiance_size = 0
 background_mode = 2
 background_color = Color(0.20871013, 0.20871016, 0.20871007, 1)
 sky = SubResource("Sky_qjien")
-ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
+ambient_light_sky_contribution = 0.9
 reflected_light_source = 1
 tonemap_exposure = 2.0
 glow_enabled = true
@@ -52,7 +56,7 @@ transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, 0, 56
 mass = 1.2
 gravity_scale = 1.0
 
-[node name="CameraRig" type="Node3D" parent="." unique_id=1000938322]
+[node name="CameraRig" type="Node3D" parent="." unique_id=1000938322 groups=["camera_rig"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3093975, 2.9949632)
 script = ExtResource("4_78x0b")
 
@@ -64,8 +68,8 @@ spring_length = 6.0
 
 [node name="Planet-Earth" type="Node3D" parent="." unique_id=2078065892]
 script = ExtResource("3_xv3hj")
-gravity_strength = 100.0
-mass = 600.0
+gravity_strength = 15.0
+mass = 2000.0
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth" unique_id=2056927064]
 use_collision = true
@@ -109,3 +113,9 @@ radius = 80.31296
 radial_segments = 70
 rings = 86
 material = SubResource("StandardMaterial3D_xv3hj")
+
+[node name="Boney" parent="." unique_id=666712437 instance=ExtResource("8_x7w41")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7379491, 57.680862, 0)
+
+[node name="Observatory" parent="." unique_id=1190209170 instance=ExtResource("8_0o5du")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.788102, 56.07566, -2.3343968)

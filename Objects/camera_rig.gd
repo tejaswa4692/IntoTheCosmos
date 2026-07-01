@@ -4,6 +4,7 @@ extends Node3D
 @export var min_pitch: float = -60.0
 @export var max_pitch: float = 60.0
 @onready var spring_arm: SpringArm3D = $SpringArm3D
+@onready var camera: Camera3D = $SpringArm3D/Camera3D
 
 var yaw: float = 0.0
 var pitch: float = 0.0
@@ -31,5 +32,18 @@ func _physics_process(_delta: float) -> void:
 	if not target:
 		return
 	global_position = target.global_position
-	rotation.y = yaw
-	spring_arm.rotation.x = pitch
+	# only apply yaw/pitch when following a rocket or similar
+	# if target is the player, the player handles its own camera via the Head node
+	if target.is_in_group("rocket"):
+		rotation.y = yaw
+		spring_arm.rotation.x = pitch
+	else:
+		rotation.y = yaw
+		spring_arm.rotation.x = pitch
+
+
+func activate():
+	camera.current = true
+
+func deactivate():
+	camera.current = false

@@ -71,6 +71,7 @@ gravity_scale = 0.0
 script = ExtResource("1_sjyr3")
 rcs_force = 60.0
 thrust_force = 150.0
+satellite_name = null
 pitch_torque = 20.0
 yaw_torque = 20.0
 roll_torque = 20.0
@@ -80,8 +81,8 @@ stabilization_strength = 20.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010564804, 0.4634397, 0.1842472)
 shape = SubResource("BoxShape3D_sjyr3")
 
-[node name="Sketchfab_Scene" parent="." unique_id=502575782 instance=ExtResource("2_o4cw8")]
-transform = Transform3D(-6.556708e-10, 0, 0.015, 0, 0.015, 0, -0.015, 0, -6.556708e-10, 0.26724803, -0.220267, -0.033187896)
+[node name="Sketchfab_Scene" parent="." unique_id=502575782 groups=["satellites"] instance=ExtResource("2_o4cw8")]
+transform = Transform3D(-6.556708e-10, 0, 0.015, 0, 0.015, 0, -0.015, 0, -6.556708e-10, 0.26929006, -0.22228414, -0.0339292)
 
 [node name="ThrustCone" type="MeshInstance3D" parent="." unique_id=647962985]
 transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, -0.0025044382, -0.19738135, -0.10792266)

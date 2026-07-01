@@ -101,6 +101,10 @@ shader_parameter/fresnel_factor = 2.0
 shader_parameter/fresnel_amplification = 1.5
 shader_parameter/fresnel_power = 1.5
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_567k3"]
+height = 2.456543
+radius = 0.85791016
+
 [node name="Rocket" type="RigidBody3D" unique_id=1263267957]
 mass = 100.0
 gravity_scale = 0.0
@@ -298,4 +302,18 @@ volume_db = -20.0
 [node name="Marker3D" type="Marker3D" parent="." unique_id=895849147]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2853837, 0)
 
+[node name="ProximityArea" type="Area3D" parent="." unique_id=845502897 groups=["rocket"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6001969, 0)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProximityArea" unique_id=1897021494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22827148, 0)
+shape = SubResource("CylinderShape3D_567k3")
+
+[node name="PlayerExitMarker" type="Marker3D" parent="." unique_id=54658365]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0196022, 0.7582755)
+
 [connection signal="body_entered" from="." to="." method="collision_impact"]
+[connection signal="body_entered" from="ProximityArea" to="." method="_on_proximity_entered"]
+[connection signal="body_exited" from="ProximityArea" to="." method="_on_proximity_exited"]

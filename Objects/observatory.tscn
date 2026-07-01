@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bihi88ppsh3m7"]
+
+[ext_resource type="Script" uid="uid://d2788isrs8x1n" path="res://Objects/observatory.gd" id="1_jhae5"]
+[ext_resource type="PackedScene" uid="uid://ceivx7cqyufyn" path="res://Objects/observatory(object).tscn" id="2_jhae5"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3mcnk"]
+radius = 2.3402147
+
+[node name="Observatory" type="Node3D" unique_id=1190209170]
+script = ExtResource("1_jhae5")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=749667026]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1375952291]
+shape = SubResource("SphereShape3D_3mcnk")
+
+[node name="Control" type="Control" parent="." unique_id=2043342232]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control" unique_id=1631401537]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.13
+anchor_right = 0.545
+anchor_bottom = 0.13
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Active sattelites"
+
+[node name="ItemList" type="ItemList" parent="Control" unique_id=2077643279]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.25
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerExitMarkers" type="Marker3D" parent="." unique_id=318630130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2474844, 0.681056, 0)
+
+[node name="Observatory" parent="." unique_id=867485610 instance=ExtResource("2_jhae5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.814553, 0, 0)
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="item_clicked" from="Control/ItemList" to="." method="_on_item_list_item_clicked"]

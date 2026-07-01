@@ -22,6 +22,7 @@ const ACTION_ROLL_RIGHT  = "roll_right"
 const ACTION_THRUST      = "thrust"
 var canmove: bool = true
 
+var has_player: bool = false
 var current_bias: float = 0.0
 
 @onready var RCS_Thrusters_left = [$"RCS-Left/RCS-back", $"RCS-Left/RCS-Down", $"RCS-Left/RCS-forward", $"RCS-Left/RCS-Up", $"RCS-Left/RCS-left", $"RCS-Left/RCS-right"]
@@ -55,7 +56,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if canmove:
 		_handle_gravity()
-		if CameraManager.get_current() == self:
+		if has_player:
 			$Control.show()
 			_handle_rotation()
 			_handle_thrust()
@@ -76,16 +77,23 @@ func _input(event: InputEvent) -> void:
 			if Input.is_action_just_pressed("R"):
 				CameraManager.reset()
 				get_tree().reload_current_scene()
+			return
+
+	if !has_player:
+		return
+
+	if event is InputEventKey:
 		if Input.is_action_just_pressed("eject"):
 			eject_satellite()
 		if Input.is_action_just_pressed("help-open"):
 			handle_help()
-			
+
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			throttleslider.value += throttleslider.step
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			throttleslider.value -= throttleslider.step
+
 
 func _handle_rcs() -> void:
 	var local_force := Vector3.ZERO
@@ -236,14 +244,15 @@ func _handle_thrust() -> void:
 func collision_impact(body: Node) -> void:
 	if abs(linear_velocity.y) > impact_velocity_threshold or abs(linear_velocity.x) > 5 or abs(linear_velocity.z) > 5:
 		canmove = false
+		has_player = false
 		$Explosion.explode()
 		await get_tree().create_timer(0.5).timeout
 		$Explosion3.explode()
 		await get_tree().create_timer(0.5).timeout
 		$Explosion4.explode()
 		print("Impact with ", body.name, " at ", linear_velocity.length())
-		
-		
+
+
 func handle_help() -> void:
 	if curent_help == 0:
 		$Control/Help.visible = true
@@ -257,3 +266,16 @@ func handle_help() -> void:
 		$Control/Help/Help2.hide()
 		$Control/Help.hide()
 		curent_help = 0
+
+
+func _on_proximity_entered(body: Node) -> void:
+	if body.has_method("set_nearest_rocket"):
+		body.set_nearest_rocket(self)
+
+func _on_proximity_exited(body: Node) -> void:
+	if body.has_method("set_nearest_rocket"):
+		body.set_nearest_rocket(null)
+
+
+func can_unmount() -> bool:
+	return canmove
