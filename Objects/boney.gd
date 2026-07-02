@@ -163,9 +163,11 @@ func _mount(target) -> void:
 	mount_source = target
 	if target.has_method("get_mount_target"):
 		target = target.get_mount_target()
-	mounted_target = target
 	if target == null:
 		return
+	# clear previous mounted target if there was one
+	if mounted_target != null and is_instance_valid(mounted_target):
+		mounted_target.has_player = false
 	is_mounted = true
 	mounted_target = target
 	visible = false

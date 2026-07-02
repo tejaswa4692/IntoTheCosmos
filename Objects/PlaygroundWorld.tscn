@@ -6,8 +6,10 @@
 [ext_resource type="Script" uid="uid://btbun1t27m14m" path="res://Objects/gravity_source.gd" id="3_xv3hj"]
 [ext_resource type="Script" uid="uid://dqoodcniemx37" path="res://Objects/camera_rig.gd" id="4_78x0b"]
 [ext_resource type="AudioStream" uid="uid://ctk2enmyhj364" path="res://Assets/Music/Cosmos1.mp3" id="6_ol3l7"]
+[ext_resource type="PackedScene" uid="uid://b8sla8idannnh" path="res://Objects/Planet.tscn" id="6_ypcqb"]
 [ext_resource type="PackedScene" uid="uid://bihi88ppsh3m7" path="res://Objects/observatory.tscn" id="8_0o5du"]
 [ext_resource type="PackedScene" uid="uid://b6lcvfg0warq3" path="res://Objects/boney.tscn" id="8_x7w41"]
+[ext_resource type="PackedScene" uid="uid://cqik5bcb3xa8a" path="res://Objects/sattelite.tscn" id="9_0o5du"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol3l7"]
 sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
@@ -49,12 +51,20 @@ environment = SubResource("Environment_78x0b")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=108467816]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_energy = 0.685
 shadow_enabled = true
 
 [node name="Rocket" parent="." unique_id=1263267957 instance=ExtResource("1_arduf")]
-transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, 0, 56.941673, 0)
-mass = 1.2
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, 0, 70.861244, 0)
+mass = 30.0
 gravity_scale = 1.0
+thrust_force = 500.0
+pitch_torque = 20.0
+yaw_torque = 10.0
+roll_torque = 20.0
+stabilization_strength = 25.0
+impact_velocity_threshold = 10.0
+rcs_force = 200.0
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=1000938322 groups=["camera_rig"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3093975, 2.9949632)
@@ -66,34 +76,12 @@ spring_length = 6.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D" unique_id=994309216]
 
-[node name="Planet-Earth" type="Node3D" parent="." unique_id=2078065892]
-script = ExtResource("3_xv3hj")
+[node name="Planet-Earth3" parent="." unique_id=58250303 instance=ExtResource("6_ypcqb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1283.1575, -475.6587, 1837.416)
+
+[node name="Planet-Earth5" parent="." unique_id=980564763 instance=ExtResource("6_ypcqb")]
 gravity_strength = 15.0
 mass = 2000.0
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth" unique_id=2056927064]
-use_collision = true
-collision_layer = 3
-collision_mask = 3
-radius = 56.051727
-radial_segments = 70
-rings = 86
-material = SubResource("StandardMaterial3D_xv3hj")
-
-[node name="Planet-Earth3" type="Node3D" parent="." unique_id=1430132568]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1283.1575, -475.6587, 1837.416)
-script = ExtResource("3_xv3hj")
-gravity_strength = 60.0
-mass = 5000.0
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth3" unique_id=1581939822]
-use_collision = true
-collision_layer = 3
-collision_mask = 3
-radius = 88.9308
-radial_segments = 70
-rings = 86
-material = SubResource("StandardMaterial3D_xv3hj")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=662722076]
 stream = ExtResource("6_ol3l7")
@@ -115,7 +103,10 @@ rings = 86
 material = SubResource("StandardMaterial3D_xv3hj")
 
 [node name="Boney" parent="." unique_id=666712437 instance=ExtResource("8_x7w41")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7379491, 57.680862, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7379491, 71.60043, 0)
 
-[node name="Observatory" parent="." unique_id=1190209170 instance=ExtResource("8_0o5du")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.788102, 56.07566, -2.3343968)
+[node name="Observatory2" parent="." unique_id=296325195 instance=ExtResource("8_0o5du")]
+transform = Transform3D(1, 0, 0, 0, 0.99587333, 0.09075425, 0, -0.09075425, 0.99587333, -1.4195759, 69.97626, -4.780915)
+
+[node name="Sattelite" parent="." unique_id=1623321927 instance=ExtResource("9_0o5du")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5541158, 71.42517, 0)

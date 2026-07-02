@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b8sla8idannnh"]
+
+[ext_resource type="Script" uid="uid://btbun1t27m14m" path="res://Objects/gravity_source.gd" id="1_rvel7"]
+[ext_resource type="PackedScene" uid="uid://6awxulel8se5" path="res://Assets/Planet-Icosphere/Planet-LOD.blend" id="2_rvel7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rvel7"]
+radius = 70.0
+
+[node name="Planet-Earth3" type="Node3D" unique_id=58250303]
+script = ExtResource("1_rvel7")
+gravity_strength = 60.0
+mass = 5000.0
+
+[node name="Planet-LOD" parent="." unique_id=1598452982 instance=ExtResource("2_rvel7")]
+transform = Transform3D(70, 0, 0, 0, 70, 0, 0, 0, 70, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1531804507]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=502283915]
+shape = SubResource("SphereShape3D_rvel7")
+
+[node name="LODUpdateTimer" type="Timer" parent="." unique_id=1838352782]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="LODUpdateTimer" to="." method="_on_lod_timer_timeout"]

@@ -66,16 +66,9 @@ shadow_offset = Vector2(2, 2)
 [node name="Sattelite" type="RigidBody3D" unique_id=1623321927]
 collision_layer = 2
 collision_mask = 2
-mass = 50.0
+mass = 2.0
 gravity_scale = 0.0
 script = ExtResource("1_sjyr3")
-rcs_force = 60.0
-thrust_force = 150.0
-satellite_name = null
-pitch_torque = 20.0
-yaw_torque = 20.0
-roll_torque = 20.0
-stabilization_strength = 20.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=451088010]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010564804, 0.4634397, 0.1842472)

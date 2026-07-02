@@ -46,7 +46,7 @@ func _ready() -> void:
 	gravity_scale = 0
 	$Control/YouDied.hide()
 	set_thrust_gradient_bias(throttleslider.value)
-	setup_sattelite()
+	#setup_sattelite()
 	$Control/Help.hide()
 	for i in RCS_Thrusters_left:
 		i.hide()
@@ -73,6 +73,8 @@ func _physics_process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
+		if Input.is_action_just_pressed("setup_sattelite"):
+			setup_sattelite()
 		if !canmove:
 			if Input.is_action_just_pressed("R"):
 				CameraManager.reset()
@@ -164,6 +166,8 @@ func _handle_gravity() -> void:
 		$Control/Label.text = "Speed: " + str(int(linear_velocity.length())) + "Alt: " + str(int(altitude))
 
 func setup_sattelite():
+	if satellite != null:
+		return  # already holding one
 	var sattelite_instance = satellite_scene.instantiate()
 	sattelite_instance.position = $Marker3D.position
 	sattelite_instance.freeze = true
@@ -180,6 +184,7 @@ func eject_satellite():
 	satellite.freeze = false
 	satellite.linear_velocity = linear_velocity
 	satellite.angular_velocity = angular_velocity
+	satellite = null  # ← clear reference so a new one can be set up
 
 
 func _handle_rotation() -> void:

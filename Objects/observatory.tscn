@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ceivx7cqyufyn" path="res://Objects/observatory(object).tscn" id="2_jhae5"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_3mcnk"]
-radius = 2.3402147
+radius = 3.4103427
 
 [node name="Observatory" type="Node3D" unique_id=1190209170]
 script = ExtResource("1_jhae5")
@@ -14,6 +14,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1375952291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6427803, -0.49376553, -0.36740255)
 shape = SubResource("SphereShape3D_3mcnk")
 
 [node name="Control" type="Control" parent="." unique_id=2043342232]

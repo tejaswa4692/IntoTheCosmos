@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dqv8yxjf7yjyi"
-path="res://.godot/imported/Observatory.blend-ec5f6e1f330ec30d078e2a2bcdaf5a0d.scn"
+uid="uid://6awxulel8se5"
+path="res://.godot/imported/Planet-LOD.blend-4b6b5556227dcb04e64f99f54fff21c9.scn"
 
 [deps]
 
-source_file="res://Assets/Observatory/Observatory.blend"
-dest_files=["res://.godot/imported/Observatory.blend-ec5f6e1f330ec30d078e2a2bcdaf5a0d.scn"]
+source_file="res://Assets/Planet-Icosphere/Planet-LOD.blend"
+dest_files=["res://.godot/imported/Planet-LOD.blend-4b6b5556227dcb04e64f99f54fff21c9.scn"]
 
 [params]
 
@@ -39,10 +39,10 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"Material.002": {
+"Planet": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://Assets/Observatory/Windows.tres",
-"use_external/path": "uid://b1s3git8yleqy"
+"use_external/fallback_path": "res://Assets/Planet-Icosphere/PlanetShader.tres",
+"use_external/path": "uid://eguns8apnutn"
 }
 }
 }

@@ -1,10 +1,13 @@
 extends RigidBody3D
 
-@export var rcs_force: float = 1.0
-@export var thrust_force: float = 10.0
+@export var rcs_force: float = 10.0
+@export var thrust_force: float = 15.0
 
 @onready var thruster = $ThrustCone
+@onready var thruster2 = $ThrustCone/ThrustCone
+@onready var thruster3 = $ThrustCone/ThrustCone2
 @onready var throttleslider = $Control/VSlider
+var assigned_observatory: Node = null
 
 @export var satellite_name := "Explorer I"
 
@@ -16,6 +19,7 @@ const ACTION_RCS_RIGHT    = "rcs_right"
 const ACTION_RCS_FORWARD  = "rcs_forward"
 const ACTION_RCS_BACK     = "rcs_back"
 
+var thruster_material: ShaderMaterial
 var has_player = false
 
 @export var pitch_torque: float = 1.0
@@ -35,15 +39,24 @@ const ACTION_ROLL_RIGHT = "roll_right"
 var current_bias: float = 0.0
 
 func _ready():
-	SatelliteManager.satellites.append(self)
+	SatelliteManager.register(self)
 	CameraManager.register(self)
 	linear_damp = 0
 	angular_damp = 0
 	gravity_scale = 0
-	set_thrust_gradient_bias(0)  # <-- hide cone on start
+	# duplicate mesh then material separately and cache it
+	thruster.mesh = thruster.mesh.duplicate()
+	thruster_material = thruster.get_active_material(0).duplicate()
+	thruster.material_override = thruster_material
+	thruster2.material_override = thruster_material
+	thruster3.material_override = thruster_material
+	
+	set_thrust_gradient_bias(0)
+	
+
 
 func _input(event: InputEvent) -> void:
-	if CameraManager.get_current() != self:
+	if !has_player:
 		return
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -54,12 +67,12 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	_handle_gravity()
-	if CameraManager.get_current() == self:
+	if has_player:
 		_handle_input(delta)
 		$Control.show()
 	else:
-		set_thrust_gradient_bias(0)
 		$Control.hide()
+		set_thrust_gradient_bias(0)
 
 func _handle_gravity() -> void:
 	for source in GravityManager.sources:
@@ -107,8 +120,9 @@ func _handle_thrust() -> void:
 		apply_central_force(force)
 
 func set_thrust_gradient_bias(value: float) -> void:
-	var mat = thruster.mesh.surface_get_material(0) as ShaderMaterial
-	mat.set_shader_parameter("gradient_bias", value)
+	if thruster_material == null:
+		return
+	thruster_material.set_shader_parameter("gradient_bias", value)
 
 func _update_thrust_visual(delta: float) -> void:
 	var target = throttleslider.value if Input.is_action_pressed(ACTION_THRUST) else 0.0

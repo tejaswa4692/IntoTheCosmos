@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://eguns8apnutn"]
+
+[ext_resource type="Shader" uid="uid://dpuj2h56escql" path="res://Objects/PlaygroundWorld.tres" id="1_dde2u"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_dde2u")

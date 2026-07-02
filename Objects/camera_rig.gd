@@ -22,10 +22,7 @@ func _input(event: InputEvent) -> void:
 			Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 			else Input.MOUSE_MODE_CAPTURED
 		)
-	elif event is InputEventKey:
-		for i in CameraManager.targets.size():
-			if event.is_action_pressed("cam_" + str(i + 1)):
-				CameraManager.switch_to(i)
+
 
 func _physics_process(_delta: float) -> void:
 	var target = CameraManager.get_current()
