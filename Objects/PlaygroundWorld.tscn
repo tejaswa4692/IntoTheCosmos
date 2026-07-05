@@ -12,6 +12,7 @@
 [ext_resource type="Material" uid="uid://dkoxk4h4sw5n7" path="res://Assets/Starfield/StarShader.tres" id="10_34g4x"]
 [ext_resource type="Shader" uid="uid://b32qsklw5flmn" path="res://Objects/nebula.gdshader" id="11_ypcqb"]
 [ext_resource type="Shader" uid="uid://d06hr80gyghnj" path="res://Objects/blackhole.gdshader" id="12_amm11"]
+[ext_resource type="Script" uid="uid://do2b6ant3wtqj" path="res://Objects/Planets/planet_spawn_manager.gd" id="13_ag2w8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol3l7"]
 sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
@@ -38,14 +39,13 @@ reflected_light_source = 1
 ssr_fade_in = 14.55087
 ssao_enabled = true
 glow_enabled = true
+volumetric_fog_density = 0.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xv3hj"]
 radius = 0.3
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_amm11"]
-top_radius = 10.0
-bottom_radius = 10.0
-height = 6.0
+[sub_resource type="BoxMesh" id="BoxMesh_amm11"]
+size = Vector3(21, 11, 24)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_amm11"]
 render_priority = 0
@@ -56,6 +56,8 @@ shader_parameter/detail_scale = 1.00000004587006
 shader_parameter/fade_radius = 5.0
 shader_parameter/fade_softness = 3.0
 shader_parameter/field_scale = 1.0
+shader_parameter/shape_noise_amount = 1.6450000781375
+shader_parameter/shape_noise_scale = 9.46500044632762
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ag2w8"]
 render_priority = 0
@@ -138,17 +140,11 @@ far = 10000.0
 
 [node name="Planet-Earth3" parent="." unique_id=58250303 instance=ExtResource("6_ypcqb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1283.1575, -475.6587, 1837.416)
-gravity_strength = 40.0
-mass = 2000.0
 
 [node name="Planet-Earth6" parent="." unique_id=1500714912 instance=ExtResource("6_ypcqb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 534.1675, 326.9217, 2957.506)
-gravity_strength = 40.0
-mass = 2000.0
 
 [node name="Planet-Earth5" parent="." unique_id=91549530 instance=ExtResource("6_ypcqb")]
-gravity_strength = 40.0
-mass = 2000.0
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="." unique_id=1859949540]
 stream = ExtResource("5_amm11")
@@ -157,8 +153,6 @@ autoplay = true
 [node name="Planet-Earth4" type="Node3D" parent="." unique_id=747630384]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 290.20795, 2109.04)
 script = ExtResource("3_xv3hj")
-gravity_strength = 0.0
-mass = 3000.0
 
 [node name="Boney" parent="." unique_id=666712437 groups=["influencable_object"] instance=ExtResource("8_x7w41")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7379491, 71.60043, 0)
@@ -173,12 +167,15 @@ script = ExtResource("9_0o5du")
 material_override = ExtResource("10_34g4x")
 
 [node name="Nebula2" type="MeshInstance3D" parent="." unique_id=457822407]
-transform = Transform3D(-32.413673, 75.97661, 14.148653, -76.51455, -33.706985, 5.7124896, 10.869582, -10.708389, 82.40422, -7010.542, 378.42386, 748.46356)
-mesh = SubResource("CylinderMesh_amm11")
+transform = Transform3D(-32.413673, 75.97661, 14.148653, -76.51455, -33.706985, 5.7124896, 10.869582, -10.708389, 82.40422, -1668.6299, 378.42386, 748.46356)
+mesh = SubResource("BoxMesh_amm11")
 surface_material_override/0 = SubResource("ShaderMaterial_amm11")
 
 [node name="BlackHole" type="MeshInstance3D" parent="." unique_id=2079518372]
 transform = Transform3D(96.78586, 22.180716, -11.853847, -25.14951, 85.36069, -45.618584, -2.9802322e-06, 47.133522, 88.19541, -1045.9019, 89.78498, -7845.1367)
 mesh = SubResource("SphereMesh_k2xjf")
 
-[node name="Node3D" type="Node3D" parent="." unique_id=1824265708]
+[node name="PlanetSpawnManager" type="Node3D" parent="." unique_id=1800072302]
+script = ExtResource("13_ag2w8")
+player_path = NodePath("../Rocket")
+planet_scene = ExtResource("6_ypcqb")

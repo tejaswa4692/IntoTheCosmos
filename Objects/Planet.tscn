@@ -8,10 +8,11 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_rvel7"]
 radius = 70.0
 
+[sub_resource type="SphereMesh" id="SphereMesh_48vsq"]
+
 [node name="Planet-Earth3" type="Node3D" unique_id=58250303]
 script = ExtResource("1_rvel7")
-gravity_strength = 60.0
-mass = 5000.0
+mass = 10000.0
 
 [node name="Planet-LOD" parent="." unique_id=805624272 groups=["planet"] instance=ExtResource("2_rvel7")]
 transform = Transform3D(70, 0, 0, 0, 70, 0, 0, 0, 70, 0, 0, 0)
@@ -33,6 +34,11 @@ mesh = ExtResource("3_o5h3e")
 
 [node name="PlanetRockScatterer" type="Node3D" parent="." unique_id=893176570]
 script = ExtResource("4_48vsq")
-rock_count = 20000
+rock_count = 15000
+
+[node name="SourceMesh" type="MeshInstance3D" parent="." unique_id=1786901324]
+transform = Transform3D(140, 0, 0, 0, 140, 0, 0, 0, 140, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_48vsq")
 
 [connection signal="timeout" from="LODUpdateTimer" to="." method="_on_lod_timer_timeout"]

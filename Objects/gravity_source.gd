@@ -2,7 +2,7 @@ extends Node3D
 class_name GravitySource
 
 @export var gravity_strength: float = 9.8
-@export var mass: float = 200.0
+@export var mass: float = 5000.0
 @export var use_inverse_square: bool = true
 @export var min_influence_threshold: float = 0.5 
 
@@ -17,7 +17,7 @@ const FIXED_ICE_CAPS: float = 0.0
 const FIXED_ROUGHNESS: float = 1.0
 const FIXED_ATMOSPHERE_STRENGTH: float = 0.0
 
-enum NoiseType { VALUE, PERLIN, CELLULAR, RIDGED }
+enum NoiseType { VALUE, PERLIN,}
 const PLANET_SHADER: Shader = preload("res://Assets/Planet-Icosphere/PlanetShader.gdshader")
 
 @onready var camera: Camera3D = get_viewport().get_camera_3d()
@@ -25,6 +25,7 @@ var soi_radius: float = 0.0
 var planet_material: ShaderMaterial
 
 func _ready() -> void:
+	
 	_recalculate_soi()
 	GravityManager.register(self)
 	if randomize_appearance:
@@ -32,7 +33,7 @@ func _ready() -> void:
 		_apply_material_to_lods()
 
 func _exit_tree() -> void:
-	GravityManager.unregister(self)
+	GravityManager.unregister(self) 
 
 func _debug_draw_soi() -> void:
 	var mesh_instance := MeshInstance3D.new()
@@ -74,6 +75,23 @@ func _on_lod_timer_timeout() -> void:
 		$"Planet-LOD/LOD-Mid".hide()
 		$"Planet-LOD/LOD-Farthest".show()
 
+#func rockrandomizer() -> void:
+	#var rng := RandomNumberGenerator.new()
+	#if planet_seed == -1:
+		#rng.randomize()
+		#planet_seed = rng.seed  
+	#else:
+		#rng.seed = planet_seed
+	#$PlanetRockScatterer.rock_count = randi_range()
+
+func randomize_rocks() -> void:
+	var rng := RandomNumberGenerator.new()
+	if planet_seed == -1:
+		rng.randomize()
+		planet_seed = rng.seed  
+	else:
+		rng.seed = planet_seed
+	$PlanetRockScatterer.rock_count = randi_range(500, 10000)
 
 func _generate_planet_material() -> void:
 	var rng := RandomNumberGenerator.new()
@@ -99,8 +117,9 @@ func _generate_planet_material() -> void:
 	planet_material.set_shader_parameter("color_low", Color.from_hsv(fmod(base_hue + 0.02, 1.0), rng.randf_range(0.4, 0.8), rng.randf_range(0.3, 0.5)))
 	planet_material.set_shader_parameter("color_mid", Color.from_hsv(fmod(base_hue + 0.05, 1.0), rng.randf_range(0.3, 0.6), rng.randf_range(0.5, 0.7)))
 	planet_material.set_shader_parameter("color_high", Color.from_hsv(fmod(base_hue + 0.1, 1.0), rng.randf_range(0.1, 0.4), rng.randf_range(0.7, 0.95)))
-
 	planet_material.set_shader_parameter("rim_power", rng.randf_range(1.5, 4.0))
+	
+	
 
 func _apply_material_to_lods() -> void:
 	var lod_root := get_node_or_null("Planet-LOD")
