@@ -42,23 +42,23 @@ shadow_color = Color(0.21950102, 0.21950102, 0.21950102, 0.6)
 shadow_size = 2
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_567k3"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0js77"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ortt4"]
 render_priority = 0
 shader = ExtResource("4_d4paf")
-shader_parameter/model_height = 5.00000023424012
+shader_parameter/model_height = 6.270000294565119
 shader_parameter/dissolve_start = 0.0
 shader_parameter/dissolve_length = 1.0
 shader_parameter/gradient_bias = 5.0
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_567k3")
-shader_parameter/noise_speed = 4.42000020995
-shader_parameter/noise_strength = 0.350000016625
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_0js77")
+shader_parameter/noise_speed = 5.0
+shader_parameter/noise_strength = 0.6150000292125
 shader_parameter/stretch_factor = 2.0
-shader_parameter/noise_direction = Vector2(0, 1)
-shader_parameter/_color = Color(0.4602576, 0.6125884, 1, 1)
+shader_parameter/noise_direction = Vector2(9.755, 13.25)
+shader_parameter/_color = Color(0.18902752, 0.76906765, 0.99999994, 1)
 shader_parameter/power_factor = 1.0
-shader_parameter/fresnel_factor = 1.44500006537762
+shader_parameter/fresnel_factor = 3.35500015610262
 shader_parameter/fresnel_amplification = 1.5
 shader_parameter/fresnel_power = 1.5
 
@@ -66,7 +66,7 @@ shader_parameter/fresnel_power = 1.5
 material = SubResource("ShaderMaterial_ortt4")
 top_radius = 0.06
 bottom_radius = 0.15
-height = 5.0
+height = 5.67
 radial_segments = 7
 rings = 0
 cap_top = false
@@ -217,9 +217,8 @@ visible = false
 texture = ExtResource("5_ojypr")
 
 [node name="ThrustCone" type="MeshInstance3D" parent="." unique_id=515889379]
-transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -3.32062, 0)
+transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -3.5906072, 0)
 mesh = SubResource("CylinderMesh_07b4d")
-surface_material_override/0 = SubResource("ShaderMaterial_ortt4")
 
 [node name="RCS-Left" type="Node3D" parent="." unique_id=1040655934]
 

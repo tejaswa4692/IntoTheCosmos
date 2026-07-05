@@ -1,0 +1,494 @@
+[gd_scene format=3 uid="uid://djq7ix01l6ome"]
+
+[ext_resource type="Script" uid="uid://es3rjm2otfjy" path="res://Objects/hi.gd" id="1_00o51"]
+[ext_resource type="PackedScene" uid="uid://c88cunaohbg7l" path="res://Assets/RocketMesh/Rocket.blend" id="1_cgnp4"]
+[ext_resource type="Shader" uid="uid://edva3yswm4fr" path="res://Objects/rocket.gdshader" id="2_o8aa8"]
+[ext_resource type="FontFile" uid="uid://d2h03oosgun6g" path="res://Assets/0xProto/0xProtoNerdFontMono-Regular.ttf" id="3_c4cat"]
+[ext_resource type="FontFile" uid="uid://d1t3ke760oaqu" path="res://Assets/0xProto/0xProtoNerdFontMono-Bold.ttf" id="4_pxcmu"]
+[ext_resource type="FontFile" uid="uid://b67r7jaqnoqv6" path="res://Assets/0xProto/0xProtoNerdFontMono-Italic.ttf" id="5_00o51"]
+[ext_resource type="FontFile" uid="uid://dujscdaiocpca" path="res://Assets/0xProto/0xProtoNerdFont-Regular.ttf" id="6_pxcmu"]
+[ext_resource type="Script" uid="uid://cvajfid14omjd" path="res://Objects/starfield.gd" id="8_gu6rj"]
+[ext_resource type="Material" uid="uid://dkoxk4h4sw5n7" path="res://Assets/Starfield/StarShader.tres" id="9_6ejgq"]
+[ext_resource type="Shader" uid="uid://b32qsklw5flmn" path="res://Objects/nebula.gdshader" id="10_jvksb"]
+[ext_resource type="Shader" uid="uid://d06hr80gyghnj" path="res://Objects/blackhole.gdshader" id="11_k4dlt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_twcok"]
+size = Vector3(10, 36, 30.365)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vqi4f"]
+render_priority = 0
+shader = ExtResource("10_jvksb")
+shader_parameter/albedo = Color(0.85720575, 0.765011, 0.57268304, 1)
+shader_parameter/time_scale = 0.210000009975
+shader_parameter/detail_scale = 1.19500005513256
+shader_parameter/fade_radius = 5.0
+shader_parameter/fade_softness = 3.0
+shader_parameter/field_scale = 1.4800000228
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o8aa8"]
+sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
+sky_horizon_color = Color(0.3281188, 0.33780026, 0.35069966, 1)
+sky_curve = 0.058843866
+sky_cover_modulate = Color(0.31061712, 0.31061712, 0.3106171, 1)
+ground_bottom_color = Color(0.11414019, 0.111464344, 0.100763954, 1)
+ground_horizon_color = Color(0.29174888, 0.30064216, 0.31249082, 1)
+ground_curve = 0.07210023
+energy_multiplier = 0.6
+
+[sub_resource type="Sky" id="Sky_qjien"]
+sky_material = SubResource("ProceduralSkyMaterial_o8aa8")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_0js77"]
+background_mode = 2
+background_color = Color(0.20871013, 0.20871016, 0.20871007, 1)
+sky = SubResource("Sky_qjien")
+ambient_light_source = 3
+ambient_light_color = Color(0.2339099, 0.24355265, 0.24374437, 1)
+ambient_light_sky_contribution = 0.0
+reflected_light_source = 1
+tonemap_mode = 4
+glow_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pxcmu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00o51"]
+render_priority = 0
+shader = ExtResource("2_o8aa8")
+shader_parameter/model_height = 6.270000294565119
+shader_parameter/dissolve_start = 0.0
+shader_parameter/dissolve_length = 1.0
+shader_parameter/gradient_bias = 2.01500009245262
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_pxcmu")
+shader_parameter/noise_speed = 5.0
+shader_parameter/noise_strength = 0.6150000292125
+shader_parameter/stretch_factor = 2.0
+shader_parameter/noise_direction = Vector2(9.755, 13.25)
+shader_parameter/_color = Color(0.18902752, 0.76906765, 0.99999994, 1)
+shader_parameter/power_factor = 1.0
+shader_parameter/fresnel_factor = 3.35500015610262
+shader_parameter/fresnel_amplification = 1.5
+shader_parameter/fresnel_power = 1.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xt767"]
+material = SubResource("ShaderMaterial_00o51")
+top_radius = 0.06
+bottom_radius = 0.15
+height = 5.0
+radial_segments = 7
+rings = 0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pxcmu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_00o51"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n2of4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_00o51"]
+bg_color = Color(0, 0, 0, 0.30588236)
+corner_radius_top_left = 39
+corner_radius_top_right = 39
+corner_radius_bottom_right = 39
+corner_radius_bottom_left = 39
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t41jk"]
+content_margin_left = 29.0
+content_margin_top = 19.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kdg8y"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2of4"]
+content_margin_left = 219.0
+content_margin_right = 10.0
+bg_color = Color(0.19215687, 0.19215687, 0.19215687, 0.8392157)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gu6rj"]
+content_margin_top = 10.0
+content_margin_right = 209.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jvksb"]
+content_margin_right = 14.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ejgq"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t41jk"]
+content_margin_top = 14.0
+bg_color = Color(0.5609549, 0.5609549, 0.56095487, 1)
+expand_margin_left = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdg8y"]
+content_margin_top = 14.0
+bg_color = Color(0.29219002, 0.29219005, 0.29219002, 1)
+expand_margin_left = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gu6rj"]
+content_margin_top = 14.0
+bg_color = Color(0.59717613, 0.59717613, 0.5971761, 1)
+expand_margin_left = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ag2w8"]
+render_priority = 0
+shader = ExtResource("11_k4dlt")
+shader_parameter/radius = 0.0
+shader_parameter/spin = 0.4
+shader_parameter/shadow_asymmetry = 0.5
+shader_parameter/shadow_oblateness = 0.5
+shader_parameter/frame_drag_strength = 0.5
+shader_parameter/doppler_beaming = 0.5
+shader_parameter/warp_falloff = 2.5
+shader_parameter/warp_strength = 1.0
+shader_parameter/warp_inner_edge = 0.3
+shader_parameter/color_core = Color(1, 1, 1, 1)
+shader_parameter/brightness_core = 22.0
+shader_parameter/color_hot = Color(0.80684066, 0.8122979, 0.6900669, 1)
+shader_parameter/brightness_hot = 10.0
+shader_parameter/color_mid = Color(0.50090086, 0.4625911, 0.3833227, 1)
+shader_parameter/brightness_mid = 6.5
+shader_parameter/color_cool = Color(0.9329368, 0.7273669, 0.5070893, 1)
+shader_parameter/brightness_cool = 4.0
+shader_parameter/color_outer = Color(0.8529563, 0.6278091, 0.29541725, 1)
+shader_parameter/brightness_outer = 2.2
+shader_parameter/color_edge = Color(0.6291461, 0.46571946, 0.27893093, 1)
+shader_parameter/brightness_edge = 1.1
+shader_parameter/gradient_stop0 = 0.08
+shader_parameter/gradient_stop1 = 0.25
+shader_parameter/gradient_stop2 = 0.55
+shader_parameter/gradient_stop3 = 0.8
+shader_parameter/color_saturation = 1.5
+shader_parameter/grav_redshift_strength = 0.85
+shader_parameter/turbulence_strength = 0.28
+shader_parameter/turbulence_scale = 2.5
+shader_parameter/turbulence_speed = 0.35
+shader_parameter/density_heat_strength = 0.55
+shader_parameter/density_heat_power = 0.3
+shader_parameter/rs = 1.65500007535262
+
+[sub_resource type="SphereMesh" id="SphereMesh_oi4fq"]
+material = SubResource("ShaderMaterial_ag2w8")
+radius = 8.125
+height = 8.86
+rings = 4
+
+[node name="Hi" type="Node3D" unique_id=224829519]
+script = ExtResource("1_00o51")
+
+[node name="Nebula2" type="MeshInstance3D" parent="." unique_id=1841596224]
+transform = Transform3D(19572.008, 0, 0, 0, 19572.008, 0, 0, 0, 19572.008, 531242.9, -7189.494, 221035.9)
+mesh = SubResource("BoxMesh_twcok")
+surface_material_override/0 = SubResource("ShaderMaterial_vqi4f")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1203957673]
+environment = SubResource("Environment_0js77")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1082541022]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_energy = 0.685
+shadow_enabled = true
+
+[node name="RocketContainer" type="Node3D" parent="." unique_id=1576508569]
+transform = Transform3D(1, 0, 0, 0, 0.96046877, 0.27838767, 0, -0.27838767, 0.96046877, -2.14, -0.795, 0.08)
+
+[node name="Rocket" parent="RocketContainer" unique_id=362476159 instance=ExtResource("1_cgnp4")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="ThrustCone" type="MeshInstance3D" parent="RocketContainer" unique_id=1098087204]
+transform = Transform3D(0.9999999, 0, 0, 0, -0.9999999, -8.742277e-08, 0, 8.742277e-08, -1, 0, -2.43472, 0)
+mesh = SubResource("CylinderMesh_xt767")
+
+[node name="Control" type="Control" parent="." unique_id=1838146412]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="Control" parent="Control" unique_id=1038512821]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/MainMenu" unique_id=564980430]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.265
+anchor_right = 1.05
+anchor_bottom = 0.43
+offset_right = 1.0
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_c4cat")
+theme_override_fonts/bold_font = ExtResource("4_pxcmu")
+theme_override_fonts/bold_italics_font = ExtResource("5_00o51")
+theme_override_fonts/italics_font = ExtResource("5_00o51")
+theme_override_font_sizes/normal_font_size = 80
+text = "Into the cosmos"
+scroll_active = false
+
+[node name="Start" type="Button" parent="Control/MainMenu" unique_id=946478607]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.5
+anchor_right = 0.06
+anchor_bottom = 0.5
+offset_top = -29.0
+offset_right = 149.0
+offset_bottom = 29.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_pressed_color = Color(0.49354547, 0.49354553, 0.49354553, 1)
+theme_override_colors/font_hover_color = Color(0.7204672, 0.7204675, 0.72046816, 1)
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pxcmu")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_00o51")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_n2of4")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n2of4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n2of4")
+text = "Start"
+alignment = 0
+
+[node name="Settings" type="Button" parent="Control/MainMenu" unique_id=133780328]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.6
+anchor_right = 0.06
+anchor_bottom = 0.6
+offset_top = -29.0
+offset_right = 238.0
+offset_bottom = 29.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_pressed_color = Color(0.49354547, 0.49354553, 0.49354553, 1)
+theme_override_colors/font_hover_color = Color(0.7204672, 0.7204675, 0.72046816, 1)
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pxcmu")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_00o51")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_n2of4")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n2of4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n2of4")
+text = "Settings"
+alignment = 0
+
+[node name="Settings2" type="Control" parent="Control" unique_id=155598970]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/Settings2" unique_id=1817807925]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_00o51")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Settings2/PanelContainer" unique_id=1129236592]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer" unique_id=1707795448]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=471234446]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxEmpty_t41jk")
+text = "Settings"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=113663241]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 51
+alignment = 1
+
+[node name="Resolution2" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=219711815]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kdg8y")
+text = "Resolution"
+
+[node name="resolution" type="OptionButton" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1194017890]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n2of4")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=357812561]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 36
+alignment = 1
+
+[node name="RenderSCale" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=680786786]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kdg8y")
+text = "Window Mode"
+
+[node name="display" type="OptionButton" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1348698082]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n2of4")
+flat = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=1355764473]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 126
+alignment = 1
+
+[node name="Glow" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=336448018]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gu6rj")
+text = "Glow"
+
+[node name="Glow2" type="CheckButton" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1471538726]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jvksb")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=825819738]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 126
+alignment = 1
+
+[node name="SSAO" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4" unique_id=274639654]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gu6rj")
+text = "SSAO"
+
+[node name="SSAOButton" type="CheckButton" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4" unique_id=602558986]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jvksb")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=826014465]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 72
+alignment = 1
+
+[node name="Shadow Distance" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5" unique_id=1397921630]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6ejgq")
+text = "Render Scale"
+
+[node name="renderscale" type="OptionButton" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5" unique_id=514809834]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n2of4")
+
+[node name="Back" type="Button" parent="Control/Settings2" unique_id=1743836807]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27400002
+anchor_top = 0.81900007
+anchor_right = 0.34
+anchor_bottom = 0.89900005
+offset_left = -0.44799805
+offset_top = 0.08795166
+offset_right = 0.52001953
+offset_bottom = 0.24798584
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_t41jk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kdg8y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gu6rj")
+text = "Back"
+
+[node name="Apply" type="Button" parent="Control/Settings2" unique_id=1764873581]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.642
+anchor_top = 0.81900007
+anchor_right = 0.725
+anchor_bottom = 0.89900005
+offset_left = -0.3840332
+offset_top = 0.08795166
+offset_bottom = 0.24798584
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_t41jk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kdg8y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gu6rj")
+text = "Apply"
+
+[node name="Camera_center" type="Node3D" parent="." unique_id=1283854749]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0669308, 0, -0.20884424)
+
+[node name="Camera3D" type="Camera3D" parent="Camera_center" unique_id=1276665529]
+transform = Transform3D(-0.18659258, 0, -0.9824374, 0, 1, 0, 0.9824374, 0, -0.18659258, -6.033, -0.985, -4.896)
+fov = 56.0
+far = 10000.0
+
+[node name="Starfield" type="Node3D" parent="." unique_id=270928514]
+script = ExtResource("8_gu6rj")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Starfield" unique_id=384246719]
+material_override = ExtResource("9_6ejgq")
+
+[node name="Nebula" type="MeshInstance3D" parent="." unique_id=1270871616]
+transform = Transform3D(-102.81945, 85.82204, -40.431988, 85.83508, 58.76333, -93.547935, -40.40425, -93.55991, -95.843864, 597.81305, 130.68958, 939.2029)
+mesh = SubResource("BoxMesh_twcok")
+surface_material_override/0 = SubResource("ShaderMaterial_vqi4f")
+
+[node name="BlackHole" type="MeshInstance3D" parent="." unique_id=766289349]
+transform = Transform3D(96.78586, 22.180716, -11.853847, -25.14951, 85.36069, -45.618584, -2.9802322e-06, 47.133522, 88.19541, 2193.148, -519.35345, -5555.2773)
+mesh = SubResource("SphereMesh_oi4fq")
+
+[connection signal="pressed" from="Control/MainMenu/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Control/MainMenu/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Control/Settings2/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Control/Settings2/Apply" to="." method="_on_apply_pressed"]

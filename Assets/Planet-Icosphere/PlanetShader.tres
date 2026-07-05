@@ -1,7 +1,22 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://eguns8apnutn"]
 
-[ext_resource type="Shader" uid="uid://dpuj2h56escql" path="res://Objects/PlaygroundWorld.tres" id="1_dde2u"]
+[ext_resource type="Shader" uid="uid://cd28tpatn8vty" path="res://Assets/Planet-Icosphere/PlanetShader.gdshader" id="1_dde2u"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_dde2u")
+shader_parameter/seed = 1.425
+shader_parameter/noise_scale = 2.4600000931
+shader_parameter/octaves = 5
+shader_parameter/persistence = 0.89999997615814
+shader_parameter/noise_type = 2
+shader_parameter/color_deep = Color(0.050980393, 0.101960786, 0.3019608, 1)
+shader_parameter/color_low = Color(0.5465782, 0.20134455, 0.14117375, 1)
+shader_parameter/color_mid = Color(0.5298569, 0.3667136, 0.37449962, 1)
+shader_parameter/color_high = Color(0.5941685, 0.6864913, 0.66511416, 1)
+shader_parameter/ice_caps = 0.0
+shader_parameter/ice_color = Color(0.9, 0.95, 1, 1)
+shader_parameter/roughness_val = 1.0
+shader_parameter/rim_power = 0.5
+shader_parameter/atmosphere_color = Color(0, 0, 0, 1)
+shader_parameter/atmosphere_strength = 0.0

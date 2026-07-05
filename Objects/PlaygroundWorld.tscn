@@ -2,14 +2,16 @@
 
 [ext_resource type="Script" uid="uid://cnfapuavi5wru" path="res://Objects/playground_world.gd" id="1_78x0b"]
 [ext_resource type="PackedScene" uid="uid://jmmg3uvn4ina" path="res://Objects/rocket.tscn" id="1_arduf"]
-[ext_resource type="Texture2D" uid="uid://cno2m2wd1hlhb" path="res://Assets/kenney_prototype-textures (1)/PNG/Dark/texture_04.png" id="1_lgna4"]
 [ext_resource type="Script" uid="uid://btbun1t27m14m" path="res://Objects/gravity_source.gd" id="3_xv3hj"]
 [ext_resource type="Script" uid="uid://dqoodcniemx37" path="res://Objects/camera_rig.gd" id="4_78x0b"]
-[ext_resource type="AudioStream" uid="uid://ctk2enmyhj364" path="res://Assets/Music/Cosmos1.mp3" id="6_ol3l7"]
+[ext_resource type="AudioStream" uid="uid://b2ub5nsi1pvn4" path="res://Assets/Music/Ambient Space Synth Music (For Videos) - Adrift by Hayden Folker.mp3" id="5_amm11"]
 [ext_resource type="PackedScene" uid="uid://b8sla8idannnh" path="res://Objects/Planet.tscn" id="6_ypcqb"]
 [ext_resource type="PackedScene" uid="uid://bihi88ppsh3m7" path="res://Objects/observatory.tscn" id="8_0o5du"]
 [ext_resource type="PackedScene" uid="uid://b6lcvfg0warq3" path="res://Objects/boney.tscn" id="8_x7w41"]
-[ext_resource type="PackedScene" uid="uid://cqik5bcb3xa8a" path="res://Objects/sattelite.tscn" id="9_0o5du"]
+[ext_resource type="Script" uid="uid://cvajfid14omjd" path="res://Objects/starfield.gd" id="9_0o5du"]
+[ext_resource type="Material" uid="uid://dkoxk4h4sw5n7" path="res://Assets/Starfield/StarShader.tres" id="10_34g4x"]
+[ext_resource type="Shader" uid="uid://b32qsklw5flmn" path="res://Objects/nebula.gdshader" id="11_ypcqb"]
+[ext_resource type="Shader" uid="uid://d06hr80gyghnj" path="res://Objects/blackhole.gdshader" id="12_amm11"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol3l7"]
 sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
@@ -21,27 +23,82 @@ ground_horizon_color = Color(0.29174888, 0.30064216, 0.31249082, 1)
 ground_curve = 0.07210023
 energy_multiplier = 0.6
 
-[sub_resource type="Sky" id="Sky_qjien"]
+[sub_resource type="Sky" id="Sky_x7w41"]
 sky_material = SubResource("ProceduralSkyMaterial_ol3l7")
 radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_78x0b"]
 background_mode = 2
 background_color = Color(0.20871013, 0.20871016, 0.20871007, 1)
-sky = SubResource("Sky_qjien")
+sky = SubResource("Sky_x7w41")
 ambient_light_source = 3
-ambient_light_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
-ambient_light_sky_contribution = 0.9
+ambient_light_color = Color(0.41598046, 0.41598046, 0.41598028, 1)
+ambient_light_sky_contribution = 0.0
 reflected_light_source = 1
-tonemap_exposure = 2.0
+ssr_fade_in = 14.55087
+ssao_enabled = true
 glow_enabled = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xv3hj"]
 radius = 0.3
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xv3hj"]
-albedo_texture = ExtResource("1_lgna4")
-uv1_triplanar = true
+[sub_resource type="CylinderMesh" id="CylinderMesh_amm11"]
+top_radius = 10.0
+bottom_radius = 10.0
+height = 6.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_amm11"]
+render_priority = 0
+shader = ExtResource("11_ypcqb")
+shader_parameter/albedo = Color(0.59607846, 1, 0.6862745, 1)
+shader_parameter/time_scale = 0.030000001425
+shader_parameter/detail_scale = 1.00000004587006
+shader_parameter/fade_radius = 5.0
+shader_parameter/fade_softness = 3.0
+shader_parameter/field_scale = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ag2w8"]
+render_priority = 0
+shader = ExtResource("12_amm11")
+shader_parameter/radius = 0.0
+shader_parameter/spin = 0.4
+shader_parameter/shadow_asymmetry = 0.5
+shader_parameter/shadow_oblateness = 0.5
+shader_parameter/frame_drag_strength = 0.5
+shader_parameter/doppler_beaming = 0.0
+shader_parameter/warp_falloff = 0.5
+shader_parameter/warp_strength = 0.0
+shader_parameter/warp_inner_edge = 0.3
+shader_parameter/color_core = Color(1, 1, 1, 1)
+shader_parameter/brightness_core = 22.0
+shader_parameter/color_hot = Color(0.80684066, 0.8122979, 0.6900669, 1)
+shader_parameter/brightness_hot = 10.0
+shader_parameter/color_mid = Color(0.50090086, 0.4625911, 0.3833227, 1)
+shader_parameter/brightness_mid = 6.5
+shader_parameter/color_cool = Color(0.9329368, 0.7273669, 0.5070893, 1)
+shader_parameter/brightness_cool = 4.0
+shader_parameter/color_outer = Color(0.8529563, 0.6278091, 0.29541725, 1)
+shader_parameter/brightness_outer = 2.2
+shader_parameter/color_edge = Color(0.6291461, 0.46571946, 0.27893093, 1)
+shader_parameter/brightness_edge = 1.1
+shader_parameter/gradient_stop0 = 0.08
+shader_parameter/gradient_stop1 = 0.25
+shader_parameter/gradient_stop2 = 0.55
+shader_parameter/gradient_stop3 = 0.8
+shader_parameter/color_saturation = 1.5
+shader_parameter/grav_redshift_strength = 0.85
+shader_parameter/turbulence_strength = 0.28
+shader_parameter/turbulence_scale = 2.5
+shader_parameter/turbulence_speed = 0.35
+shader_parameter/density_heat_strength = 0.55
+shader_parameter/density_heat_power = 0.3
+shader_parameter/rs = 1.65500007535262
+
+[sub_resource type="SphereMesh" id="SphereMesh_k2xjf"]
+material = SubResource("ShaderMaterial_ag2w8")
+radius = 8.125
+height = 8.86
+rings = 4
 
 [node name="Node3D" type="Node3D" unique_id=914275524]
 script = ExtResource("1_78x0b")
@@ -54,13 +111,15 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 light_energy = 0.685
 shadow_enabled = true
 
-[node name="Rocket" parent="." unique_id=1263267957 instance=ExtResource("1_arduf")]
-transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, 0, 70.861244, 0)
+[node name="Rocket" parent="." unique_id=1263267957 groups=["influencable_object"] instance=ExtResource("1_arduf")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, 0, 77.43615, 0)
 mass = 30.0
 gravity_scale = 1.0
-thrust_force = 500.0
+linear_damp_mode = 1
+angular_damp_mode = 1
+thrust_force = 700.0
 pitch_torque = 20.0
-yaw_torque = 10.0
+yaw_torque = 20.0
 roll_torque = 20.0
 stabilization_strength = 25.0
 impact_velocity_threshold = 10.0
@@ -75,38 +134,51 @@ shape = SubResource("SphereShape3D_xv3hj")
 spring_length = 6.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D" unique_id=994309216]
+far = 10000.0
 
 [node name="Planet-Earth3" parent="." unique_id=58250303 instance=ExtResource("6_ypcqb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1283.1575, -475.6587, 1837.416)
-
-[node name="Planet-Earth5" parent="." unique_id=980564763 instance=ExtResource("6_ypcqb")]
-gravity_strength = 15.0
+gravity_strength = 40.0
 mass = 2000.0
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=662722076]
-stream = ExtResource("6_ol3l7")
+[node name="Planet-Earth6" parent="." unique_id=1500714912 instance=ExtResource("6_ypcqb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 534.1675, 326.9217, 2957.506)
+gravity_strength = 40.0
+mass = 2000.0
+
+[node name="Planet-Earth5" parent="." unique_id=91549530 instance=ExtResource("6_ypcqb")]
+gravity_strength = 40.0
+mass = 2000.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="." unique_id=1859949540]
+stream = ExtResource("5_amm11")
 autoplay = true
 
 [node name="Planet-Earth4" type="Node3D" parent="." unique_id=747630384]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 290.20795, 2109.04)
 script = ExtResource("3_xv3hj")
-gravity_strength = 30.0
+gravity_strength = 0.0
 mass = 3000.0
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Planet-Earth4" unique_id=1080678764]
-use_collision = true
-collision_layer = 3
-collision_mask = 3
-radius = 80.31296
-radial_segments = 70
-rings = 86
-material = SubResource("StandardMaterial3D_xv3hj")
-
-[node name="Boney" parent="." unique_id=666712437 instance=ExtResource("8_x7w41")]
+[node name="Boney" parent="." unique_id=666712437 groups=["influencable_object"] instance=ExtResource("8_x7w41")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7379491, 71.60043, 0)
 
 [node name="Observatory2" parent="." unique_id=296325195 instance=ExtResource("8_0o5du")]
-transform = Transform3D(1, 0, 0, 0, 0.99587333, 0.09075425, 0, -0.09075425, 0.99587333, -1.4195759, 69.97626, -4.780915)
+transform = Transform3D(1, 0, 0, 0, 0.99587333, 0.09075425, 0, -0.09075425, 0.99587333, -1.4195759, 69.81335, -7.167664)
 
-[node name="Sattelite" parent="." unique_id=1623321927 instance=ExtResource("9_0o5du")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5541158, 71.42517, 0)
+[node name="Starfield" type="Node3D" parent="." unique_id=73669482]
+script = ExtResource("9_0o5du")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Starfield" unique_id=1877425574]
+material_override = ExtResource("10_34g4x")
+
+[node name="Nebula2" type="MeshInstance3D" parent="." unique_id=457822407]
+transform = Transform3D(-32.413673, 75.97661, 14.148653, -76.51455, -33.706985, 5.7124896, 10.869582, -10.708389, 82.40422, -7010.542, 378.42386, 748.46356)
+mesh = SubResource("CylinderMesh_amm11")
+surface_material_override/0 = SubResource("ShaderMaterial_amm11")
+
+[node name="BlackHole" type="MeshInstance3D" parent="." unique_id=2079518372]
+transform = Transform3D(96.78586, 22.180716, -11.853847, -25.14951, 85.36069, -45.618584, -2.9802322e-06, 47.133522, 88.19541, -1045.9019, 89.78498, -7845.1367)
+mesh = SubResource("SphereMesh_k2xjf")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1824265708]

@@ -22,7 +22,7 @@ scale_curve = SubResource("CurveTexture_6qb35")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3e4vi"]
 albedo_color = Color(0.8095512, 0.38824728, 0.25028855, 1)
 emission_enabled = true
-emission = Color(0.80784315, 0.3882353, 0.2509804, 1)
+emission = Color(0.7881417, 0.37471303, 0.236929, 1)
 emission_energy_multiplier = 5.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_6qb35"]
@@ -31,7 +31,7 @@ top_radius = 0.1
 bottom_radius = 0.0
 
 [sub_resource type="Curve" id="Curve_6qb35"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.20727272, 0.8531626), 0.0, 0.0, 0, 0, Vector2(0.40363634, 0.8531626), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.21771216, 0.4616564), 0.0, 0.0, 0, 0, Vector2(0.42804423, 0.4915644), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_mesi4"]
@@ -54,7 +54,7 @@ gravity = Vector3(0, 5, 0)
 scale_min = 0.5
 scale_max = 1.5
 scale_curve = SubResource("CurveTexture_5xg1g")
-color = Color(0.427493, 0.42749307, 0.42749307, 1)
+color = Color(0.41215244, 0.4121525, 0.41215235, 1)
 alpha_curve = SubResource("CurveTexture_mesi4")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qb35"]
@@ -99,7 +99,7 @@ gravity = Vector3(0, 5, 0)
 scale_min = 0.5
 scale_max = 1.5
 scale_curve = SubResource("CurveTexture_d3pmi")
-color = Color(1, 0.78767186, 0.31060806, 1)
+color = Color(0.52016014, 0.38432252, 2.8878452e-07, 1)
 color_ramp = SubResource("GradientTexture1D_6qb35")
 emission_curve = SubResource("CurveTexture_3l07u")
 

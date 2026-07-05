@@ -147,7 +147,7 @@ func _update_thrust_visual(_delta: float) -> void:
 
 
 func _handle_gravity() -> void:
-	for source in GravityManager.sources:
+	for source in GravityManager.get_active_sources(global_position):
 		var to_source: Vector3 = source.global_position - global_position
 		var distance: float = to_source.length()
 		if distance < 0.01:
@@ -164,6 +164,17 @@ func _handle_gravity() -> void:
 	if GravityManager.sources.size() > 0:
 		var altitude = (global_position - GravityManager.sources[0].global_position).length()
 		$Control/Label.text = "Speed: " + str(int(linear_velocity.length())) + "Alt: " + str(int(altitude))
+		
+	var total_force := Vector3.ZERO
+	for source in GravityManager.get_active_sources(global_position):
+		var to_source = source.global_position - global_position
+		var distance = to_source.length()
+		if distance < 0.01:
+			continue
+		var direction = to_source.normalized()
+		var strength = source.gravity_strength * source.mass / (distance * distance) if source.use_inverse_square else source.gravity_strength
+		total_force += direction * strength
+
 
 func setup_sattelite():
 	if satellite != null:
@@ -222,7 +233,6 @@ func _handle_rotation() -> void:
 		local_torque.z -= local_angular_velocity.z * stabilization_strength
 
 	apply_torque(global_transform.basis * local_torque)
-
 
 
 func _handle_landing_gear() -> void:

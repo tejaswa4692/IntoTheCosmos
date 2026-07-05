@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dkoxk4h4sw5n7"]
+
+[ext_resource type="Shader" uid="uid://2goke6tifil" path="res://Assets/Starfield/StarShader.gdshader" id="1_vagsk"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vagsk")

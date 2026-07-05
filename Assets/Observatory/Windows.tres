@@ -4,4 +4,4 @@
 transparency = 1
 depth_draw_mode = 1
 shading_mode = 2
-albedo_color = Color(0.7135886, 0.8585409, 0.99123996, 0.84313726)
+albedo_color = Color(0.7137255, 0.85882354, 0.99215686, 0.29411766)

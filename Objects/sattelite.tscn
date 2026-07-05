@@ -63,7 +63,7 @@ shadow_color = Color(0.21950102, 0.21950102, 0.21950102, 0.6)
 shadow_size = 2
 shadow_offset = Vector2(2, 2)
 
-[node name="Sattelite" type="RigidBody3D" unique_id=1623321927]
+[node name="Sattelite" type="RigidBody3D" unique_id=1623321927 groups=["influencable_object", "satellites"]]
 collision_layer = 2
 collision_mask = 2
 mass = 2.0
@@ -74,7 +74,7 @@ script = ExtResource("1_sjyr3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010564804, 0.4634397, 0.1842472)
 shape = SubResource("BoxShape3D_sjyr3")
 
-[node name="Sketchfab_Scene" parent="." unique_id=502575782 groups=["satellites"] instance=ExtResource("2_o4cw8")]
+[node name="Sketchfab_Scene" parent="." unique_id=502575782 instance=ExtResource("2_o4cw8")]
 transform = Transform3D(-6.556708e-10, 0, 0.015, 0, 0.015, 0, -0.015, 0, -6.556708e-10, 0.26929006, -0.22228414, -0.0339292)
 
 [node name="ThrustCone" type="MeshInstance3D" parent="." unique_id=647962985]
