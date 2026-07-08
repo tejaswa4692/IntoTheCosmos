@@ -7,16 +7,21 @@ extends CharacterBody3D
 @export var gravity_align_speed: float = 5.0  
 @onready var fp_camera = $Head/Camera3D
 var observatory = preload("res://Objects/observatory.tscn")
-@onready var raycast = $Head/HeadCast
+@onready var raycast = $HeadCast
 @onready var animation_tree: AnimationTree = $AnimationTree
 var run_val = 0
-var walk_val = 0
-var is_running: int = 1
+var jump_val = 0
+var ui_open : bool
 
+@onready var satellite_ui: Control = $SatteliteUI
+@onready var satellite_item_list: ItemList = $SatteliteUI/ItemList
+
+var displayed_satellites: Array = []
+var current_observatory = null   # the observatory we're currently picking a satellite for
 
 var mounted_target = null      # Rocket or Satellite
 var mount_source = null        # Rocket or Observatory
-
+var settings_open: bool = false
 var gravity_direction: Vector3 = Vector3.DOWN
 var gravity_strength: float = 0.0
 var gravity_force: Vector3 = Vector3.ZERO
@@ -34,12 +39,13 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and not is_mounted:
-		# yaw: rotate the whole body around its local up
-		rotate(up_direction, -event.relative.x * mouse_sensitivity)
-		# pitch: tilt head up/down, clamped
-		pitch -= event.relative.y * mouse_sensitivity
-		pitch = clamp(pitch, deg_to_rad(-89), deg_to_rad(89))
-		head.rotation.x = pitch
+		if !settings_open:
+			# yaw: rotate the whole body around its local up
+			rotate(up_direction, -event.relative.x * mouse_sensitivity)
+			# pitch: tilt head up/down, clamped
+			pitch -= event.relative.y * mouse_sensitivity
+			pitch = clamp(pitch, deg_to_rad(-89), deg_to_rad(89))
+			head.rotation.x = pitch
 	
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("interact") and not Input.is_key_pressed(KEY_SHIFT):
@@ -49,6 +55,8 @@ func _input(event: InputEvent) -> void:
 				_unmount()
 			elif nearest_rocket != null:
 				_mount(nearest_rocket)
+		if Input.is_action_just_pressed("ui_cancel") and ui_open:
+			satellite_ui.visible = false
 
 
 func _physics_process(delta: float) -> void:
@@ -57,9 +65,15 @@ func _physics_process(delta: float) -> void:
 	_update_gravity(delta)
 	_handle_movement(delta)
 	update_tree()
-	if Input.is_action_just_pressed("Place") and raycast.is_colliding():
+	if Input.is_action_just_pressed("Place") and raycast.is_colliding() and (satellite_ui.visible == false) and !settings_open:
 		print("placing")
 		buildobservatory()
+	
+	
+	if GraphicsSettings.showkeybinds:  #Please fix this later tis is just embrassing 
+		$Help.show()
+	else:
+		$Help.hide()
 
 func _update_gravity(delta: float) -> void:
 	var active_sources := GravityManager.get_active_sources(global_position)
@@ -103,9 +117,8 @@ func _update_gravity(delta: float) -> void:
 				global_rotate(axis.normalized(), smooth)
 
 func update_tree() -> void:
-	animation_tree["parameters/WalkMix/blend_amount"] = walk_val
 	animation_tree["parameters/RunMix/blend_amount"] = run_val
-	animation_tree["parameters/WalkOrRun/blend_amount"] = is_running
+	animation_tree["parameters/JumpVal/blend_amount"] = jump_val
 
 func _handle_movement(delta: float) -> void:
 	if not is_on_floor():
@@ -115,21 +128,31 @@ func _handle_movement(delta: float) -> void:
 		var into_floor = velocity.dot(-floor_normal)
 		if into_floor < 0:
 			velocity -= -floor_normal * into_floor
-
 	# jumping — pushes away from gravity direction
 	if Input.is_action_just_pressed("jump") and $RayCast3D.is_colliding():
+		
 		velocity += -gravity_direction * jump_velocity
-
+	
+	
+	if $RayCast3D.is_colliding():
+		jump_val = lerpf(jump_val, 0.0, 0.2)
+	else:
+		jump_val = lerpf(jump_val, 1.0, 0.2)
+	
+	
 	# WASD movement relative to camera facing, projected onto planet surface
 	var input_dir = Vector2.ZERO
 	if Input.is_action_pressed("forward"):
-		run_val = lerpf(run_val, 1.0, 0.1)
+		run_val = lerpf(run_val, 1.6, 0.1)
 		input_dir.y -= 1
 	if Input.is_action_pressed("back"):
+		run_val = lerpf(run_val, -1.0, 0.1)
 		input_dir.y += 1
 	if Input.is_action_pressed("left"):
+		run_val = lerpf(run_val, 0.7, 0.1)
 		input_dir.x -= 1
 	if Input.is_action_pressed("right"):
+		run_val = lerpf(run_val, 0.7, 0.1)
 		input_dir.x += 1
 
 	input_dir = input_dir.normalized()
@@ -160,6 +183,12 @@ func _handle_movement(delta: float) -> void:
 
 func _mount(target) -> void:
 	mount_source = target
+	if target.is_in_group("observatory") and target.get_mount_target() == null and !satellite_ui.visible:
+		_show_satellite_ui(target)
+	elif target.is_in_group("observatory") and target.get_mount_target() == null and satellite_ui.visible:
+		hide_satellite_ui()
+		
+		
 	if target.has_method("get_mount_target"):
 		target = target.get_mount_target()
 	if target == null:
@@ -176,6 +205,8 @@ func _mount(target) -> void:
 	get_tree().get_first_node_in_group("camera_rig").activate()
 	CameraManager.override_target = target
 	target.has_player = true
+	if GraphicsSettings.showkeybinds:
+		$Help.hide()	
 
 func _unmount() -> void:
 	is_mounted = false
@@ -199,16 +230,91 @@ func _unmount() -> void:
 	CameraManager.set_current(self)
 	get_tree().get_first_node_in_group("camera_rig").deactivate()
 	fp_camera.current = true
+	if GraphicsSettings.showkeybinds:
+		$Help.show()
+
 
 func set_nearest_rocket(rocket) -> void:
 	nearest_rocket = rocket
 
+func _show_satellite_ui(selected_observatory) -> void:
+	ui_open = true
+	current_observatory = selected_observatory
+	displayed_satellites.clear()
+	satellite_item_list.clear()
+	for sat in SatelliteManager.satellites:
+		if !is_instance_valid(sat):
+			continue
+		displayed_satellites.append(sat)
+		var label = sat.satellite_name
+		if sat.assigned_observatory != null and sat.assigned_observatory != selected_observatory:
+			label += " (Assigned)"
+		satellite_item_list.add_item(label)
+	satellite_ui.show()
+	$SatteliteUI/MainMenu.show()
+	satellite_item_list.hide()
+	$SatteliteUI/UpgradesList.hide()
+	$SatteliteUI/SatelliteText.hide()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
+func hide_satellite_ui() -> void:
+	ui_open = false
+	satellite_ui.hide()
+	$SatteliteUI/MainMenu.hide()
+	satellite_item_list.hide()
+	$SatteliteUI/UpgradesList.hide()
+	$SatteliteUI/SatelliteText.hide()
+	current_observatory = null
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _on_item_list_item_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
+	if current_observatory == null:
+		return
+	if index < 0 or index >= displayed_satellites.size():
+		return
+	var sat = displayed_satellites[index]
+	if sat.assigned_observatory != null and sat.assigned_observatory != current_observatory:
+		return
+	current_observatory.assign_satellite(sat)
+	hide_satellite_ui()
 
 func buildobservatory() -> void:
-	var observatoryinstance = observatory.instantiate()
-	get_tree().root.add_child(observatoryinstance)
-	var point = raycast.get_collision_point()
-	var normal = raycast.get_collision_normal()
-	observatoryinstance.global_position = point
-	observatoryinstance.global_basis = Basis.looking_at(normal)
-	observatoryinstance.rotate_object_local(Vector3.RIGHT, deg_to_rad(-90))
+	if raycast.get_collider().is_in_group("planet"):
+		if raycast.get_collider().get_parent().has_observatory == false:
+			print(raycast.get_collider().get_parent().has_observatory)
+			var observatoryinstance = observatory.instantiate()
+			get_tree().root.add_child(observatoryinstance)
+			var point = raycast.get_collision_point()
+			var normal = raycast.get_collision_normal()
+			observatoryinstance.global_position = point
+			observatoryinstance.global_basis = Basis.looking_at(normal)
+			observatoryinstance.rotate_object_local(Vector3.RIGHT, deg_to_rad(-90))
+			raycast.get_collider().get_parent().change_observatory_status()
+			print(raycast.get_collider().get_parent().has_observatory)
+
+
+func _on_main_menu_item_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
+	print(index)
+	match index:
+		0:
+			$SatteliteUI/MainMenu.hide()
+			satellite_item_list.show()
+			$SatteliteUI/UpgradesList.hide()
+		1:
+			$SatteliteUI/MainMenu.hide()
+			satellite_item_list.hide()
+			$SatteliteUI/UpgradesList.show()
+		2:
+			current_observatory.pleaserefuel()
+			hide_satellite_ui()
+		3:
+			$SatteliteUI/SatelliteText.show()
+
+
+func _on_done_button_pressed() -> void:
+	if current_observatory != null and current_observatory.rocket != null:
+		current_observatory.dock_satellite_on_rocket($SatteliteUI/SatelliteText/LineEdit.text)
+		hide_satellite_ui()
+	else:
+		hide_satellite_ui()

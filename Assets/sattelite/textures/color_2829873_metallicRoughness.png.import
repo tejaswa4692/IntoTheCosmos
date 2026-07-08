@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://k8nx2kam3d35"
 path.s3tc="res://.godot/imported/color_2829873_metallicRoughness.png-746a8efed2156d2b3dde345bb6be29ec.s3tc.ctex"
+path.etc2="res://.godot/imported/color_2829873_metallicRoughness.png-746a8efed2156d2b3dde345bb6be29ec.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/sattelite/textures/color_2829873_metallicRoughness.png"
-dest_files=["res://.godot/imported/color_2829873_metallicRoughness.png-746a8efed2156d2b3dde345bb6be29ec.s3tc.ctex"]
+dest_files=["res://.godot/imported/color_2829873_metallicRoughness.png-746a8efed2156d2b3dde345bb6be29ec.s3tc.ctex", "res://.godot/imported/color_2829873_metallicRoughness.png-746a8efed2156d2b3dde345bb6be29ec.etc2.ctex"]
 
 [params]
 

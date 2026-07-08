@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dyvwjvilhhacv"
 path.s3tc="res://.godot/imported/color_2076_baseColor.jpeg-9c19cd72ef1d2ed496f439052fc326e1.s3tc.ctex"
+path.etc2="res://.godot/imported/color_2076_baseColor.jpeg-9c19cd72ef1d2ed496f439052fc326e1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/sattelite/textures/color_2076_baseColor.jpeg"
-dest_files=["res://.godot/imported/color_2076_baseColor.jpeg-9c19cd72ef1d2ed496f439052fc326e1.s3tc.ctex"]
+dest_files=["res://.godot/imported/color_2076_baseColor.jpeg-9c19cd72ef1d2ed496f439052fc326e1.s3tc.ctex", "res://.godot/imported/color_2076_baseColor.jpeg-9c19cd72ef1d2ed496f439052fc326e1.etc2.ctex"]
 
 [params]
 

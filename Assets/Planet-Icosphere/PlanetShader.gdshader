@@ -5,7 +5,7 @@ uniform float seed = 0.0;
 uniform float noise_scale : hint_range(0.5, 10.0) = 2.5;
 uniform int octaves : hint_range(1, 8) = 5;
 uniform float persistence : hint_range(0.1, 0.9) = 0.5;
-uniform int noise_type : hint_enum("Value", "Perlin", "Cellular", "Ridged") = 1;
+uniform int noise_type : hint_enum("Perlin", "Cloud", "Cellular", "Marble") = 1;
 
 uniform vec4 color_deep : source_color = vec4(0.05, 0.1, 0.3, 1.0);
 uniform vec4 color_low : source_color = vec4(0.1, 0.4, 0.15, 1.0);
@@ -28,10 +28,6 @@ vec3 hash3(vec3 p) {
 		dot(p, vec3(113.5, 271.9, 124.6)) + seed
 	);
 	return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
-}
-
-float hash1(vec3 p) {
-	return hash3(p).x * 0.5 + 0.5; // 0..1
 }
 
 // --- Perlin / gradient noise (classic, smooth continents) ---
@@ -60,32 +56,6 @@ float perlinNoise3d(vec3 p) {
 	return mix(nxy0, nxy1, u.z); // -1..1
 }
 
-// --- Value noise (blockier, no gradient dot — good for alien/patchy looks) ---
-float valueNoise3d(vec3 p) {
-	vec3 i = floor(p);
-	vec3 f = fract(p);
-	vec3 u = f * f * (3.0 - 2.0 * f);
-
-	float n000 = hash1(i + vec3(0,0,0));
-	float n100 = hash1(i + vec3(1,0,0));
-	float n010 = hash1(i + vec3(0,1,0));
-	float n110 = hash1(i + vec3(1,1,0));
-	float n001 = hash1(i + vec3(0,0,1));
-	float n101 = hash1(i + vec3(1,0,1));
-	float n011 = hash1(i + vec3(0,1,1));
-	float n111 = hash1(i + vec3(1,1,1));
-
-	float nx00 = mix(n000, n100, u.x);
-	float nx10 = mix(n010, n110, u.x);
-	float nx01 = mix(n001, n101, u.x);
-	float nx11 = mix(n011, n111, u.x);
-
-	float nxy0 = mix(nx00, nx10, u.y);
-	float nxy1 = mix(nx01, nx11, u.y);
-
-	return mix(nxy0, nxy1, u.z) * 2.0 - 1.0; // -1..1
-}
-
 // --- Cellular / Voronoi noise (cracked terrain, cell-like continents) ---
 float cellularNoise3d(vec3 p) {
 	vec3 i = floor(p);
@@ -105,18 +75,32 @@ float cellularNoise3d(vec3 p) {
 	return min_dist; // roughly 0..1.5
 }
 
+// --- Cloud noise: soft, clumpy, fluffy patches ---
+float cloudNoise3d(vec3 p) {
+	float n = perlinNoise3d(p);
+	n = (n + 1.0) * 0.5; // 0..1
+	n = smoothstep(0.3, 0.8, n); // pushes toward clumped "empty or full" patches
+	return n * 2.0 - 1.0;
+}
+
+// --- Marble noise: sine-warped stripes/veins ---
+float marbleNoise3d(vec3 p) {
+	float n = perlinNoise3d(p);
+	float stripes = sin((p.x + p.y) * 2.0 + n * 6.0);
+	return stripes;
+}
+
 // --- Single noise sample, dispatches by type ---
 float sampleNoise(vec3 p) {
 	if (noise_type == 0) {
-		return valueNoise3d(p);
-	} else if (noise_type == 1) {
 		return perlinNoise3d(p);
+	} else if (noise_type == 1) {
+		return cloudNoise3d(p);
 	} else if (noise_type == 2) {
 		float c = cellularNoise3d(p);
 		return (1.0 - c) * 2.0 - 1.0; // invert so cell centers read as "high"
 	} else {
-		float n = perlinNoise3d(p);
-		return abs(n) * 2.0 - 1.0; // ridged
+		return marbleNoise3d(p);
 	}
 }
 

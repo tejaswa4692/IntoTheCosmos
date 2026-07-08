@@ -13,6 +13,11 @@ var landing_gear: bool = false
 var satellite_scene = preload("res://Objects/sattelite.tscn")
 var satellite: RigidBody3D
 
+var fuel = 5000
+
+
+@onready var fuel_guage = $Control/FuelGuage
+
 const ACTION_PITCH_UP    = "forward"
 const ACTION_PITCH_DOWN  = "back"
 const ACTION_YAW_LEFT    = "left"
@@ -29,7 +34,6 @@ var current_bias: float = 0.0
 @onready var RCS_Thrusters_right = [$"RCS-Right/RCS-back", $"RCS-Right/RCS-Down", $"RCS-Right/RCS-forward", $"RCS-Right/RCS-Up", $"RCS-Right/RCS-left", $"RCS-Right/RCS-right"]
 
 @onready var throttleslider = $Control/VSlider
-
 @export var rcs_force: float = 5.0
 const ACTION_RCS_UP    = "rcs_up"
 const ACTION_RCS_DOWN  = "rcs_down"
@@ -41,17 +45,25 @@ const ACTION_RCS_BACK    = "rcs_back"
 var curent_help = 0
 
 func _ready() -> void:
+	fuel_guage.max_value = fuel
+	fuel_guage.value = fuel
 	CameraManager.register(self)
 	linear_damp = 0
 	gravity_scale = 0
 	$Control/YouDied.hide()
 	set_thrust_gradient_bias(throttleslider.value)
-	#setup_sattelite()
+	setup_sattelite()
 	$Control/Help.hide()
 	for i in RCS_Thrusters_left:
 		i.hide()
 	for i in RCS_Thrusters_right:
 		i.hide()
+	$Rocket/AnimationPlayer.play("CubeAction_004")
+	landing_gear = true
+	await $Rocket/AnimationPlayer.animation_finished
+	$LandingGearCollision.disabled = false
+
+
 
 func _physics_process(_delta: float) -> void:
 	if canmove:
@@ -63,23 +75,27 @@ func _physics_process(_delta: float) -> void:
 			_handle_rcs()
 			_handle_landing_gear()
 			_update_thrust_visual(_delta)
+			if GraphicsSettings.showkeybinds:  #Please fix this later tis is just embrassing 
+				$Help.show()
+			else:
+				$Help.hide()
 		else:
 			$Control.hide()
+			$Help.hide() 
 			set_thrust_gradient_bias(0)
 	else:
 		set_thrust_gradient_bias(0)
 		$Control/YouDied.show()
+	
+	
+	
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		if Input.is_action_just_pressed("setup_sattelite"):
-			setup_sattelite()
-		if !canmove:
-			if Input.is_action_just_pressed("R"):
-				CameraManager.reset()
-				get_tree().reload_current_scene()
-			return
+		if Input.is_action_just_pressed("R") and !canmove:
+			CameraManager.reset()
+			get_tree().reload_current_scene()
 
 	if !has_player:
 		return
@@ -141,10 +157,12 @@ func set_thrust_gradient_bias(value: float):
 	mat.set_shader_parameter("gradient_bias", value)
 
 func _update_thrust_visual(_delta: float) -> void:
-	var target = throttleslider.value if Input.is_action_pressed(ACTION_THRUST) else 0.0
-	current_bias = lerp(current_bias, target, _delta * 5.0)
-	set_thrust_gradient_bias(current_bias)
-
+	if fuel > 0:
+		var target = throttleslider.value if Input.is_action_pressed(ACTION_THRUST) else 0.0
+		current_bias = lerp(current_bias, target, _delta * 5.0)
+		set_thrust_gradient_bias(current_bias)
+	else:
+		set_thrust_gradient_bias(0)
 
 func _handle_gravity() -> void:
 	for source in GravityManager.get_active_sources(global_position):
@@ -163,9 +181,8 @@ func _handle_gravity() -> void:
 	# debug — remove when done tuning
 	if GravityManager.sources.size() > 0:
 		var altitude = (global_position - GravityManager.sources[0].global_position).length()
-		$Control/Label.text = "Speed: " + str(int(linear_velocity.length())) + "Alt: " + str(int(altitude))
-		
-	var total_force := Vector3.ZERO
+		$Control/Label.text = "Speed: " + str(int(linear_velocity.length())) + "Alt: " + str(int(altitude) - 70)
+
 	for source in GravityManager.get_active_sources(global_position):
 		var to_source = source.global_position - global_position
 		var distance = to_source.length()
@@ -173,17 +190,17 @@ func _handle_gravity() -> void:
 			continue
 		var direction = to_source.normalized()
 		var strength = source.gravity_strength * source.mass / (distance * distance) if source.use_inverse_square else source.gravity_strength
-		total_force += direction * strength
 
-
-func setup_sattelite():
+func setup_sattelite(name = "Explorer I"):
 	if satellite != null:
 		return  # already holding one
 	var sattelite_instance = satellite_scene.instantiate()
 	sattelite_instance.position = $Marker3D.position
 	sattelite_instance.freeze = true
+	sattelite_instance.satellite_name = name
 	add_child(sattelite_instance)
 	satellite = sattelite_instance
+	mass += satellite.mass
 
 func eject_satellite():
 	if satellite == null or !satellite.freeze:
@@ -195,6 +212,7 @@ func eject_satellite():
 	satellite.freeze = false
 	satellite.linear_velocity = linear_velocity
 	satellite.angular_velocity = angular_velocity
+	mass -= satellite.mass
 	satellite = null  # ← clear reference so a new one can be set up
 
 
@@ -251,13 +269,19 @@ func _handle_landing_gear() -> void:
 
 
 func _handle_thrust() -> void:
-	if Input.is_action_pressed(ACTION_THRUST):
-		var forward := global_transform.basis.y
-		apply_central_force(forward * (thrust_force * throttleslider.value))
+	if(linear_velocity.length() > 550):
+		$Control/Warning.show()
+	else:
+		$Control/Warning.hide()
+		if Input.is_action_pressed(ACTION_THRUST) and fuel > 0:
+			var forward := global_transform.basis.y
+			apply_central_force(forward * (thrust_force * throttleslider.value))
+			fuel = max(0, fuel - (throttleslider.value))
+			fuel_guage.value = fuel
 
 
 func collision_impact(body: Node) -> void:
-	if abs(linear_velocity.y) > impact_velocity_threshold or abs(linear_velocity.x) > 5 or abs(linear_velocity.z) > 5:
+	if abs(linear_velocity.length()) > impact_velocity_threshold:
 		canmove = false
 		has_player = false
 		$Explosion.explode()
@@ -290,6 +314,9 @@ func _on_proximity_entered(body: Node) -> void:
 func _on_proximity_exited(body: Node) -> void:
 	if body.has_method("set_nearest_rocket"):
 		body.set_nearest_rocket(null)
+
+
+
 
 
 func can_unmount() -> bool:

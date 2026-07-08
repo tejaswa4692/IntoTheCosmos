@@ -9,7 +9,10 @@ extends RigidBody3D
 @onready var throttleslider = $Control/VSlider
 var assigned_observatory: Node = null
 
+@export var fuel = 2000
 @export var satellite_name := "Explorer I"
+@onready var fuel_guage: VSlider = $Control/FuelGuage
+
 
 const ACTION_THRUST       = "thrust"
 const ACTION_RCS_UP       = "rcs_up"
@@ -116,8 +119,9 @@ func _handle_rcs() -> void:
 func _handle_thrust() -> void:
 	if Input.is_action_pressed(ACTION_THRUST):
 		var forward := global_transform.basis.y
-		var force = forward * (thrust_force * throttleslider.value)
-		apply_central_force(force)
+		apply_central_force(forward * (thrust_force * throttleslider.value))
+
+
 
 func set_thrust_gradient_bias(value: float) -> void:
 	if thruster_material == null:

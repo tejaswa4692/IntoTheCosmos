@@ -13,9 +13,26 @@ extends Node3D
 @export var rock_count := 10000
 @export var chunk_divisions := 3
 
-## Set to false if an external manager (e.g. PlanetSectorManager) wants to
-## control when generation happens instead of it running automatically.
-@export var auto_generate_on_ready: bool = true
+## NOTE: default changed from true to false. GravitySource now explicitly
+## calls set_base_color() then regenerate() once it has computed the
+## planet's color_low, so rocks always get the right tint before they
+## generate. If you use this scatterer somewhere WITHOUT a GravitySource
+## driving it, set this back to true (rocks will just use base_rock_color's
+## default value below).
+@export var auto_generate_on_ready: bool = false
+
+## Base tint color rocks are generated around (each rock jitters slightly
+## from this). Set externally via set_base_color() -- normally called by
+## GravitySource with the planet's color_low.
+@export var base_rock_color: Color = Color(0.55, 0.5, 0.45)
+
+## How much each rock's hue/saturation/value can randomly drift from
+## base_rock_color, so rocks don't look like uniform copies of each other.
+@export var hue_jitter := 0.03
+@export var saturation_jitter := 0.12
+@export var value_jitter := 0.18
+
+const ROCK_SHADER: Shader = preload("res://Assets/RockShader.gdshader")
 
 const ROCK_RENDER_DISTANCE := 200.0
 const PLANET_RADIUS := 20.0
@@ -23,6 +40,7 @@ const MIN_DISTANCE := 0.8
 const CELL_SIZE := MIN_DISTANCE
 
 var chunks: Dictionary = {}
+var _rock_material: ShaderMaterial
 
 var _generation_thread: Thread = null
 var _is_generating := false
@@ -33,14 +51,21 @@ class Chunk:
 	var multimeshes: Array[MultiMesh] = []
 	var multimesh_instances: Array[MultiMeshInstance3D] = []
 	var transforms: Array = []
+	var colors: Array = []
+	var custom_datas: Array = []
 
 
 func _ready() -> void:
+	rock_count *= GraphicsSettings.rock_count
+	_rock_material = ShaderMaterial.new()
+	_rock_material.shader = ROCK_SHADER
+
 	create_chunks()
 	if auto_generate_on_ready:
 		get_parent().get_node("SourceMesh").show()
 		start_generation()
 		get_parent().get_node("SourceMesh").hide()
+
 
 func _exit_tree() -> void:
 	# Make sure we don't leave a dangling thread if this node is freed
@@ -58,6 +83,13 @@ func _process(delta: float) -> void:
 		update_chunk_visibility(get_viewport().get_camera_3d())
 
 
+## Called externally (normally by GravitySource) to set the tint rocks
+## should be generated around. Call this BEFORE regenerate()/start_generation()
+## so the color is baked in on first generation, not a frame late.
+func set_base_color(color: Color) -> void:
+	base_rock_color = color
+
+
 func create_chunks():
 	chunks.clear()
 	for x in [-1, 0, 1]:
@@ -72,19 +104,25 @@ func create_chunks():
 					var mm := MultiMesh.new()
 					mm.mesh = mesh
 					mm.transform_format = MultiMesh.TRANSFORM_3D
+					mm.use_colors = true
+					mm.use_custom_data = true
 					var mmi := MultiMeshInstance3D.new()
 					mmi.multimesh = mm
+					mmi.material_override = _rock_material
 					chunk.node.add_child(mmi)
 					chunk.multimeshes.append(mm)
 					chunk.multimesh_instances.append(mmi)
 					chunk.transforms.append([])
+					chunk.colors.append([])
+					chunk.custom_datas.append([])
 				add_child(chunk.node)
 				chunks[Vector3i(x, y, z)] = chunk
 
 
 ## Public entry point: (re)generates rocks. Safe to call again later
-## (e.g. after changing rock_count), as long as a generation isn't already
-## running -- check is_generating() first if you need to guard externally.
+## (e.g. after changing rock_count or base_rock_color), as long as a
+## generation isn't already running -- check is_generating() first if you
+## need to guard externally.
 func regenerate() -> void:
 	if _is_generating:
 		push_warning("PlanetRockScatterer: generation already in progress, ignoring regenerate() call")
@@ -106,21 +144,14 @@ func start_generation() -> void:
 	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 	var indices: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
 	var sphere_transform: Transform3D = sphere.global_transform
-
-	# MultiMesh instance transforms are interpreted relative to this node's
-	# parent chain, not world space. We must convert world-space rock
-	# positions into local space before storing them, or planets far from
-	# world origin end up with their rocks flung out to roughly double
-	# their distance from origin. This has to be read here, on the main
-	# thread -- global_transform isn't safe to read from a background thread.
 	var to_local_transform: Transform3D = self.global_transform.affine_inverse()
-
-	# Everything the thread needs is captured here as plain data (vectors,
-	# transforms, ints) -- no references to this Node, MultiMesh, or anything
-	# else in the scene tree cross into the thread.
 	_generation_thread = Thread.new()
 	_generation_thread.start(
-		_generate_rocks_threaded.bind(vertices, indices, sphere_transform, to_local_transform, rock_count, rock_meshes.size())
+		_generate_rocks_threaded.bind(
+			vertices, indices, sphere_transform, to_local_transform,
+			rock_count, rock_meshes.size(),
+			base_rock_color, hue_jitter, saturation_jitter, value_jitter
+		)
 	)
 
 
@@ -134,8 +165,11 @@ func _generate_rocks_threaded(
 	sphere_transform: Transform3D,
 	to_local_transform: Transform3D,
 	target_rock_count: int,
-	mesh_variant_count: int
-) -> void:
+	mesh_variant_count: int,
+	color_base: Color,
+	h_jitter: float,
+	s_jitter: float,
+	v_jitter: float) -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 
@@ -143,8 +177,6 @@ func _generate_rocks_threaded(
 	var placed := 0
 	var attempts := 0
 	var max_attempts := target_rock_count * 10
-
-	# result[chunk_key] = Array of (Array of Transform3D), indexed by mesh_index
 	var result: Dictionary = {}
 	for cx in [-1, 0, 1]:
 		for cy in [-1, 0, 1]:
@@ -152,10 +184,18 @@ func _generate_rocks_threaded(
 				if cx == 0 and cy == 0 and cz == 0:
 					continue
 				var key := Vector3i(cx, cy, cz)
-				var per_mesh: Array = []
+				var per_mesh_transforms: Array = []
+				var per_mesh_colors: Array = []
+				var per_mesh_custom: Array = []
 				for i in range(mesh_variant_count):
-					per_mesh.append([])
-				result[key] = per_mesh
+					per_mesh_transforms.append([])
+					per_mesh_colors.append([])
+					per_mesh_custom.append([])
+				result[key] = {
+					"transforms": per_mesh_transforms,
+					"colors": per_mesh_colors,
+					"custom": per_mesh_custom
+				}
 
 	while placed < target_rock_count and attempts < max_attempts:
 		attempts += 1
@@ -217,10 +257,6 @@ func _generate_rocks_threaded(
 		basis = basis.scaled(Vector3.ONE * scale)
 
 		var transform = Transform3D(basis, world_pos)
-
-		# Convert from world space into space local to this node
-		# (PlanetRockScatterer), since MultiMesh instance transforms are
-		# relative to the parent chain, not world space.
 		transform = to_local_transform * transform
 
 		var chunk_key = Vector3i(
@@ -232,7 +268,20 @@ func _generate_rocks_threaded(
 			continue
 
 		var mesh_index = rng.randi() % mesh_variant_count
-		result[chunk_key][mesh_index].append(transform)
+		var rock_color := Color.from_hsv(
+			fmod(color_base.h + rng.randf_range(-h_jitter, h_jitter) + 1.0, 1.0),
+			clamp(color_base.s + rng.randf_range(-s_jitter, s_jitter), 0.0, 1.0),
+			clamp(color_base.v + rng.randf_range(-v_jitter, v_jitter), 0.05, 1.0)
+		)
+
+		# Per-rock random seed, packed into a Color and read in the shader
+		# as INSTANCE_CUSTOM, so the shared procedural shader looks
+		# different on every single rock instance.
+		var custom_seed := Color(rng.randf(), rng.randf(), rng.randf(), 1.0)
+
+		result[chunk_key]["transforms"][mesh_index].append(transform)
+		result[chunk_key]["colors"][mesh_index].append(rock_color)
+		result[chunk_key]["custom"][mesh_index].append(custom_seed)
 		placed += 1
 
 	# call_deferred marshals this call safely onto the main thread --
@@ -248,10 +297,10 @@ func _on_generation_complete(result: Dictionary) -> void:
 		if !chunks.has(chunk_key):
 			continue
 		var chunk: Chunk = chunks[chunk_key]
-		chunk.transforms = result[chunk_key]
-
+		chunk.transforms = result[chunk_key]["transforms"]
+		chunk.colors = result[chunk_key]["colors"]
+		chunk.custom_datas = result[chunk_key]["custom"]
 	build_multimeshes()
-
 	if _generation_thread != null:
 		_generation_thread.wait_to_finish()
 		_generation_thread = null
@@ -263,9 +312,13 @@ func build_multimeshes() -> void:
 		for mesh_index in range(chunk.multimeshes.size()):
 			var mm = chunk.multimeshes[mesh_index]
 			var transforms = chunk.transforms[mesh_index]
+			var colors = chunk.colors[mesh_index]
+			var custom_datas = chunk.custom_datas[mesh_index]
 			mm.instance_count = transforms.size()
 			for i in range(transforms.size()):
 				mm.set_instance_transform(i, transforms[i])
+				mm.set_instance_color(i, colors[i])
+				mm.set_instance_custom_data(i, custom_datas[i])
 
 
 func update_chunk_visibility(camera: Camera3D) -> void:
@@ -280,7 +333,7 @@ func update_chunk_visibility(camera: Camera3D) -> void:
 	var cam_dir = (camera.global_position - planet_pos).normalized()
 	for chunk in chunks.values():
 		var chunk_dir = chunk.center.normalized()
-		chunk.node.visible = chunk_dir.dot(cam_dir) > 0.6
+		chunk.node.visible = chunk_dir.dot(cam_dir) > 0.2
 
 
 #This is only for looking at the chunks when debugging

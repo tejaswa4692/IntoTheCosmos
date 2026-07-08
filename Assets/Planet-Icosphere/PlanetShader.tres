@@ -6,9 +6,9 @@
 render_priority = 0
 shader = ExtResource("1_dde2u")
 shader_parameter/seed = 1.425
-shader_parameter/noise_scale = 2.4600000931
+shader_parameter/noise_scale = 2.5
 shader_parameter/octaves = 5
-shader_parameter/persistence = 0.89999997615814
+shader_parameter/persistence = 0.5700000238151199
 shader_parameter/noise_type = 2
 shader_parameter/color_deep = Color(0.050980393, 0.101960786, 0.3019608, 1)
 shader_parameter/color_low = Color(0.5465782, 0.20134455, 0.14117375, 1)

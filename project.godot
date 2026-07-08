@@ -11,8 +11,9 @@ config_version=5
 [application]
 
 config/name="Into-the-cosmos"
-run/main_scene="uid://dj7nqiadcfdvb"
+run/main_scene="uid://djq7ix01l6ome"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/image="uid://1vqgfucuwmwt"
 config/icon="uid://bxnrivd8fmhi"
 
 [autoload]
@@ -27,7 +28,6 @@ GraphicsSettings="*uid://c2l6h6pud37x0"
 
 window/size/mode=2
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [editor_plugins]
 
@@ -177,3 +177,8 @@ jolt_physics_3d/limits/max_linear_velocity=10000.0
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+textures/vram_compression/import_etc2_astc=true
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
+textures/default_filters/anisotropic_filtering_level=3
+anti_aliasing/quality/msaa_2d=1
+anti_aliasing/quality/msaa_3d=1

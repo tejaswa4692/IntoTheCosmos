@@ -2,8 +2,29 @@
 
 [ext_resource type="PackedScene" uid="uid://dqv8yxjf7yjyi" path="res://Assets/Observatory/Observatory.blend" id="1_3yc8j"]
 
-[node name="Observatory" unique_id=867485610 instance=ExtResource("1_3yc8j")]
+[node name="Observatory" unique_id=1482636260 instance=ExtResource("1_3yc8j")]
 
-[node name="StaticBody3D" parent="Cube" parent_id_path=PackedInt32Array(557165488) index="0" unique_id=802926265]
+[node name="Cube_" parent="." index="0" unique_id=1969402492]
+layers = 3
+
+[node name="StaticBody3D" parent="Cube_" index="0" unique_id=1687025868]
+collision_layer = 3
+collision_mask = 3
+
+[node name="Cube-col" parent="." index="1" unique_id=434600908]
+layers = 3
+
+[node name="StaticBody3D" parent="Cube-col" index="0" unique_id=1784581117]
+collision_layer = 3
+collision_mask = 3
+
+[node name="Cylinder" parent="." index="13" unique_id=1031112499]
+layers = 3
+
+[node name="StaticBody3D" parent="Cylinder" index="0" unique_id=987212933]
+collision_layer = 7
+collision_mask = 7
+
+[node name="StaticBody3D" parent="Cube_001" parent_id_path=PackedInt32Array(117886780) index="0" unique_id=1375302452]
 collision_layer = 3
 collision_mask = 3

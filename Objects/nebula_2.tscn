@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bnr3c7jpsa3mt"]
+
+[ext_resource type="Shader" uid="uid://b32qsklw5flmn" path="res://Objects/nebula.gdshader" id="1_a7ih8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_amm11"]
+size = Vector3(21, 11, 24)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_amm11"]
+render_priority = 0
+shader = ExtResource("1_a7ih8")
+shader_parameter/albedo = Color(0.59607846, 1, 0.6862745, 1)
+shader_parameter/time_scale = 0.030000001425
+shader_parameter/detail_scale = 1.00000004587006
+shader_parameter/fade_radius = 5.0
+shader_parameter/fade_softness = 3.0
+shader_parameter/field_scale = 1.0
+shader_parameter/shape_noise_amount = 1.6450000781375
+shader_parameter/shape_noise_scale = 9.46500044632762
+
+[node name="Nebula2" type="MeshInstance3D" unique_id=806577908]
+transform = Transform3D(-32.413673, 75.97661, 14.148653, -76.51455, -33.706985, 5.7124896, 10.869582, -10.708389, 82.40422, 0, 0, 0)
+mesh = SubResource("BoxMesh_amm11")
+surface_material_override/0 = SubResource("ShaderMaterial_amm11")

@@ -3,21 +3,28 @@
 [ext_resource type="Script" uid="uid://btbun1t27m14m" path="res://Objects/gravity_source.gd" id="1_rvel7"]
 [ext_resource type="PackedScene" uid="uid://6awxulel8se5" path="res://Assets/Planet-Icosphere/Planet-LOD.blend" id="2_rvel7"]
 [ext_resource type="ArrayMesh" uid="uid://b0xhhupxp6cq8" path="res://Assets/Debries/rock.obj" id="3_o5h3e"]
+[ext_resource type="Shader" uid="uid://vyskeea23vin" path="res://Assets/RockShader.gdshader" id="4_0x0fb"]
 [ext_resource type="Script" uid="uid://dfyg625n1x0nh" path="res://Objects/Planets/planet_rock_scatterer.gd" id="4_48vsq"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rvel7"]
 radius = 70.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xktmy"]
+render_priority = 0
+shader = ExtResource("4_0x0fb")
+shader_parameter/base_roughness = 0.9
+shader_parameter/noise_scale = 6.0
+shader_parameter/noise_contrast = 0.35
+
 [sub_resource type="SphereMesh" id="SphereMesh_48vsq"]
 
 [node name="Planet-Earth3" type="Node3D" unique_id=58250303]
 script = ExtResource("1_rvel7")
-mass = 10000.0
 
-[node name="Planet-LOD" parent="." unique_id=805624272 groups=["planet"] instance=ExtResource("2_rvel7")]
+[node name="Planet-LOD" parent="." unique_id=252755823 instance=ExtResource("2_rvel7")]
 transform = Transform3D(70, 0, 0, 0, 70, 0, 0, 0, 70, 0, 0, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1531804507]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1531804507 groups=["planet"]]
 collision_layer = 3
 collision_mask = 3
 
@@ -29,12 +36,12 @@ wait_time = 0.2
 autostart = true
 
 [node name="Rock" type="MeshInstance3D" parent="." unique_id=1355427554]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10246302, 69.995316, 1.1831663)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10246302, 65.925125, 1.1831663)
 mesh = ExtResource("3_o5h3e")
+surface_material_override/0 = SubResource("ShaderMaterial_xktmy")
 
 [node name="PlanetRockScatterer" type="Node3D" parent="." unique_id=893176570]
 script = ExtResource("4_48vsq")
-rock_count = 15000
 
 [node name="SourceMesh" type="MeshInstance3D" parent="." unique_id=1786901324]
 transform = Transform3D(140, 0, 0, 0, 140, 0, 0, 0, 140, 0, 0, 0)

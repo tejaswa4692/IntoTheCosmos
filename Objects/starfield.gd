@@ -11,6 +11,7 @@ var all_colors: Array[Color] = []
 var rng := RandomNumberGenerator.new()
 
 func _ready():
+	stars_per_chunk *= GraphicsSettings.sky_particle
 	var mesh = QuadMesh.new()
 	mesh.size = Vector2(0.4,0.4)
 	

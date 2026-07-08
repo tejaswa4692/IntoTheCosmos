@@ -1,39 +1,20 @@
 extends Node3D
 class_name PlanetSectorManager
 
-## Assign your player/rocket node here (drag it in the Inspector)
 @export var player_path: NodePath
-
-## Assign your Planet.tscn here (the one with GravitySource attached)
 @export var planet_scene: PackedScene
-
-## Size of one sector (cube) in world units
 @export var sector_size := 4000.0
-
-## How many sectors out (in each axis) to keep spawned around the player
 @export var stream_radius_sectors := 2
-
-## Sectors further than this (in sector units) get despawned
 @export var despawn_radius_sectors := 3
-
-## Global seed for the whole universe. Change this to get a totally different galaxy.
 @export var galaxy_seed := 1337
-
-## Chance (0-1) that any given sector actually contains a planet
 @export var planet_spawn_chance := 0.15
-
-## How much the planet's position can be randomly offset within its sector
 @export var position_jitter := 1200.0
-
-## Min/max random scale applied to spawned planets
 @export var min_planet_scale := 0.5
 @export var max_planet_scale := 2.5
-
-## Base mass/gravity at scale = 1.0 (mirrors GravitySource defaults)
 @export var base_mass := 5000.0
 @export var base_gravity_strength := 9.8
 
-var _spawned_sectors: Dictionary = {}   # Vector3i -> Node3D (planet instance, or null for confirmed-empty)
+var _spawned_sectors: Dictionary = {}  
 var _rng := RandomNumberGenerator.new()
 var _check_timer := 0.0
 const CHECK_INTERVAL := 0.5
@@ -81,9 +62,6 @@ func update_streaming(player_sector: Vector3i) -> void:
 
 
 func _sector_seed(coord: Vector3i) -> int:
-	# Deterministic seed derived from sector coordinate + galaxy seed.
-	# Same coord always produces the same seed -> same planet (or same emptiness)
-	# every time the player revisits it.
 	var h := galaxy_seed
 	h = h * 73856093 ^ coord.x * 19349663
 	h = h * 83492791 ^ coord.y * 2654435761
@@ -94,29 +72,17 @@ func _sector_seed(coord: Vector3i) -> int:
 func spawn_sector(coord: Vector3i) -> void:
 	var seed_value := _sector_seed(coord)
 	_rng.seed = seed_value
-
 	if _rng.randf() > planet_spawn_chance:
 		_spawned_sectors[coord] = null   # mark as "checked, empty" so we don't reroll
 		return
-
 	if planet_scene == null:
 		push_warning("PlanetSectorManager: planet_scene not assigned")
 		return
-
 	var planet := planet_scene.instantiate()
-
-	# Derive size/gravity/mass from the same deterministic RNG, all set on the
-	# already-existing exported properties on GravitySource. Nothing about
-	# GravitySource itself is modified.
 	var scale_factor: float = _rng.randf_range(min_planet_scale, max_planet_scale)
 	planet.scale = Vector3.ONE * scale_factor
 	planet.mass = base_mass * pow(scale_factor, 3.0)
 	planet.gravity_strength = base_gravity_strength * scale_factor
-
-	# Setting planet_seed before add_child means GravitySource._ready() will
-	# use this exact seed for its own material randomization (it already does
-	# this internally whenever planet_seed != -1), so appearance is
-	# deterministic per sector without needing any changes to that script.
 	planet.planet_seed = seed_value
 
 	var jitter := Vector3(
@@ -125,12 +91,7 @@ func spawn_sector(coord: Vector3i) -> void:
 		_rng.randf_range(-position_jitter, position_jitter)
 	)
 	planet.position = sector_center(coord) + jitter
-
 	add_child(planet)
-
-	# randomize_rocks() is already a public method on GravitySource; since
-	# planet_seed is already set, this deterministically reseeds rock count
-	# using the same seed as the appearance material.
 	if planet.has_method("randomize_rocks"):
 		planet.randomize_rocks()
 

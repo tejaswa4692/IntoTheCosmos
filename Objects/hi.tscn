@@ -24,6 +24,8 @@ shader_parameter/detail_scale = 1.19500005513256
 shader_parameter/fade_radius = 5.0
 shader_parameter/fade_softness = 3.0
 shader_parameter/field_scale = 1.4800000228
+shader_parameter/shape_noise_amount = 0.5
+shader_parameter/shape_noise_scale = 3.0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o8aa8"]
 sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
@@ -118,6 +120,14 @@ content_margin_right = 14.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ejgq"]
 content_margin_top = 10.0
 content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k4dlt"]
+content_margin_top = 10.0
+content_margin_right = 209.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_twcok"]
+content_margin_right = 14.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t41jk"]
 content_margin_top = 14.0
@@ -427,6 +437,70 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_n2of4")
 theme_override_styles/hover = SubResource("StyleBoxFlat_n2of4")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_n2of4")
 theme_override_styles/focus = SubResource("StyleBoxFlat_n2of4")
+
+[node name="SkyParcticle" type="HBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=1839469458]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 72
+alignment = 1
+
+[node name="Shadow Distance" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/SkyParcticle" unique_id=1380504967]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6ejgq")
+text = "Sky Particle Density"
+
+[node name="SkyParticle" type="OptionButton" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/SkyParcticle" unique_id=677837799]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n2of4")
+
+[node name="RockDensity" type="HBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=1667974667]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 72
+alignment = 1
+
+[node name="Shadow Distance" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/RockDensity" unique_id=1899306954]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6ejgq")
+text = "Rock and Debries Density"
+
+[node name="RockDensity" type="OptionButton" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/RockDensity" unique_id=1524598738]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_n2of4")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n2of4")
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer" unique_id=1821425238]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 126
+alignment = 1
+
+[node name="Help" type="Label" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6" unique_id=971316375]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_pxcmu")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_k4dlt")
+text = "Show Keybinds"
+
+[node name="Keybinds" type="CheckButton" parent="Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6" unique_id=411205038]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_twcok")
 
 [node name="Back" type="Button" parent="Control/Settings2" unique_id=1743836807]
 layout_mode = 1

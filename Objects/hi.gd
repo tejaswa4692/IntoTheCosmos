@@ -3,6 +3,8 @@ extends Node3D
 @onready var resolution: OptionButton = $Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/resolution
 @onready var display: OptionButton = $Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/display
 @onready var render_scale: OptionButton = $Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/renderscale
+@onready var sky_particle: OptionButton = $Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/SkyParcticle/SkyParticle
+@onready var rock_count: OptionButton = $Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/RockDensity/RockDensity
 
 
 func _ready() -> void:
@@ -19,6 +21,17 @@ func _ready() -> void:
 	render_scale.add_item("75%")
 	render_scale.add_item("100%")
 	render_scale.add_item("125%")
+	
+	sky_particle.add_item("25%")
+	sky_particle.add_item("50%")
+	sky_particle.add_item("75%")
+	sky_particle.add_item("100%")
+	
+	rock_count.add_item("0%")
+	rock_count.add_item("25%")
+	rock_count.add_item("50%")
+	rock_count.add_item("75%")
+	rock_count.add_item("100%")
 	$Control/Settings2.hide()
 
 
@@ -48,10 +61,31 @@ func _on_apply_pressed():
 			GraphicsSettings.render_scale = 1.0
 		3:
 			GraphicsSettings.render_scale = 1.25
+	match sky_particle.selected:
+		0:
+			GraphicsSettings.sky_particle = 0.25
+		1:
+			GraphicsSettings.sky_particle = 0.5
+		2:
+			GraphicsSettings.sky_particle = 0.75
+		3:
+			GraphicsSettings.sky_particle = 1.0
+	match rock_count.selected:
+		0:
+			GraphicsSettings.rock_count = 0.0
+		1:
+			GraphicsSettings.rock_count = 0.25
+		2:
+			GraphicsSettings.rock_count = 0.5
+		3:
+			GraphicsSettings.rock_count = 0.75
+		4:
+			GraphicsSettings.rock_count = 1.0
 	GraphicsSettings.glow = $Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/Glow2.button_pressed
 	GraphicsSettings.ssao = $Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/SSAOButton.button_pressed
+	GraphicsSettings.showkeybinds = $Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6/Keybinds.button_pressed
 	GraphicsSettings.apply()
-
+	get_tree().reload_current_scene()
 
 func _process(delta: float) -> void:
 	$Camera_center.rotation_degrees.y += 5 * delta
@@ -87,11 +121,30 @@ func load_current_settings():
 			render_scale.select(2)
 		1.25:
 			render_scale.select(3)
-
+	match GraphicsSettings.sky_particle:
+		0.25:
+			sky_particle.select(0)
+		0.5:
+			sky_particle.select(1)
+		0.75:
+			sky_particle.select(2)
+		1.0:
+			sky_particle.select(3)
+	match GraphicsSettings.rock_count:
+		0.0:
+			rock_count.select(0)
+		0.25:
+			rock_count.select(1)
+		0.5:
+			rock_count.select(2)
+		0.75:
+			rock_count.select(3)
+		1.0:
+			rock_count.select(4)
 	# Checkboxes
 	$Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/Glow2.button_pressed = GraphicsSettings.glow
 	$Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/SSAOButton.button_pressed = GraphicsSettings.ssao
-
+	$Control/Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6/Keybinds.button_pressed = GraphicsSettings.showkeybinds
 
 func _on_start_pressed() -> void:
 	get_tree().change_scene_to_file("res://Objects/PlaygroundWorld.tscn")

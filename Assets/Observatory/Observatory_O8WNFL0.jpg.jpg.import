@@ -1,0 +1,45 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://w2b5tq4tli6d"
+path.s3tc="res://.godot/imported/Observatory_O8WNFL0.jpg.jpg-0ef8259769d357eef247ace6a3fc00ac.s3tc.ctex"
+path.etc2="res://.godot/imported/Observatory_O8WNFL0.jpg.jpg-0ef8259769d357eef247ace6a3fc00ac.etc2.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "d6fab09d04a0065f767da9fef5237169"
+}
+
+[deps]
+
+source_file="res://Assets/Observatory/Observatory_O8WNFL0.jpg.jpg"
+dest_files=["res://.godot/imported/Observatory_O8WNFL0.jpg.jpg-0ef8259769d357eef247ace6a3fc00ac.s3tc.ctex", "res://.godot/imported/Observatory_O8WNFL0.jpg.jpg-0ef8259769d357eef247ace6a3fc00ac.etc2.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
