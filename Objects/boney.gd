@@ -183,14 +183,15 @@ func _handle_movement(delta: float) -> void:
 
 func _mount(target) -> void:
 	mount_source = target
-	if target.is_in_group("observatory") and target.get_mount_target() == null and !satellite_ui.visible:
-		_show_satellite_ui(target)
-	elif target.is_in_group("observatory") and target.get_mount_target() == null and satellite_ui.visible:
-		hide_satellite_ui()
-		
-		
-	if target.has_method("get_mount_target"):
-		target = target.get_mount_target()
+	if target.is_in_group("observatory"):
+		if !satellite_ui.visible:
+			_show_satellite_ui(target)
+		else:
+			hide_satellite_ui()
+		return  # observatories never auto-mount; UI decides what happens next
+	_do_mount(target)
+
+func _do_mount(target) -> void:
 	if target == null:
 		return
 	# clear previous mounted target if there was one
@@ -206,7 +207,7 @@ func _mount(target) -> void:
 	CameraManager.override_target = target
 	target.has_player = true
 	if GraphicsSettings.showkeybinds:
-		$Help.hide()	
+		$Help.hide()
 
 func _unmount() -> void:
 	is_mounted = false
@@ -256,6 +257,10 @@ func _show_satellite_ui(selected_observatory) -> void:
 	$SatteliteUI/UpgradesList.hide()
 	$SatteliteUI/SatelliteText.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if selected_observatory.satellite_target != null:
+		$SatteliteUI/MainMenu.set_item_text(0, "Control Satellite")
+	elif selected_observatory.satellite_target == null:
+		$SatteliteUI/MainMenu.set_item_text(0, "Satelite Manager")
 
 
 func hide_satellite_ui() -> void:
@@ -298,9 +303,14 @@ func _on_main_menu_item_clicked(index: int, _at_position: Vector2, _mouse_button
 	print(index)
 	match index:
 		0:
-			$SatteliteUI/MainMenu.hide()
-			satellite_item_list.show()
-			$SatteliteUI/UpgradesList.hide()
+			if current_observatory.satellite_target != null:
+				var sat = current_observatory.get_mount_target()
+				hide_satellite_ui()
+				_do_mount(sat)
+			else:
+				$SatteliteUI/MainMenu.hide()
+				satellite_item_list.show()
+				$SatteliteUI/UpgradesList.hide()
 		1:
 			$SatteliteUI/MainMenu.hide()
 			satellite_item_list.hide()
