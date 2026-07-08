@@ -6,7 +6,7 @@
   <img src="iamges/Screenshot_20260708_151654.png" width="800">
 </p>
 
-[Click here to watch the gameplay video on YouTube](https://youtu.be/EsZQD3edJl4) |
+[Click here to watch the gameplay video on YouTube](https://youtu.be/RQmEh_rwnzQ) |
 [Click here to view all the devlogs related to this project](https://stardance.hackclub.com/projects/25109)
 
 ## Download
