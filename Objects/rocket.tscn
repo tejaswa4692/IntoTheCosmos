@@ -2,13 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bsns3h58fm4oi" path="res://Objects/rocket.gd" id="1_ijyl3"]
 [ext_resource type="PackedScene" uid="uid://c88cunaohbg7l" path="res://Assets/RocketMesh/Rocket.blend" id="2_ijyl3"]
-[ext_resource type="PackedScene" uid="uid://b3r7iwfkoxmju" path="res://Assets/Explosion/Explosion.blend" id="3_07b4d"]
+[ext_resource type="FontFile" uid="uid://dujscdaiocpca" path="res://Assets/0xProto/0xProtoNerdFont-Regular.ttf" id="3_567k3"]
 [ext_resource type="Texture2D" uid="uid://dk0kvj6al2m0e" path="res://Assets/Help/Help1.png" id="4_567k3"]
 [ext_resource type="Shader" uid="uid://edva3yswm4fr" path="res://Objects/rocket.gdshader" id="4_d4paf"]
 [ext_resource type="Texture2D" uid="uid://byk0qghd0ajya" path="res://Assets/Help/Help2.png" id="5_ojypr"]
 [ext_resource type="PackedScene" uid="uid://ddkvsfssgnohj" path="res://Objects/explosion.tscn" id="5_ortt4"]
 [ext_resource type="AudioStream" uid="uid://bq8q1xaymda7h" path="res://Assets/Music/RcsColdGas.mp3" id="6_a1xkk"]
-[ext_resource type="Texture2D" uid="uid://1kuw2u1ou6bs" path="res://Assets/Help/HelpKeys/Rectangle 1.png" id="9_ojypr"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ijyl3"]
 height = 3.1152344
@@ -16,18 +15,6 @@ radius = 0.2265625
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ijyl3"]
 size = Vector3(1.479248, 1, 1.5148926)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojypr"]
-bg_color = Color(0.40784314, 0.40784314, 0.40784314, 1)
-border_width_left = 6
-border_width_top = 6
-border_width_right = 6
-border_width_bottom = 6
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_right = 18
-corner_radius_bottom_left = 18
 
 [sub_resource type="ImageTexture" id="ImageTexture_d4paf"]
 
@@ -160,522 +147,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010620117, -1.4249139, -0.
 shape = SubResource("BoxShape3D_ijyl3")
 disabled = true
 
-[node name="Explosion2" parent="." unique_id=1620987180 instance=ExtResource("3_07b4d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.60969406, 0)
-
 [node name="Help" type="Control" parent="." unique_id=1687724039]
-visible = false
 layout_mode = 3
-anchor_left = 0.05
-anchor_right = 0.94
-anchor_bottom = 1.0
-offset_top = -3.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HeloKeyW" type="Control" parent="Help" unique_id=1259618774]
-layout_mode = 1
-anchor_left = 0.017
-anchor_top = 0.83800006
-anchor_right = 0.089
-anchor_bottom = 0.96500003
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW" unique_id=1136884016]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW" unique_id=582435101]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.1190001
-anchor_bottom = 1.0
-offset_right = 0.0058059692
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "A"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HeloKeyW9" type="Control" parent="Help" unique_id=1033391524]
-layout_mode = 1
-anchor_left = 0.077
-anchor_top = 0.515
-anchor_right = 0.197
-anchor_bottom = 0.64
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="Panel" parent="Help/HeloKeyW9" unique_id=1287027012]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -12.96257
-offset_top = -2.6959534
-offset_right = 13.94783
-offset_bottom = -2.6959534
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW9" unique_id=104626740]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 7.03743
-offset_top = -0.69595337
-offset_right = 3.98526
-offset_bottom = -0.69595337
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "Shift +"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HeloKeyW6" type="Control" parent="Help" unique_id=229207989]
-layout_mode = 1
-anchor_left = 0.017
-anchor_top = 0.044
-anchor_right = 0.089
-anchor_bottom = 0.17
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW6" unique_id=157583062]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW6" unique_id=1624529195]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "Esc"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="Help/HeloKeyW6" unique_id=802962629]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 6
-text = "Pause"
-horizontal_alignment = 1
-
-[node name="HeloKeyW7" type="Control" parent="Help" unique_id=1027633908]
-layout_mode = 1
-anchor_left = 0.907
-anchor_top = 0.044
-anchor_right = 0.977
-anchor_bottom = 0.17
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW7" unique_id=1999367642]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW7" unique_id=195035133]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "R"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="Help/HeloKeyW7" unique_id=192682841]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 6
-text = "Reset"
-horizontal_alignment = 1
-
-[node name="HeloKeyW2" type="Control" parent="Help" unique_id=489003216]
-layout_mode = 1
-anchor_left = 0.102
-anchor_top = 0.83800006
-anchor_right = 0.172
-anchor_bottom = 0.96500003
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW2" unique_id=1677912994]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW2" unique_id=1232065474]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 8.579826
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "S"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HeloKeyW4" type="Control" parent="Help" unique_id=721883234]
-layout_mode = 1
-anchor_left = 0.102
-anchor_top = 0.683
-anchor_right = 0.172
-anchor_bottom = 0.813
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW4" unique_id=1536326848]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW4" unique_id=740932777]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.1350001
-anchor_bottom = 1.0
-offset_right = 0.018363953
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "W"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HeloKeyW11" type="Control" parent="Help" unique_id=1179913114]
-layout_mode = 1
-anchor_left = 0.022
-anchor_top = 0.683
-anchor_right = 0.092
-anchor_bottom = 0.813
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW11" unique_id=1242656501]
-layout_mode = 0
-offset_left = -4.572159
-offset_top = -0.55996704
-offset_right = 75.42784
-offset_bottom = 79.44003
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW11" unique_id=2034554244]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "Q"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HeloKeyW10" type="Control" parent="Help" unique_id=825441886]
-layout_mode = 1
-anchor_left = 0.187
-anchor_top = 0.683
-anchor_right = 0.257
-anchor_bottom = 0.813
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW10" unique_id=598944410]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW10" unique_id=1617261648]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.133
-anchor_bottom = 1.0
-offset_right = 0.011192322
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "E"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HeloKeyW3" type="Control" parent="Help" unique_id=483351358]
-layout_mode = 1
-anchor_left = 0.187
-anchor_top = 0.83800006
-anchor_right = 0.257
-anchor_bottom = 0.96500003
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW3" unique_id=2085167704]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW3" unique_id=1816952352]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.133
-anchor_bottom = 1.0
-offset_right = 0.011192322
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "D"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HeloKeyW5" type="Control" parent="Help" unique_id=1732636878]
-layout_mode = 1
-anchor_left = 0.902
-anchor_top = 0.83800006
-anchor_right = 0.972
-anchor_bottom = 0.96500003
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW5" unique_id=1078494062]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW5" unique_id=1658289437]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.146
-anchor_bottom = 1.0
-offset_right = 0.015304565
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "C"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="Help/HeloKeyW5" unique_id=1482109539]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 8.0
-offset_right = 8.355835
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 6
-text = "Mount/Unmount"
-horizontal_alignment = 1
-
-[node name="HeloKeyW12" type="Control" parent="Help" unique_id=1235010359]
-layout_mode = 1
-anchor_left = 0.817
-anchor_top = 0.83800006
-anchor_right = 0.887
-anchor_bottom = 0.96500003
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW12" unique_id=56360155]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW12" unique_id=169572461]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.148
-anchor_bottom = 1.0
-offset_right = 0.022445679
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 38
-text = "G"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="Help/HeloKeyW12" unique_id=1195708400]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.1340001
-anchor_bottom = 1.0
-offset_top = 8.0
-offset_right = 0.013999939
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 6
-text = "Spawn Sattelite"
-horizontal_alignment = 1
-
-[node name="HeloKeyW8" type="Control" parent="Help" unique_id=1196001550]
-layout_mode = 1
-anchor_left = 0.902
-anchor_top = 0.673
-anchor_right = 0.972
-anchor_bottom = 0.8
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW8" unique_id=1476883836]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW8" unique_id=487241654]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.146
-anchor_bottom = 1.0
-offset_right = 0.015304565
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 27
-text = "F"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="Help/HeloKeyW8" unique_id=412449525]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.1320001
-anchor_bottom = 1.0
-offset_top = 13.0
-offset_right = 0.0068511963
-offset_bottom = 0.9199829
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 6
-text = "Release Sattelite"
-horizontal_alignment = 1
-
-[node name="HeloKeyW13" type="Control" parent="Help" unique_id=2090282891]
-layout_mode = 1
-anchor_left = 0.812
-anchor_top = 0.673
-anchor_right = 0.887
-anchor_bottom = 0.8
-offset_left = 0.41599846
-offset_top = -0.024047852
-offset_right = -0.5279999
-offset_bottom = -0.32000732
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Help/HeloKeyW13" unique_id=608382991]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_ojypr")
-
-[node name="Label" type="Label" parent="Help/HeloKeyW13" unique_id=736202062]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.146
-anchor_bottom = 1.0
-offset_right = 0.015304565
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 27
-text = "J"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="Help/HeloKeyW13" unique_id=246597401]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.1320001
-anchor_bottom = 1.0
-offset_top = 13.0
-offset_right = 0.0068511963
-offset_bottom = 0.9199829
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 6
-text = "Landing Gear"
-horizontal_alignment = 1
 
 [node name="Help-Key-Indicator" type="Label" parent="Help" unique_id=208999494]
 layout_mode = 1
@@ -689,8 +167,32 @@ offset_top = -37.0
 offset_right = 216.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_567k3")
 theme_override_font_sizes/font_size = 27
 text = " to open help press H (important)"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Help" unique_id=1630913465]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 0.02
+anchor_right = 0.03
+anchor_bottom = 0.1
+offset_right = 356.44
+offset_bottom = 241.2
+theme_override_colors/default_color = Color(0.38863307, 0.83022666, 3.85046e-07, 1)
+theme_override_fonts/normal_font = ExtResource("3_567k3")
+theme_override_font_sizes/normal_font_size = 12
+text = "Press Esc to open pause menu
+Press R to reset the player and rocket position
+press WASD to move
+Press Shift + WASD to use RCS
+Press C to unmount/spacewalk
+Press F to release the satellite 
+press J for landing gear
+Press left mouse for throttle
+Scroll up and down for selecting throttle level
+ "
 
 [node name="Control" type="Control" parent="." unique_id=1946425534]
 visible = false

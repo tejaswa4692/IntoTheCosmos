@@ -11,7 +11,6 @@ var assigned_observatory: Node = null
 
 @export var fuel = 2000
 @export var satellite_name := "Explorer I"
-@onready var fuel_guage: VSlider = $Control/FuelGuage
 
 
 const ACTION_THRUST       = "thrust"

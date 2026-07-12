@@ -32,6 +32,8 @@ func _physics_process(_delta: float) -> void:
 	# only apply yaw/pitch when following a rocket or similar
 	# if target is the player, the player handles its own camera via the Head node
 	if target.is_in_group("rocket"):
+		#if Input.is_action_pressed("thrust"):   
+			#shake_active_camera(target.throttleslider.value)
 		rotation.y = yaw
 		spring_arm.rotation.x = pitch
 	else:
@@ -44,3 +46,8 @@ func activate():
 
 func deactivate():
 	camera.current = false
+
+func shake_active_camera(scale: float) -> void:
+	var shakeval = scale * 0.025
+	camera.h_offset = randf_range(shakeval, -shakeval)
+	camera.v_offset = randf_range(shakeval, -shakeval)

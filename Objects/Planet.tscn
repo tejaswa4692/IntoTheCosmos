@@ -18,6 +18,9 @@ shader_parameter/noise_contrast = 0.35
 
 [sub_resource type="SphereMesh" id="SphereMesh_48vsq"]
 
+[sub_resource type="SphereOccluder3D" id="SphereOccluder3D_0x0fb"]
+radius = 70.183334
+
 [node name="Planet-Earth3" type="Node3D" unique_id=58250303]
 script = ExtResource("1_rvel7")
 
@@ -47,5 +50,8 @@ script = ExtResource("4_48vsq")
 transform = Transform3D(140, 0, 0, 0, 140, 0, 0, 0, 140, 0, 0, 0)
 visible = false
 mesh = SubResource("SphereMesh_48vsq")
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="." unique_id=2083172514]
+occluder = SubResource("SphereOccluder3D_0x0fb")
 
 [connection signal="timeout" from="LODUpdateTimer" to="." method="_on_lod_timer_timeout"]

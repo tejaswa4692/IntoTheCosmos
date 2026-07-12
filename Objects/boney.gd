@@ -1,12 +1,11 @@
 extends CharacterBody3D
 
-@export var move_speed: float = 5.0
+@export var move_speed: float = 2.5
 @export var jump_velocity: float = 5.0
 @export var mouse_sensitivity: float = 0.003
 @export var interact_distance: float = 3.0
 @export var gravity_align_speed: float = 5.0  
 @onready var fp_camera = $Head/Camera3D
-var observatory = preload("res://Objects/observatory.tscn")
 @onready var raycast = $HeadCast
 @onready var animation_tree: AnimationTree = $AnimationTree
 var run_val = 0
@@ -33,6 +32,11 @@ var pitch: float = 0.0
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 
+const PLACEABLE_SCENES := {
+	"observatory": preload("res://Objects/observatory.tscn"),
+	"rover": preload("res://Assets/Rover/rover.tscn")
+}
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
@@ -46,7 +50,15 @@ func _input(event: InputEvent) -> void:
 			pitch -= event.relative.y * mouse_sensitivity
 			pitch = clamp(pitch, deg_to_rad(-89), deg_to_rad(89))
 			head.rotation.x = pitch
-	
+
+	# Minecraft-style hotbar scrolling. Blocked while any menu is open
+	# so scrolling through the world doesn't fight with menu scrolling.
+	if event is InputEventMouseButton and event.pressed and not is_mounted and !settings_open and !ui_open:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			InventoryGlobal.select_next()
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			InventoryGlobal.select_prev()
+
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("interact") and not Input.is_key_pressed(KEY_SHIFT):
 			if is_mounted:
@@ -57,17 +69,15 @@ func _input(event: InputEvent) -> void:
 				_mount(nearest_rocket)
 		if Input.is_action_just_pressed("ui_cancel") and ui_open:
 			satellite_ui.visible = false
-
-
+			
 func _physics_process(delta: float) -> void:
 	if is_mounted:
 		return
 	_update_gravity(delta)
 	_handle_movement(delta)
 	update_tree()
-	if Input.is_action_just_pressed("Place") and raycast.is_colliding() and (satellite_ui.visible == false) and !settings_open:
-		print("placing")
-		buildobservatory()
+	if Input.is_action_just_pressed("Place") and (satellite_ui.visible == false) and !settings_open:
+		try_place_selected_item()
 	
 	
 	if GraphicsSettings.showkeybinds:  #Please fix this later tis is just embrassing 
@@ -240,6 +250,7 @@ func set_nearest_rocket(rocket) -> void:
 
 func _show_satellite_ui(selected_observatory) -> void:
 	ui_open = true
+	InventoryGlobal.isUIopen = true
 	current_observatory = selected_observatory
 	displayed_satellites.clear()
 	satellite_item_list.clear()
@@ -265,6 +276,7 @@ func _show_satellite_ui(selected_observatory) -> void:
 
 func hide_satellite_ui() -> void:
 	ui_open = false
+	InventoryGlobal.isUIopen = false
 	satellite_ui.hide()
 	$SatteliteUI/MainMenu.hide()
 	satellite_item_list.hide()
@@ -284,19 +296,41 @@ func _on_item_list_item_clicked(index: int, _at_position: Vector2, _mouse_button
 	current_observatory.assign_satellite(sat)
 	hide_satellite_ui()
 
-func buildobservatory() -> void:
-	if raycast.get_collider().is_in_group("planet"):
-		if raycast.get_collider().get_parent().has_observatory == false:
-			print(raycast.get_collider().get_parent().has_observatory)
-			var observatoryinstance = observatory.instantiate()
-			get_tree().root.add_child(observatoryinstance)
-			var point = raycast.get_collision_point()
-			var normal = raycast.get_collision_normal()
-			observatoryinstance.global_position = point
-			observatoryinstance.global_basis = Basis.looking_at(normal)
-			observatoryinstance.rotate_object_local(Vector3.RIGHT, deg_to_rad(-90))
-			raycast.get_collider().get_parent().change_observatory_status()
-			print(raycast.get_collider().get_parent().has_observatory)
+func try_place_selected_item() -> void:
+	var selected := InventoryGlobal.get_selected_item()
+	if selected == "" or not PLACEABLE_SCENES.has(selected):
+		return
+	if not raycast.is_colliding():
+		return
+	var collider = raycast.get_collider()
+	if not collider.is_in_group("planet"):
+		return
+	var planet = collider.get_parent()
+
+	# Per-item placement rules go here. Add more `if selected == ...`
+	# branches as new placeable rules are needed.
+	if selected == "observatory" and planet.has_observatory:
+		var instance = PLACEABLE_SCENES[selected].instantiate()
+		get_tree().root.add_child(instance)
+		var point = raycast.get_collision_point()
+		var normal = raycast.get_collision_normal()
+		instance.global_position = point
+		instance.global_basis = Basis.looking_at(normal)
+		instance.rotate_object_local(Vector3.RIGHT, deg_to_rad(-90))
+
+	if selected == "observatory":
+		planet.change_observatory_status()
+
+	if selected == "rover":
+		var instance = PLACEABLE_SCENES[selected].instantiate()
+		get_tree().root.add_child(instance)
+		var point = raycast.get_collision_point()
+		var normal = raycast.get_collision_normal()
+		instance.global_position = point
+		instance.global_basis = Basis.looking_at(normal)
+		instance.rotate_object_local(Vector3.RIGHT, deg_to_rad(-90))
+
+	InventoryGlobal.remove_item(selected, 1)
 
 
 func _on_main_menu_item_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
@@ -320,7 +354,8 @@ func _on_main_menu_item_clicked(index: int, _at_position: Vector2, _mouse_button
 			hide_satellite_ui()
 		3:
 			$SatteliteUI/SatelliteText.show()
-
+		4:
+			current_observatory.spawn_vehicle_rover()
 
 func _on_done_button_pressed() -> void:
 	if current_observatory != null and current_observatory.rocket != null:

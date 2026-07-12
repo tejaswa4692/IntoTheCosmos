@@ -3,6 +3,7 @@ extends Node3D
 var satellite_target = null
 var rocket_based :  bool = false
 var rocket = null
+var rover_scene = preload("res://Assets/Rover/rover.tscn")
 
 func _on_area_3d_body_entered(body):
 	if body.has_method("set_nearest_rocket"):
@@ -38,11 +39,18 @@ func _on_rocket_rebaser_body_exited(body: Node3D) -> void:
 		rocket_based = false
 		rocket = null
 
-func dock_satellite_on_rocket(name: String) -> void:
+func dock_satellite_on_rocket(satname: String) -> void:
 	if rocket != null:
-		rocket.setup_sattelite(name)
+		rocket.setup_sattelite(satname)
 
 func pleaserefuel() -> void:
 	if rocket != null:
 		rocket.fuel = 5000 #HERE TO CHANGE FUEL DONT FORGET IT LATER
 		rocket.fuel_guage.value = 5000
+
+
+func spawn_vehicle_rover() -> void:
+	var rover_instance = rover_scene.instantiate()
+	rover_instance.position = $Marker3D.position
+	rover_instance.rotation = $Marker3D.rotation
+	add_child(rover_instance)

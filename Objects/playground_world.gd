@@ -3,6 +3,8 @@ extends Node3D
 @onready var resolution: OptionButton = $Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/resolution
 @onready var display: OptionButton = $Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/display
 @onready var render_scale: OptionButton = $Settings2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/renderscale
+@onready var settings: Control = $Settings2
+@onready var player = $Boney
 
 
 func _ready() -> void:
@@ -18,15 +20,15 @@ func _input(event: InputEvent) -> void:
 		if Input.is_action_just_pressed("R"):
 			reset_player()
 		if Input.is_action_just_pressed("ui_cancel"):
-			$Settings2.visible = !$Settings2.visible
-			if !$Settings2.visible:
-				$Boney.settings_open = false
+			settings.visible = !settings.visible
+			if !settings.visible:
+				player.settings_open = false
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			if $Settings2.visible:
-				$Boney.settings_open = true
+			if settings.visible:
+				player.settings_open = true
 
 func reset_player() -> void:
-	$Boney.global_transform = $PlayerLoc.global_transform
+	player.global_transform = $PlayerLoc.global_transform
 	$Rocket.global_transform = $RocketLoc.global_transform
 
 
@@ -85,7 +87,7 @@ func settings_ready() -> void:
 	render_scale.add_item("75%")
 	render_scale.add_item("100%")
 	render_scale.add_item("125%")
-	$Settings2.hide()
+	settings.hide()
 
 
 func _on_apply_pressed():
@@ -121,7 +123,7 @@ func _on_apply_pressed():
 
 
 func _on_back_pressed() -> void:
-	$Settings2.hide()
+	settings.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 

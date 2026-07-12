@@ -14,7 +14,9 @@
 [ext_resource type="Script" uid="uid://do2b6ant3wtqj" path="res://Objects/Planets/planet_spawn_manager.gd" id="13_ag2w8"]
 [ext_resource type="Shader" uid="uid://b32qsklw5flmn" path="res://Objects/nebula.gdshader" id="13_ojfgx"]
 [ext_resource type="FontFile" uid="uid://b0recaxa13gtf" path="res://Assets/0xProto/0xProtoNerdFont-Bold.ttf" id="14_k2xjf"]
+[ext_resource type="PackedScene" uid="uid://c3jnwrpmlbvbp" path="res://Assets/Rover/rover.tscn" id="16_ojfgx"]
 [ext_resource type="FontFile" uid="uid://dujscdaiocpca" path="res://Assets/0xProto/0xProtoNerdFont-Regular.ttf" id="17_kvg7m"]
+[ext_resource type="PackedScene" uid="uid://dhk7cv8g2j1gw" path="res://Objects/DockingShip/docking_ship.tscn" id="17_rfc3h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol3l7"]
 sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
@@ -49,19 +51,19 @@ volumetric_fog_density = 0.0
 radius = 0.3
 
 [sub_resource type="BoxMesh" id="BoxMesh_yaehb"]
-size = Vector3(23, 3, 26.65)
+size = Vector3(20, 20, 20)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvg7m"]
 render_priority = 0
 shader = ExtResource("13_ojfgx")
 shader_parameter/albedo = Color(0.59607846, 1, 0.6862745, 1)
-shader_parameter/time_scale = 0.4650000220875
-shader_parameter/detail_scale = 1.00000004587006
+shader_parameter/time_scale = 0.010000000475
+shader_parameter/detail_scale = 1.35500006273256
 shader_parameter/fade_radius = 5.0
 shader_parameter/fade_softness = 3.0
-shader_parameter/field_scale = 1.0
-shader_parameter/shape_noise_amount = 0.0
-shader_parameter/shape_noise_scale = 0.10000000149012
+shader_parameter/field_scale = 2.4150000672125
+shader_parameter/shape_noise_amount = 1.4400000684
+shader_parameter/shape_noise_scale = 2.17000009981512
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ag2w8"]
 render_priority = 0
@@ -293,6 +295,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3093975, 2.9949632)
 script = ExtResource("4_78x0b")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig" unique_id=2138654543]
+collision_mask = 3
 shape = SubResource("SphereShape3D_xv3hj")
 spring_length = 6.0
 
@@ -311,7 +314,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 290.20795, 2109.04)
 script = ExtResource("3_xv3hj")
 
 [node name="Boney" parent="." unique_id=666712437 groups=["influencable_object"] instance=ExtResource("8_x7w41")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7379491, 71.60043, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8492398, 71.60043, 5.5935574)
+move_speed = 1.495
 
 [node name="Starfield" type="Node3D" parent="." unique_id=73669482]
 script = ExtResource("9_0o5du")
@@ -320,7 +324,7 @@ script = ExtResource("9_0o5du")
 material_override = ExtResource("10_34g4x")
 
 [node name="Nebula2" parent="." unique_id=806577908 instance=ExtResource("11_k2xjf")]
-transform = Transform3D(-32.413673, 75.9766, 14.148663, -76.51455, -33.707005, 5.712498, 10.86958, -10.708385, 82.40422, -6913.1987, 378.42386, 2076.4573)
+transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, -6608.631, 395.8988, 12960.731)
 mesh = SubResource("BoxMesh_yaehb")
 surface_material_override/0 = SubResource("ShaderMaterial_kvg7m")
 
@@ -605,6 +609,16 @@ value = 70.0
 
 [node name="Load" type="AnimationPlayer" parent="LoadingScreen" unique_id=1027555547]
 libraries/ = SubResource("AnimationLibrary_ojfgx")
+
+[node name="DockingShip" parent="." unique_id=602642202 instance=ExtResource("17_rfc3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 102.56813, 0)
+visible = false
+
+[node name="Rover" parent="." unique_id=232793370 instance=ExtResource("16_ojfgx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.070694864, 71.40962, 3.4974837)
+
+[node name="DockingShip2" parent="." unique_id=2058088437 instance=ExtResource("17_rfc3h")]
+transform = Transform3D(0.9996095, 0.027956538, 0, -0.02795654, 0.99960935, 0, 0, 0, 1.0000005, -26.207628, 77.7568, 0)
 
 [connection signal="pressed" from="Settings2/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Settings2/Exit" to="." method="_on_exit_pressed"]

@@ -52,7 +52,6 @@ func _ready() -> void:
 	gravity_scale = 0
 	$Control/YouDied.hide()
 	set_thrust_gradient_bias(throttleslider.value)
-	setup_sattelite()
 	$Control/Help.hide()
 	for i in RCS_Thrusters_left:
 		i.hide()
@@ -314,10 +313,6 @@ func _on_proximity_entered(body: Node) -> void:
 func _on_proximity_exited(body: Node) -> void:
 	if body.has_method("set_nearest_rocket"):
 		body.set_nearest_rocket(null)
-
-
-
-
 
 func can_unmount() -> bool:
 	return canmove
