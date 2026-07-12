@@ -15,7 +15,7 @@ Download the latest release from the GitHub Releases page and launch the executa
 
 > **Note:** The current release has well documented controls and instructions on how to get your spacecraft into orbit. If you're new, you can also press **ESC** to open the Settings menu and enable the on-screen keybind guide.
 
-[Click here to play the web version instead KEEP IN MIND WEB VERSION HAS MAJOR BUGS, LOOKS WORSE AND HAS UI ISSUES, I HIGHLY RECOMMEND PLAYING THE DOWNLOADABLE VERSION AS IT DOESNT HAVE ANY OF THESE ISSUES](https://tubular-dragon-ab055e.netlify.app/)
+[Click here to play the web version instead KEEP IN MIND WEB VERSION HAS MAJOR BUGS, LOOKS WORSE AND HAS UI ISSUES, I HIGHLY RECOMMEND PLAYING THE DOWNLOADABLE VERSION AS IT DOESNT HAVE ANY OF THESE ISSUES](https://tejaswa7692.itch.io/into-the-cosmos)
 
 ---
 
