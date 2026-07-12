@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bflvmu3vr7l36"]
+
+[ext_resource type="Script" uid="uid://yfmqo7kpahlj" path="res://Objects/Scrap/scrap.gd" id="1_88ef6"]
+[ext_resource type="ArrayMesh" uid="uid://cyiuca84gjou0" path="res://Assets/Scrap/Scrap.obj" id="2_ptpeh"]
+[ext_resource type="ArrayMesh" uid="uid://wwbj5qmh6om8" path="res://Assets/Scrap/Scrap(Particle).obj" id="3_g2p6d"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ptpeh"]
+size = Vector3(1.3582916, 1.6217651, 1.4595947)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7udo6"]
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 1.65
+initial_velocity_max = 1.65
+
+[node name="Scrap" type="StaticBody3D" unique_id=248153912 groups=["scrap"]]
+script = ExtResource("1_88ef6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=740106324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009666443, 0.723361, -0.0446167)
+shape = SubResource("BoxShape3D_ptpeh")
+
+[node name="Scrap" type="MeshInstance3D" parent="." unique_id=653250208]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0, 0)
+mesh = ExtResource("2_ptpeh")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=985666586]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.162776, -0.037106395, 0)
+emitting = false
+amount = 29
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_7udo6")
+draw_pass_1 = ExtResource("3_g2p6d")
+
+[node name="CD" type="Timer" parent="." unique_id=2079116885]
+
+[connection signal="timeout" from="CD" to="." method="_on_cd_timeout"]

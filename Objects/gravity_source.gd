@@ -18,7 +18,7 @@ const FIXED_ICE_CAPS: float = 0.0
 const FIXED_ROUGHNESS: float = 1.0
 const FIXED_ATMOSPHERE_STRENGTH: float = 0.0
 
-enum NoiseType { PERLIN, CELLULAR, MARBLE, CLOUD}
+enum NoiseType { PERLIN, CELLULAR, CLOUD, MARBLE}
 const PLANET_SHADER: Shader = preload("res://Assets/Planet-Icosphere/PlanetShader.gdshader")
 
 @onready var camera: Camera3D = get_viewport().get_camera_3d()

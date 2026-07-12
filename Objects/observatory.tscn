@@ -45,7 +45,7 @@ light_energy = 4.11
 omni_range = 18.468401
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=1985720714]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.2898159, 0.635273, -1.6913006)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.2898159, 2.1715488, -1.4265244)
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

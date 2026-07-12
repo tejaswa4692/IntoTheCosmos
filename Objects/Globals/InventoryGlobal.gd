@@ -4,16 +4,18 @@ signal selection_changed(item_name: String)
 
 var canmove: bool = true
 var isUIopen: bool = false
-var Inventory: Array = []      # Array of {"item": String, "count": int}
+var Inventory: Array = []      # Array of {"item": String, "count": int, "backpack": Backpack (optional)}
 var selected_index: int = 0
 
 func _ready() -> void:
 	add_item("observatory", 9)
 	add_item("rover", 2)
 
+# ---------------- Normal stackable items ----------------
+
 func add_item(item_name: String, amount: int = 1) -> void:
 	for slot in Inventory:
-		if slot["item"] == item_name:
+		if slot["item"] == item_name and not slot.has("backpack"):
 			slot["count"] += amount
 			inventory_changed.emit()
 			return
@@ -23,7 +25,7 @@ func add_item(item_name: String, amount: int = 1) -> void:
 func remove_item(item_name: String, amount: int = 1) -> bool:
 	var selected_item_name := get_selected_item()
 	for i in range(Inventory.size()):
-		if Inventory[i]["item"] == item_name:
+		if Inventory[i]["item"] == item_name and not Inventory[i].has("backpack"):
 			Inventory[i]["count"] -= amount
 			if Inventory[i]["count"] <= 0:
 				Inventory.remove_at(i)
@@ -43,7 +45,6 @@ func _reselect(item_name: String) -> void:
 				selected_index = i
 				selection_changed.emit(get_selected_item())
 			return
-	# the previously-selected item is gone entirely — clamp instead
 	selected_index = clampi(selected_index, 0, Inventory.size() - 1)
 	selection_changed.emit(get_selected_item())
 
@@ -55,7 +56,7 @@ func has_item(item_name: String) -> bool:
 
 func get_item_count(item_name: String) -> int:
 	for slot in Inventory:
-		if slot["item"] == item_name:
+		if slot["item"] == item_name and not slot.has("backpack"):
 			return slot["count"]
 	return 0
 
@@ -63,6 +64,15 @@ func get_selected_item() -> String:
 	if Inventory.is_empty() or selected_index < 0 or selected_index >= Inventory.size():
 		return ""
 	return Inventory[selected_index]["item"]
+
+func get_selected_slot() -> Dictionary:
+	if Inventory.is_empty() or selected_index < 0 or selected_index >= Inventory.size():
+		return {}
+	return Inventory[selected_index]
+
+func get_selected_backpack() -> Backpack:
+	var slot := get_selected_slot()
+	return slot.get("backpack", null)
 
 func select_index(index: int) -> void:
 	if Inventory.is_empty():

@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://coah246wohuf4"]
+
+[ext_resource type="Script" uid="uid://bfodia367a068" path="res://Objects/backpack/backpack.gd" id="1_qtih8"]
+[ext_resource type="Texture2D" uid="uid://brhmqwt3srrql" path="res://Assets/InventoryIcons/observatory.png" id="2_83a4k"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_aqcv4"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w3rb4"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.23335716, 0.22829935, 0.23587963, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kik2b"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.62954575, 0.6230115, 0.63273174, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w3rb4"]
+size = Vector3(1.0343018, 1, 1)
+
+[node name="Backpack" type="Node3D" unique_id=1097135241]
+script = ExtResource("1_qtih8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1972635894]
+mesh = SubResource("BoxMesh_aqcv4")
+
+[node name="Control" type="Control" parent="." unique_id=950200216]
+layout_mode = 3
+anchor_left = 0.2
+anchor_top = 0.39
+anchor_right = 0.8
+anchor_bottom = 0.629
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemList" type="ItemList" parent="Control" unique_id=191177101]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w3rb4")
+theme_override_styles/selected = SubResource("StyleBoxFlat_kik2b")
+item_count = 5
+max_columns = 0
+icon_scale = 0.425
+item_0/icon = ExtResource("2_83a4k")
+item_1/icon = ExtResource("2_83a4k")
+item_2/icon = ExtResource("2_83a4k")
+item_3/icon = ExtResource("2_83a4k")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1014311802]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2012414647]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017150879, 0, 0)
+shape = SubResource("BoxShape3D_w3rb4")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_body_exited"]

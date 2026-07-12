@@ -8,6 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://byk0qghd0ajya" path="res://Assets/Help/Help2.png" id="5_ojypr"]
 [ext_resource type="PackedScene" uid="uid://ddkvsfssgnohj" path="res://Objects/explosion.tscn" id="5_ortt4"]
 [ext_resource type="AudioStream" uid="uid://bq8q1xaymda7h" path="res://Assets/Music/RcsColdGas.mp3" id="6_a1xkk"]
+[ext_resource type="Script" uid="uid://25hihbxa5eon" path="res://Objects/Rocket/flight_controller.gd" id="9_ojypr"]
+[ext_resource type="Script" uid="uid://rst4lwgoskhn" path="res://Objects/landing_gear_controller.gd" id="10_tt3ll"]
+[ext_resource type="Script" uid="uid://c7cr002nhgjkl" path="res://Objects/satellite_dock_controller.gd" id="11_67jq3"]
+[ext_resource type="Script" uid="uid://cply244wlx0yn" path="res://Objects/damage_controller.gd" id="12_unm8h"]
+[ext_resource type="Script" uid="uid://bmcl3vw17h1nw" path="res://Objects/help_ui_controller.gd" id="13_c0aoa"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ijyl3"]
 height = 3.1152344
@@ -132,8 +137,6 @@ gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_ijyl3")
-thrust_force = 60.0
-roll_torque = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1589436198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15137607, 2.0612031e-05)
@@ -395,6 +398,27 @@ shape = SubResource("CylinderShape3D_567k3")
 
 [node name="PlayerExitMarker" type="Marker3D" parent="." unique_id=54658365]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17087674, 0.7582755)
+
+[node name="FlightController" type="Node3D" parent="." unique_id=342263755]
+script = ExtResource("9_ojypr")
+thrust_force = 1000.0
+pitch_torque = 100.0
+yaw_torque = 100.0
+roll_torque = 100.0
+stabilization_strength = 100.0
+rcs_force = 300.0
+
+[node name="LandingGearController" type="Node3D" parent="." unique_id=1362416350]
+script = ExtResource("10_tt3ll")
+
+[node name="SatelliteDockController" type="Node3D" parent="." unique_id=265185327]
+script = ExtResource("11_67jq3")
+
+[node name="DamageController" type="Node3D" parent="." unique_id=183392603]
+script = ExtResource("12_unm8h")
+
+[node name="HelpUIController" type="Node3D" parent="." unique_id=1212083525]
+script = ExtResource("13_c0aoa")
 
 [connection signal="body_entered" from="." to="." method="collision_impact"]
 [connection signal="body_entered" from="ProximityArea" to="." method="_on_proximity_entered"]

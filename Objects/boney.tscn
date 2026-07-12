@@ -5,6 +5,12 @@
 [ext_resource type="Script" uid="uid://d28b4qsc71grw" path="res://Objects/inventory_ui.gd" id="4_cya1h"]
 [ext_resource type="Texture2D" uid="uid://brhmqwt3srrql" path="res://Assets/InventoryIcons/observatory.png" id="4_l4ocb"]
 [ext_resource type="Texture2D" uid="uid://bjmkxkd5nls7a" path="res://Assets/Boney/Boney_RocketTex.png" id="4_lka1x"]
+[ext_resource type="Script" uid="uid://diqxtgrhtg76o" path="res://Objects/Player/Movement_functions.gd" id="6_l4ocb"]
+[ext_resource type="Script" uid="uid://bqaendqpu3g3k" path="res://Objects/mount_controller.gd" id="7_cya1h"]
+[ext_resource type="Script" uid="uid://nl4xrgyoq1ma" path="res://Objects/satellite_ui_controller.gd" id="8_b3isb"]
+[ext_resource type="Script" uid="uid://clx06nns2pqke" path="res://Objects/placement_controller.gd" id="9_lhpfe"]
+[ext_resource type="Script" uid="uid://dd6d6yt672gtw" path="res://Objects/back_pack_controller.gd" id="10_l0frw"]
+[ext_resource type="Script" uid="uid://mir8cju4ku2b" path="res://Objects/scrap_manager.gd" id="11_8fhyy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3ig0"]
 radius = 0.10449219
@@ -457,6 +463,10 @@ transform = Transform3D(0.99966097, 0, 0.026037544, 0, 1, 0, -0.026037544, 0, 0.
 fov = 74.50331
 far = 10000.0
 
+[node name="ScrapBreaker" type="RayCast3D" parent="Head/Camera3D" unique_id=1737949069]
+transform = Transform3D(0.99932206, -0.026037544, 0.026028717, 0.026037544, -4.371139e-08, -0.99966097, 0.026028717, 0.99966097, 0.00067791005, -0.10714546, 0, -0.52386856)
+target_position = Vector3(0, -3.45, 0)
+
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=490176355]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012536094, 0)
 target_position = Vector3(0, -0.085, 0)
@@ -504,6 +514,7 @@ parameters/JumpVal/blend_amount = 0.041666668
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=2003866846]
 
 [node name="InventoryUI" type="Control" parent="." unique_id=2136841559]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -702,21 +713,21 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 2.3841858e-07, 0, 1, 0, -2.3841858e-07, 0, 1, 0, -0.022641242, 0)
 bones/0/enabled = true
 bones/0/position = Vector3(0, -0.022641242, 0)
-bones/0/rotation = Quaternion(-0.033818338, 1.1119239e-07, -5.6016662e-09, 0.99942803)
+bones/0/rotation = Quaternion(-0.0015516551, 1.1129256e-07, -8.642447e-09, 0.9999988)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Head"
 bones/1/parent = 0
 bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23699029, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 0.23699029, 0)
-bones/1/rotation = Quaternion(0.03224916, -4.8457518e-05, -0.0007911719, 0.9994796)
+bones/1/rotation = Quaternion(-1.8373132e-05, -7.396167e-05, -0.000789197, 0.9999997)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "LeftHand"
 bones/2/parent = 0
 bones/2/rest = Transform3D(-0.9319116, -0.36268908, -2.1853853e-07, 0.36268958, -0.9319103, 1.2662169e-07, -2.4958297e-07, 3.8738506e-08, 1, -0.123382494, 0.2129689, -2.6189195e-08)
 bones/2/enabled = true
 bones/2/position = Vector3(-0.123382494, 0.2129689, -2.6189195e-08)
-bones/2/rotation = Quaternion(-0.11542912, -0.0829257, 0.9696824, 0.19878536)
+bones/2/rotation = Quaternion(-0.116626084, -0.088646, 0.97628313, 0.15940972)
 bones/2/scale = Vector3(1.0000014, 1, 1)
 bones/3/name = "LeftHand.001"
 bones/3/parent = 2
@@ -730,7 +741,7 @@ bones/4/parent = 0
 bones/4/rest = Transform3D(-0.9247777, 0.3805076, -1.2222918e-06, -0.38050753, -0.92477787, -2.7046394e-07, -1.2332617e-06, 2.1497219e-07, 1, 0.14194445, 0.21078514, 3.7363087e-08)
 bones/4/enabled = true
 bones/4/position = Vector3(0.14180034, 0.21131313, 1.8976223e-05)
-bones/4/rotation = Quaternion(-0.11445731, -0.14030716, 0.9597228, -0.21481542)
+bones/4/rotation = Quaternion(-0.11550202, -0.13646676, 0.9681025, -0.17553848)
 bones/4/scale = Vector3(0.9999999, 1, 1)
 bones/5/name = "RightHand.001"
 bones/5/parent = 4
@@ -787,14 +798,14 @@ settings/0/joints/1/limitation = null
 [node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Armature/Skeleton3D" unique_id=1314951815]
 
 [node name="Physical Bone RightHand" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=757157688]
-transform = Transform3D(-1.5366545, 0.42434746, -0.69512385, -0.64349115, -1.5424789, 0.4808878, -0.49918637, 0.682102, 1.5199094, 0.18986642, 0.15602185, -0.11290825)
+transform = Transform3D(-1.580721, 0.2956784, -0.66217107, -0.49181283, -1.6041023, 0.45776764, -0.53293186, 0.60332847, 1.5416074, 0.18807302, 0.15773238, -0.10094363)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 joint_type = 1
-joint_offset = Transform3D(1.0000005, -4.4408905e-16, 1.4901158e-08, 0, 1.0000004, 2.9802322e-08, -1.4901161e-08, -2.9802326e-08, 1.0000002, 0.0012960422, -0.00090282527, 0.06573128)
+joint_offset = Transform3D(1.0000005, -4.4408905e-16, 1.4901158e-08, 0, 1.0000004, 2.9802322e-08, -1.4901161e-08, -2.9802326e-08, 1.0000002, 0.0014783987, -0.0009232687, 0.065938786)
 joint_rotation = Vector3(-2.9802315e-08, 1.4901154e-08, 0)
-body_offset = Transform3D(1.7364637, 0.09496753, -0.0158391, -0.017057687, 0.021873593, -1.7389094, -0.0947561, 1.736398, 0.022771299, -0.0011236668, 0.1143426, 0.0001936853)
+body_offset = Transform3D(1.7364897, 0.09467082, -0.014710188, -0.015901, 0.021462142, -1.7389252, -0.09447822, 1.7364191, 0.022295475, -0.0015098453, 0.11470595, 0.00027272105)
 bone_name = "RightHand"
 joint_constraints/bias = 0.3
 joint_constraints/damping = 1.0
@@ -806,7 +817,26 @@ transform = Transform3D(-0.030561423, -0.007099414, -0.015511215, 0.009430655, -
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1888710469]
 libraries/ = SubResource("AnimationLibrary_l0frw")
 
+[node name="MovementManager" type="Node3D" parent="." unique_id=1903018293]
+script = ExtResource("6_l4ocb")
+
+[node name="MountController" type="Node3D" parent="." unique_id=679163102]
+script = ExtResource("7_cya1h")
+
+[node name="SatelliteUIController" type="Node3D" parent="." unique_id=1806841247]
+script = ExtResource("8_b3isb")
+
+[node name="PlacementController" type="Node3D" parent="." unique_id=884013858]
+script = ExtResource("9_lhpfe")
+
+[node name="BackPackController" type="Node3D" parent="." unique_id=340554881]
+script = ExtResource("10_l0frw")
+
+[node name="ScrapManager" type="Node3D" parent="." unique_id=946725058]
+script = ExtResource("11_8fhyy")
+
 [connection signal="item_clicked" from="SatteliteUI/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="item_clicked" from="SatteliteUI/ItemList" to="SatelliteUIController" method="on_item_list_item_clicked"]
 [connection signal="item_clicked" from="SatteliteUI/UpgradesList" to="." method="_on_item_list_item_clicked"]
 [connection signal="item_clicked" from="SatteliteUI/MainMenu" to="." method="_on_main_menu_item_clicked"]
 [connection signal="pressed" from="SatteliteUI/SatelliteText/DoneButton" to="." method="_on_done_button_pressed"]

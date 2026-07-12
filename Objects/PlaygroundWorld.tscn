@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://c3jnwrpmlbvbp" path="res://Assets/Rover/rover.tscn" id="16_ojfgx"]
 [ext_resource type="FontFile" uid="uid://dujscdaiocpca" path="res://Assets/0xProto/0xProtoNerdFont-Regular.ttf" id="17_kvg7m"]
 [ext_resource type="PackedScene" uid="uid://dhk7cv8g2j1gw" path="res://Objects/DockingShip/docking_ship.tscn" id="17_rfc3h"]
+[ext_resource type="PackedScene" uid="uid://coah246wohuf4" path="res://Objects/backpack/backpack.tscn" id="18_rfc3h"]
+[ext_resource type="PackedScene" uid="uid://bflvmu3vr7l36" path="res://Objects/Scrap/scrap.tscn" id="19_aot74"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol3l7"]
 sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
@@ -282,13 +284,6 @@ mass = 40.0
 gravity_scale = 1.0
 linear_damp_mode = 1
 angular_damp_mode = 1
-thrust_force = 900.0
-pitch_torque = 40.0
-yaw_torque = 40.0
-roll_torque = 40.0
-stabilization_strength = 25.0
-impact_velocity_threshold = 10.0
-rcs_force = 200.0
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=1000938322 groups=["camera_rig"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3093975, 2.9949632)
@@ -324,7 +319,7 @@ script = ExtResource("9_0o5du")
 material_override = ExtResource("10_34g4x")
 
 [node name="Nebula2" parent="." unique_id=806577908 instance=ExtResource("11_k2xjf")]
-transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, -6608.631, 395.8988, 12960.731)
+transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, -2819.2622, 395.8988, 12960.731)
 mesh = SubResource("BoxMesh_yaehb")
 surface_material_override/0 = SubResource("ShaderMaterial_kvg7m")
 
@@ -618,7 +613,13 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.070694864, 71.40962, 3.4974837)
 
 [node name="DockingShip2" parent="." unique_id=2058088437 instance=ExtResource("17_rfc3h")]
-transform = Transform3D(0.9996095, 0.027956538, 0, -0.02795654, 0.99960935, 0, 0, 0, 1.0000005, -26.207628, 77.7568, 0)
+transform = Transform3D(0.9996095, 0.027956538, 0, -0.02795654, 0.99960935, 0, 0, 0, 1.0000005, -1.5623722, 77.067535, 0)
+
+[node name="Backpack" parent="." unique_id=1097135241 instance=ExtResource("18_rfc3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.144783, 70.339, 0)
+
+[node name="Scrap" parent="." unique_id=248153912 instance=ExtResource("19_aot74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4711, 69.97246, 0)
 
 [connection signal="pressed" from="Settings2/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Settings2/Exit" to="." method="_on_exit_pressed"]
