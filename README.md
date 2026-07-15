@@ -3,7 +3,7 @@
 *A KSP and Spaceflight Simulator inspired sandbox game about realistic space travel, built for people who just want to relax and enjoy flying through space.*
 
 <p align="center">
-  <img src="iamges/Screenshot_20260708_151654.png" width="800">
+  <img src="iamges/1.png" width="800">
 </p>
 
 [Click here to watch the gameplay video on YouTube](https://youtu.be/RQmEh_rwnzQ) |
@@ -36,7 +36,7 @@ This project was made in **Godot 4.6.2** as my submission for **Hack Club Starda
 ---
 
 <p align="center">
-  <img src="iamges/Screenshot_20260708_151900.png" width="700">
+  <img src="iamges/2.png" width="700">
 </p>
 
 # Quick Start
@@ -52,7 +52,7 @@ This project was made in **Godot 4.6.2** as my submission for **Hack Club Starda
 ---
 
 <p align="center">
-  <img src="iamges/Screenshot_20260708_151950.png" width="700">
+  <img src="iamges/3.png" width="700">
 </p>
 
 # How It Works
@@ -97,18 +97,13 @@ This is only the beginning for Into the Cosmos.
 
 Some of the features I plan to add include:
 
-* Multiplayer
-* More planets and celestial bodies
-* Planetary bases
 * Research systems
 * Resource gathering
 * More spacecraft
 * Space stations
-* Docking
-* More exploration mechanics
+* Docking (done)
+* More exploration mechanics 
 * Base building
-* Raiding your friends' bases
-* Launching missiles at enemy bases
 * More visual effects
 * More procedural content
 * Even more things to discover throughout the universe
