@@ -49,7 +49,7 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			InventoryGlobal.select_prev()
 
-	if Input.is_action_just_pressed("interact") and not Input.is_key_pressed(KEY_SHIFT):
+	if event.is_action_pressed("interact") and not event.is_echo() and not Input.is_key_pressed(KEY_SHIFT):
 		if open_backpack != null:
 			backpack_controller.close_backpack()
 		elif is_mounted:
@@ -72,9 +72,9 @@ func _physics_process(delta: float) -> void:
 	movement_controller.update_gravity(delta)
 	movement_controller.handle_movement(delta, head)
 	movement_controller.update_tree(animation_tree)
-	handle_scrap_breaking()
-	if Input.is_action_just_pressed("Place") and !ui_open and !settings_open and !breakercast.is_colliding():
-		placement_controller.try_place_selected_item()
+	if Input.is_action_just_pressed("Place") and !ui_open and !settings_open:
+		if not handle_scrap_breaking():
+			placement_controller.try_place_selected_item()
 
 	if GraphicsSettings.showkeybinds:
 		$Help.show()
@@ -87,11 +87,13 @@ func set_nearest_rocket(rocket) -> void:
 func set_nearest_backpack(bp: Backpack) -> void:
 	nearest_backpack = bp
 
-func handle_scrap_breaking() -> void:
-	if Input.is_action_just_pressed("thrust"):
-		if breakercast.is_colliding():
-			var scrap_scene = breakercast.get_collider()
-			if scrap_scene.is_in_group("scrap"):
-				scraps += scrap_scene.scrap_quantity 
-				print(scraps)
-				scrap_scene.remove()
+func handle_scrap_breaking() -> bool:
+	if breakercast.is_colliding():
+		var scrap_scene = breakercast.get_collider()
+		if scrap_scene.is_in_group("scrap"):
+			scraps += scrap_scene.scrap_quantity 
+			
+			scrap_scene.remove()
+			$NormalBoneyUI/Scrapcounter.text = "Scraps: " + str(scraps)
+			return true
+	return false

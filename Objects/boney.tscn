@@ -72,70 +72,6 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0.62954575, 0.6230115, 0.63273174, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hw58"]
-content_margin_left = 20.0
-content_margin_top = 20.0
-content_margin_right = 20.0
-content_margin_bottom = 20.0
-bg_color = Color(0.57744944, 0.5478854, 0.51825625, 1)
-border_width_left = 7
-border_width_top = 7
-border_width_right = 7
-border_width_bottom = 7
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_emjar"]
-content_margin_left = 20.0
-content_margin_top = 20.0
-content_margin_right = 20.0
-content_margin_bottom = 20.0
-bg_color = Color(0.55972064, 0.5635325, 0.54602885, 1)
-border_width_left = 7
-border_width_top = 7
-border_width_right = 7
-border_width_bottom = 7
-border_color = Color(0.7750634, 0.7750634, 0.7750633, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lka1x"]
-bg_color = Color(0.55325234, 0.52987564, 0.49717915, 1)
-border_width_left = 7
-border_width_top = 7
-border_width_right = 7
-border_width_bottom = 7
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab5kg"]
-bg_color = Color(0.5572561, 0.53384745, 0.5011066, 1)
-border_width_left = 7
-border_width_top = 7
-border_width_right = 7
-border_width_bottom = 7
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l4ocb"]
-bg_color = Color(0.4934222, 0.47091556, 0.4394223, 1)
-border_width_left = 7
-border_width_top = 7
-border_width_right = 7
-border_width_bottom = 7
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aobt8"]
 resource_name = "Heknet"
 cull_mode = 2
@@ -440,10 +376,97 @@ _data = {
 &"Run": SubResource("Animation_bmuon")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hw58"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.57744944, 0.5478854, 0.51825625, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_emjar"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.55972064, 0.5635325, 0.54602885, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+border_color = Color(0.7750634, 0.7750634, 0.7750633, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lka1x"]
+bg_color = Color(0.55325234, 0.52987564, 0.49717915, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab5kg"]
+bg_color = Color(0.5572561, 0.53384745, 0.5011066, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l4ocb"]
+bg_color = Color(0.4934222, 0.47091556, 0.4394223, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="Boney" type="CharacterBody3D" unique_id=666712437 groups=["player"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_b5u8h")
+
+[node name="NormalBoneyUI" type="Control" parent="." unique_id=253795446]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scrapcounter" type="RichTextLabel" parent="NormalBoneyUI" unique_id=43763727]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.86600006
+anchor_top = 0.019000001
+anchor_right = 0.99000007
+anchor_bottom = 0.09200001
+offset_left = 2.36792
+offset_top = -0.31200123
+offset_right = 0.51989746
+offset_bottom = -21.616005
+grow_horizontal = 0
+text = "Scraps: 0"
+horizontal_alignment = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829888483]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21643144, 0)
@@ -514,7 +537,6 @@ parameters/JumpVal/blend_amount = 0.041666668
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=2003866846]
 
 [node name="InventoryUI" type="Control" parent="." unique_id=2136841559]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -551,6 +573,143 @@ item_0/icon = ExtResource("4_l4ocb")
 item_1/icon = ExtResource("4_l4ocb")
 item_2/icon = ExtResource("4_l4ocb")
 item_3/icon = ExtResource("4_l4ocb")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=1090321486]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13529381, 0.20635363, -0.121307194)
+
+[node name="Armature" type="Node3D" parent="." unique_id=705297261]
+transform = Transform3D(0.575, 0, 0, 0, 0.575, 0, 0, 0, 0.575, 0, 0.13525228, 0)
+
+[node name="Skeleton3D" type="Skeleton3D" parent="Armature" unique_id=207369424]
+bones/0/name = "Body"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 0, 2.3841858e-07, 0, 1, 0, -2.3841858e-07, 0, 1, 0, -0.022641242, 0)
+bones/0/enabled = true
+bones/0/position = Vector3(0, -0.022641242, 0)
+bones/0/rotation = Quaternion(-0.031473517, 1.11198545e-07, -6.565482e-09, 0.9995046)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/name = "Head"
+bones/1/parent = 0
+bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23699029, 0)
+bones/1/enabled = true
+bones/1/position = Vector3(0, 0.23699029, 0)
+bones/1/rotation = Quaternion(0.029904215, -5.0313538e-05, -0.0007910554, 0.99955255)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/name = "LeftHand"
+bones/2/parent = 0
+bones/2/rest = Transform3D(-0.9319116, -0.36268908, -2.1853853e-07, 0.36268958, -0.9319103, 1.2662169e-07, -2.4958297e-07, 3.8738506e-08, 1, -0.123382494, 0.2129689, -2.6189195e-08)
+bones/2/enabled = true
+bones/2/position = Vector3(-0.123382494, 0.2129689, -2.6189195e-08)
+bones/2/rotation = Quaternion(-0.115522824, -0.08334643, 0.97021544, 0.19593342)
+bones/2/scale = Vector3(1.0000014, 1, 1)
+bones/3/name = "LeftHand.001"
+bones/3/parent = 2
+bones/3/rest = Transform3D(0.9641387, 0.26539865, -1.3695107e-07, -0.26539862, 0.96413875, 4.357068e-08, 1.4360342e-07, -5.6615512e-09, 1, 7.4505797e-09, 0.21675685, -1.3322676e-15)
+bones/3/enabled = true
+bones/3/position = Vector3(7.4505797e-09, 0.21675685, -1.3322676e-15)
+bones/3/rotation = Quaternion(-1.2419909e-08, -7.0776025e-08, -0.13390526, 0.99099416)
+bones/3/scale = Vector3(0.9999999, 1, 1)
+bones/4/name = "RightHand"
+bones/4/parent = 0
+bones/4/rest = Transform3D(-0.9247777, 0.3805076, -1.2222918e-06, -0.38050753, -0.92477787, -2.7046394e-07, -1.2332617e-06, 2.1497219e-07, 1, 0.14194445, 0.21078514, 3.7363087e-08)
+bones/4/enabled = true
+bones/4/position = Vector3(0.14180034, 0.21131313, 1.8976223e-05)
+bones/4/rotation = Quaternion(-0.114539914, -0.14003608, 0.96038467, -0.21197142)
+bones/4/scale = Vector3(0.9999999, 1, 1)
+bones/5/name = "RightHand.001"
+bones/5/parent = 4
+bones/5/rest = Transform3D(0.9739842, -0.021850685, -0.22556004, 0.02128731, 0.9997611, -0.0049297945, 0.2256139, -2.4684507e-08, 0.9742168, 3.7252583e-09, 0.22669342, -2.1316282e-14)
+bones/5/enabled = true
+bones/5/position = Vector3(3.7252583e-09, 0.22669342, -2.1316282e-14)
+bones/5/rotation = Quaternion(0.0012405383, -0.11353442, 0.010855341, 0.993474)
+bones/5/scale = Vector3(1, 0.9999998, 1)
+bones/6/name = "LegRight"
+bones/6/parent = -1
+bones/6/rest = Transform3D(-4.5299535e-06, 0.030174907, 0.9995448, -3.166497e-08, -0.9995448, 0.030174907, 1.0000001, 1.05040364e-07, 4.5288466e-06, 0.078858025, -0.018091738, -6.1126587e-10)
+bones/6/enabled = true
+bones/6/position = Vector3(0.07885803, -0.01809174, -6.112245e-10)
+bones/6/rotation = Quaternion(0.69563174, 0.01843572, 0.71811914, -0.007848491)
+bones/6/scale = Vector3(1.0000001, 1.0000001, 1.0000001)
+bones/7/name = "LegLeft"
+bones/7/parent = -1
+bones/7/rest = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, -0.06975902, -0.024157748, 2.0375528e-10)
+bones/7/enabled = true
+bones/7/position = Vector3(-0.064456485, -0.023052149, 1.1550095e-08)
+bones/7/rotation = Quaternion(0.99900806, -0.005077485, -0.010353778, -0.043009263)
+bones/7/scale = Vector3(1, 1, 1)
+
+[node name="Cube" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=1648333474]
+mesh = SubResource("ArrayMesh_l4ocb")
+skin = SubResource("Skin_cya1h")
+skeleton = NodePath("..")
+
+[node name="Cube_001" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=889005517]
+mesh = SubResource("ArrayMesh_b3isb")
+skin = SubResource("Skin_cya1h")
+skeleton = NodePath("..")
+
+[node name="Cylinder" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=1972000511]
+mesh = SubResource("ArrayMesh_lhpfe")
+skin = SubResource("Skin_cya1h")
+skeleton = NodePath("..")
+
+[node name="CCDIK3D" type="CCDIK3D" parent="Armature/Skeleton3D" unique_id=382873893]
+max_iterations = 1
+setting_count = 1
+settings/0/target_node = NodePath("../../../Marker3D")
+settings/0/root_bone_name = "RightHand"
+settings/0/root_bone = 4
+settings/0/end_bone_name = "RightHand.001"
+settings/0/end_bone = 5
+settings/0/extend_end_bone = false
+settings/0/joint_count = 2
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = null
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = null
+
+[node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Armature/Skeleton3D" unique_id=1314951815]
+
+[node name="Physical Bone RightHand" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=757157688]
+transform = Transform3D(-1.5381342, 0.41501892, -0.6974795, -0.6348272, -1.546396, 0.47982186, -0.50568044, 0.6789653, 1.5191671, 0.19148675, 0.15611134, -0.112524725)
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+joint_type = 1
+joint_offset = Transform3D(1.0000005, -4.4408905e-16, 1.4901158e-08, 0, 1.0000004, 2.9802322e-08, -1.4901161e-08, -2.9802326e-08, 1.0000002, 0.0019278518, -0.00097214605, 0.0664072)
+joint_rotation = Vector3(-2.9802315e-08, 1.4901154e-08, 0)
+body_offset = Transform3D(1.7365348, 0.094213545, -0.012119651, -0.0132505, 0.020532489, -1.7389588, -0.09406105, 1.7364552, 0.021219492, -0.0024513602, 0.11552488, 0.00046029687)
+bone_name = "RightHand"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="HoldingSprite" type="Sprite3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone RightHand" unique_id=1444137369]
+transform = Transform3D(-0.030561423, -0.007099414, -0.015511215, 0.009430655, -0.033550896, -0.0032249298, -0.0142148575, -0.006995411, 0.031209007, 0.015516758, -0.03499943, -0.0758443)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1888710469]
+libraries/ = SubResource("AnimationLibrary_l0frw")
+
+[node name="MovementManager" type="Node3D" parent="." unique_id=1903018293]
+script = ExtResource("6_l4ocb")
+
+[node name="MountController" type="Node3D" parent="." unique_id=679163102]
+script = ExtResource("7_cya1h")
+
+[node name="SatelliteUIController" type="Node3D" parent="." unique_id=1806841247]
+script = ExtResource("8_b3isb")
+
+[node name="PlacementController" type="Node3D" parent="." unique_id=884013858]
+script = ExtResource("9_lhpfe")
+
+[node name="BackPackController" type="Node3D" parent="." unique_id=340554881]
+script = ExtResource("10_l0frw")
+
+[node name="ScrapManager" type="Node3D" parent="." unique_id=946725058]
+script = ExtResource("11_8fhyy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=844678714]
+transform = Transform3D(1, 0, 0, 0, -0.681909, 0.731437, 0, -0.731437, -0.681909, 0, 10.850779, 0)
 
 [node name="SatteliteUI" type="Control" parent="." unique_id=1656404811]
 visible = false
@@ -701,142 +860,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_ab5kg")
 theme_override_styles/hover = SubResource("StyleBoxFlat_l4ocb")
 text = "Done"
 
-[node name="Marker3D" type="Marker3D" parent="." unique_id=1090321486]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13529381, 0.20635363, -0.121307194)
-
-[node name="Armature" type="Node3D" parent="." unique_id=705297261]
-transform = Transform3D(0.575, 0, 0, 0, 0.575, 0, 0, 0, 0.575, 0, 0.13525228, 0)
-
-[node name="Skeleton3D" type="Skeleton3D" parent="Armature" unique_id=207369424]
-bones/0/name = "Body"
-bones/0/parent = -1
-bones/0/rest = Transform3D(1, 0, 2.3841858e-07, 0, 1, 0, -2.3841858e-07, 0, 1, 0, -0.022641242, 0)
-bones/0/enabled = true
-bones/0/position = Vector3(0, -0.022641242, 0)
-bones/0/rotation = Quaternion(-0.0015516551, 1.1129256e-07, -8.642447e-09, 0.9999988)
-bones/0/scale = Vector3(1, 1, 1)
-bones/1/name = "Head"
-bones/1/parent = 0
-bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23699029, 0)
-bones/1/enabled = true
-bones/1/position = Vector3(0, 0.23699029, 0)
-bones/1/rotation = Quaternion(-1.8373132e-05, -7.396167e-05, -0.000789197, 0.9999997)
-bones/1/scale = Vector3(1, 1, 1)
-bones/2/name = "LeftHand"
-bones/2/parent = 0
-bones/2/rest = Transform3D(-0.9319116, -0.36268908, -2.1853853e-07, 0.36268958, -0.9319103, 1.2662169e-07, -2.4958297e-07, 3.8738506e-08, 1, -0.123382494, 0.2129689, -2.6189195e-08)
-bones/2/enabled = true
-bones/2/position = Vector3(-0.123382494, 0.2129689, -2.6189195e-08)
-bones/2/rotation = Quaternion(-0.116626084, -0.088646, 0.97628313, 0.15940972)
-bones/2/scale = Vector3(1.0000014, 1, 1)
-bones/3/name = "LeftHand.001"
-bones/3/parent = 2
-bones/3/rest = Transform3D(0.9641387, 0.26539865, -1.3695107e-07, -0.26539862, 0.96413875, 4.357068e-08, 1.4360342e-07, -5.6615512e-09, 1, 7.4505797e-09, 0.21675685, -1.3322676e-15)
-bones/3/enabled = true
-bones/3/position = Vector3(7.4505797e-09, 0.21675685, -1.3322676e-15)
-bones/3/rotation = Quaternion(-1.2419909e-08, -7.0776025e-08, -0.13390526, 0.99099416)
-bones/3/scale = Vector3(0.9999999, 1, 1)
-bones/4/name = "RightHand"
-bones/4/parent = 0
-bones/4/rest = Transform3D(-0.9247777, 0.3805076, -1.2222918e-06, -0.38050753, -0.92477787, -2.7046394e-07, -1.2332617e-06, 2.1497219e-07, 1, 0.14194445, 0.21078514, 3.7363087e-08)
-bones/4/enabled = true
-bones/4/position = Vector3(0.14180034, 0.21131313, 1.8976223e-05)
-bones/4/rotation = Quaternion(-0.11550202, -0.13646676, 0.9681025, -0.17553848)
-bones/4/scale = Vector3(0.9999999, 1, 1)
-bones/5/name = "RightHand.001"
-bones/5/parent = 4
-bones/5/rest = Transform3D(0.9739842, -0.021850685, -0.22556004, 0.02128731, 0.9997611, -0.0049297945, 0.2256139, -2.4684507e-08, 0.9742168, 3.7252583e-09, 0.22669342, -2.1316282e-14)
-bones/5/enabled = true
-bones/5/position = Vector3(3.7252583e-09, 0.22669342, -2.1316282e-14)
-bones/5/rotation = Quaternion(0.0012405383, -0.11353442, 0.010855341, 0.993474)
-bones/5/scale = Vector3(1, 0.9999998, 1)
-bones/6/name = "LegRight"
-bones/6/parent = -1
-bones/6/rest = Transform3D(-4.5299535e-06, 0.030174907, 0.9995448, -3.166497e-08, -0.9995448, 0.030174907, 1.0000001, 1.05040364e-07, 4.5288466e-06, 0.078858025, -0.018091738, -6.1126587e-10)
-bones/6/enabled = true
-bones/6/position = Vector3(0.07885803, -0.01809174, -6.112245e-10)
-bones/6/rotation = Quaternion(0.69563174, 0.01843572, 0.71811914, -0.007848491)
-bones/6/scale = Vector3(1.0000001, 1.0000001, 1.0000001)
-bones/7/name = "LegLeft"
-bones/7/parent = -1
-bones/7/rest = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, -0.06975902, -0.024157748, 2.0375528e-10)
-bones/7/enabled = true
-bones/7/position = Vector3(-0.064456485, -0.023052149, 1.1550095e-08)
-bones/7/rotation = Quaternion(0.99900806, -0.005077485, -0.010353778, -0.043009263)
-bones/7/scale = Vector3(1, 1, 1)
-
-[node name="Cube" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=1648333474]
-mesh = SubResource("ArrayMesh_l4ocb")
-skin = SubResource("Skin_cya1h")
-skeleton = NodePath("..")
-
-[node name="Cube_001" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=889005517]
-mesh = SubResource("ArrayMesh_b3isb")
-skin = SubResource("Skin_cya1h")
-skeleton = NodePath("..")
-
-[node name="Cylinder" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=1972000511]
-mesh = SubResource("ArrayMesh_lhpfe")
-skin = SubResource("Skin_cya1h")
-skeleton = NodePath("..")
-
-[node name="CCDIK3D" type="CCDIK3D" parent="Armature/Skeleton3D" unique_id=382873893]
-max_iterations = 1
-setting_count = 1
-settings/0/target_node = NodePath("../../../Marker3D")
-settings/0/root_bone_name = "RightHand"
-settings/0/root_bone = 4
-settings/0/end_bone_name = "RightHand.001"
-settings/0/end_bone = 5
-settings/0/extend_end_bone = false
-settings/0/joint_count = 2
-settings/0/joints/0/rotation_axis = 3
-settings/0/joints/0/limitation = null
-settings/0/joints/1/rotation_axis = 3
-settings/0/joints/1/limitation = null
-
-[node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Armature/Skeleton3D" unique_id=1314951815]
-
-[node name="Physical Bone RightHand" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=757157688]
-transform = Transform3D(-1.580721, 0.2956784, -0.66217107, -0.49181283, -1.6041023, 0.45776764, -0.53293186, 0.60332847, 1.5416074, 0.18807302, 0.15773238, -0.10094363)
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
-joint_type = 1
-joint_offset = Transform3D(1.0000005, -4.4408905e-16, 1.4901158e-08, 0, 1.0000004, 2.9802322e-08, -1.4901161e-08, -2.9802326e-08, 1.0000002, 0.0014783987, -0.0009232687, 0.065938786)
-joint_rotation = Vector3(-2.9802315e-08, 1.4901154e-08, 0)
-body_offset = Transform3D(1.7364897, 0.09467082, -0.014710188, -0.015901, 0.021462142, -1.7389252, -0.09447822, 1.7364191, 0.022295475, -0.0015098453, 0.11470595, 0.00027272105)
-bone_name = "RightHand"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="HoldingSprite" type="Sprite3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone RightHand" unique_id=1444137369]
-transform = Transform3D(-0.030561423, -0.007099414, -0.015511215, 0.009430655, -0.033550896, -0.0032249298, -0.0142148575, -0.006995411, 0.031209007, 0.015516758, -0.03499943, -0.0758443)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1888710469]
-libraries/ = SubResource("AnimationLibrary_l0frw")
-
-[node name="MovementManager" type="Node3D" parent="." unique_id=1903018293]
-script = ExtResource("6_l4ocb")
-
-[node name="MountController" type="Node3D" parent="." unique_id=679163102]
-script = ExtResource("7_cya1h")
-
-[node name="SatelliteUIController" type="Node3D" parent="." unique_id=1806841247]
-script = ExtResource("8_b3isb")
-
-[node name="PlacementController" type="Node3D" parent="." unique_id=884013858]
-script = ExtResource("9_lhpfe")
-
-[node name="BackPackController" type="Node3D" parent="." unique_id=340554881]
-script = ExtResource("10_l0frw")
-
-[node name="ScrapManager" type="Node3D" parent="." unique_id=946725058]
-script = ExtResource("11_8fhyy")
-
 [connection signal="item_clicked" from="SatteliteUI/ItemList" to="." method="_on_item_list_item_clicked"]
 [connection signal="item_clicked" from="SatteliteUI/ItemList" to="SatelliteUIController" method="on_item_list_item_clicked"]
 [connection signal="item_clicked" from="SatteliteUI/UpgradesList" to="." method="_on_item_list_item_clicked"]
-[connection signal="item_clicked" from="SatteliteUI/MainMenu" to="." method="_on_main_menu_item_clicked"]
+[connection signal="item_clicked" from="SatteliteUI/MainMenu" to="SatelliteUIController" method="_on_main_menu_item_clicked"]
 [connection signal="pressed" from="SatteliteUI/SatelliteText/DoneButton" to="." method="_on_done_button_pressed"]
+[connection signal="pressed" from="SatteliteUI/SatelliteText/DoneButton" to="SatelliteUIController" method="on_done_button_pressed"]

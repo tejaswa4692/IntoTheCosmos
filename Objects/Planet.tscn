@@ -5,6 +5,9 @@
 [ext_resource type="ArrayMesh" uid="uid://b0xhhupxp6cq8" path="res://Assets/Debries/rock.obj" id="3_o5h3e"]
 [ext_resource type="Shader" uid="uid://vyskeea23vin" path="res://Assets/RockShader.gdshader" id="4_0x0fb"]
 [ext_resource type="Script" uid="uid://dfyg625n1x0nh" path="res://Objects/Planets/planet_rock_scatterer.gd" id="4_48vsq"]
+[ext_resource type="Shader" uid="uid://cqgeqhmdge55g" path="res://Objects/Planets/Water.gdshader" id="6_qtlq7"]
+[ext_resource type="Script" uid="uid://dunk4t8lg48ce" path="res://Objects/Planets/scrap_scatterer.gd" id="7_82hir"]
+[ext_resource type="PackedScene" uid="uid://bflvmu3vr7l36" path="res://Objects/Scrap/scrap.tscn" id="8_qtlq7"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rvel7"]
 radius = 70.0
@@ -21,8 +24,28 @@ shader_parameter/noise_contrast = 0.35
 [sub_resource type="SphereOccluder3D" id="SphereOccluder3D_0x0fb"]
 radius = 70.183334
 
+[sub_resource type="SphereMesh" id="SphereMesh_qtlq7"]
+radius = 70.265
+height = 140.49
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g315r"]
+render_priority = 0
+shader = ExtResource("6_qtlq7")
+shader_parameter/water_color = Color(0.05, 0.35, 0.5, 0.55)
+shader_parameter/deep_color = Color(0, 0.1, 0.2, 0.85)
+shader_parameter/metallic_val = 0.6
+shader_parameter/roughness_val = 0.05
+shader_parameter/wave_speed = 0.6
+shader_parameter/wave_height = 0.08
+shader_parameter/wave_frequency = 4.0
+shader_parameter/fresnel_power = 3.0
+shader_parameter/foam_color = Color(0.8, 0.8, 0.8, 1)
+shader_parameter/foam_distance = 0.15000000642648
+shader_parameter/foam_noise_scale = 15.580000736790119
+
 [node name="Planet-Earth3" type="Node3D" unique_id=58250303]
 script = ExtResource("1_rvel7")
+atmosphere_intensity_multiplier = 0.15
 
 [node name="Planet-LOD" parent="." unique_id=252755823 instance=ExtResource("2_rvel7")]
 transform = Transform3D(70, 0, 0, 0, 70, 0, 0, 0, 70, 0, 0, 0)
@@ -53,5 +76,19 @@ mesh = SubResource("SphereMesh_48vsq")
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." unique_id=2083172514]
 occluder = SubResource("SphereOccluder3D_0x0fb")
+
+[node name="AtmosphereMesh" type="MeshInstance3D" parent="." unique_id=610016892]
+visibility_range_end = 328.3
+visibility_range_end_margin = 156.0
+visibility_range_fade_mode = 1
+mesh = SubResource("SphereMesh_qtlq7")
+
+[node name="WaterShader" type="MeshInstance3D" parent="." unique_id=1485761074]
+mesh = SubResource("SphereMesh_qtlq7")
+surface_material_override/0 = SubResource("ShaderMaterial_g315r")
+
+[node name="ScrapScatterer" type="Node3D" parent="." unique_id=47217107]
+script = ExtResource("7_82hir")
+scrap_scene = ExtResource("8_qtlq7")
 
 [connection signal="timeout" from="LODUpdateTimer" to="." method="_on_lod_timer_timeout"]

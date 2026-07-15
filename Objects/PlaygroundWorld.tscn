@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cnfapuavi5wru" path="res://Objects/playground_world.gd" id="1_78x0b"]
 [ext_resource type="PackedScene" uid="uid://jmmg3uvn4ina" path="res://Objects/rocket.tscn" id="1_arduf"]
-[ext_resource type="Script" uid="uid://btbun1t27m14m" path="res://Objects/gravity_source.gd" id="3_xv3hj"]
 [ext_resource type="Script" uid="uid://dqoodcniemx37" path="res://Objects/camera_rig.gd" id="4_78x0b"]
 [ext_resource type="AudioStream" uid="uid://b2ub5nsi1pvn4" path="res://Assets/Music/Ambient Space Synth Music (For Videos) - Adrift by Hayden Folker.mp3" id="5_amm11"]
 [ext_resource type="PackedScene" uid="uid://b8sla8idannnh" path="res://Objects/Planet.tscn" id="6_ypcqb"]
@@ -13,12 +12,15 @@
 [ext_resource type="Shader" uid="uid://d06hr80gyghnj" path="res://Objects/blackhole.gdshader" id="12_amm11"]
 [ext_resource type="Script" uid="uid://do2b6ant3wtqj" path="res://Objects/Planets/planet_spawn_manager.gd" id="13_ag2w8"]
 [ext_resource type="Shader" uid="uid://b32qsklw5flmn" path="res://Objects/nebula.gdshader" id="13_ojfgx"]
+[ext_resource type="Script" uid="uid://ijhb3s4kpc2t" path="res://Objects/blackhole_easteregg/black_hole.gd" id="13_q7ck0"]
+[ext_resource type="Texture2D" uid="uid://cfd2njvlink4f" path="res://Assets/RocketMesh/the-eye-of-despair-v0-7opg5e4gy10e1.png" id="14_abo4m"]
 [ext_resource type="FontFile" uid="uid://b0recaxa13gtf" path="res://Assets/0xProto/0xProtoNerdFont-Bold.ttf" id="14_k2xjf"]
 [ext_resource type="PackedScene" uid="uid://c3jnwrpmlbvbp" path="res://Assets/Rover/rover.tscn" id="16_ojfgx"]
 [ext_resource type="FontFile" uid="uid://dujscdaiocpca" path="res://Assets/0xProto/0xProtoNerdFont-Regular.ttf" id="17_kvg7m"]
 [ext_resource type="PackedScene" uid="uid://dhk7cv8g2j1gw" path="res://Objects/DockingShip/docking_ship.tscn" id="17_rfc3h"]
 [ext_resource type="PackedScene" uid="uid://coah246wohuf4" path="res://Objects/backpack/backpack.tscn" id="18_rfc3h"]
 [ext_resource type="PackedScene" uid="uid://bflvmu3vr7l36" path="res://Objects/Scrap/scrap.tscn" id="19_aot74"]
+[ext_resource type="PackedScene" uid="uid://j7jbnn5uc8ak" path="res://Objects/ShootingStar/shooting_star.tscn" id="22_rcfup"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ol3l7"]
 sky_top_color = Color(0.111346446, 0.10536235, 0.11134667, 1)
@@ -44,13 +46,18 @@ ambient_light_source = 3
 ambient_light_color = Color(0.5409902, 0.5409906, 0.5409904, 1)
 ambient_light_sky_contribution = 0.0
 reflected_light_source = 1
-ssr_fade_in = 14.55087
 ssao_enabled = true
 glow_enabled = true
-volumetric_fog_density = 0.0
+volumetric_fog_density = 0.005
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xv3hj"]
 radius = 0.3
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rcfup"]
+dof_blur_near_enabled = true
+dof_blur_near_distance = 1.1
+dof_blur_near_transition = 1.65
+dof_blur_amount = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_yaehb"]
 size = Vector3(20, 20, 20)
@@ -109,6 +116,9 @@ material = SubResource("ShaderMaterial_ag2w8")
 radius = 8.125
 height = 8.86
 rings = 4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aot74"]
+radius = 11.875973
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rfc3h"]
 bg_color = Color(0, 0, 0, 0.30588236)
@@ -279,14 +289,13 @@ light_energy = 0.685
 shadow_enabled = true
 
 [node name="Rocket" parent="." unique_id=1263267957 groups=["influencable_object"] instance=ExtResource("1_arduf")]
-transform = Transform3D(0.9996095, 0.027956538, 0, -0.02795654, 0.99960935, 0, 0, 0, 1.0000005, 0.946265, 72.66086, 0)
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000005, 1.2492412, 72.52764, 0)
 mass = 40.0
 gravity_scale = 1.0
 linear_damp_mode = 1
 angular_damp_mode = 1
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=1000938322 groups=["camera_rig"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3093975, 2.9949632)
 script = ExtResource("4_78x0b")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig" unique_id=2138654543]
@@ -295,6 +304,7 @@ shape = SubResource("SphereShape3D_xv3hj")
 spring_length = 6.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D" unique_id=994309216]
+attributes = SubResource("CameraAttributesPractical_rcfup")
 far = 10000.0
 
 [node name="Planet-Earth5" parent="." unique_id=175257090 instance=ExtResource("6_ypcqb")]
@@ -303,10 +313,6 @@ mass = 10000.0
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="." unique_id=1859949540]
 stream = ExtResource("5_amm11")
 autoplay = true
-
-[node name="Planet-Earth4" type="Node3D" parent="." unique_id=747630384]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 290.20795, 2109.04)
-script = ExtResource("3_xv3hj")
 
 [node name="Boney" parent="." unique_id=666712437 groups=["influencable_object"] instance=ExtResource("8_x7w41")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8492398, 71.60043, 5.5935574)
@@ -324,8 +330,49 @@ mesh = SubResource("BoxMesh_yaehb")
 surface_material_override/0 = SubResource("ShaderMaterial_kvg7m")
 
 [node name="BlackHole" type="MeshInstance3D" parent="." unique_id=2079518372]
-transform = Transform3D(89.901, 19.937212, 38.991215, -17.815235, 97.98539, -9.026342, -40.00531, 1.1683959, 91.64171, 6944.29, 477.42365, -1200.79)
+transform = Transform3D(80.216446, -45.221706, 38.991215, 52.201443, 84.814674, -9.026344, -28.988413, 27.594595, 91.64171, 10782.443, -1178.4604, -2996.9248)
 mesh = SubResource("SphereMesh_k2xjf")
+script = ExtResource("13_q7ck0")
+
+[node name="Area3D" type="Area3D" parent="BlackHole" unique_id=1614212315]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlackHole/Area3D" unique_id=831224586]
+shape = SubResource("SphereShape3D_aot74")
+
+[node name="EasterEgg" type="Control" parent="BlackHole" unique_id=974513851]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="BlackHole/EasterEgg" unique_id=544804109]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_abo4m")
+
+[node name="TextEdit" type="RichTextLabel" parent="BlackHole/EasterEgg" unique_id=1901802360]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("17_kvg7m")
+theme_override_font_sizes/normal_font_size = 61
+text = "Why did you enter my domain
+GET OUT MORTAL
+"
+horizontal_alignment = 1
 
 [node name="PlanetSpawnManager" type="Node3D" parent="." unique_id=1800072302]
 script = ExtResource("13_ag2w8")
@@ -605,22 +652,26 @@ value = 70.0
 [node name="Load" type="AnimationPlayer" parent="LoadingScreen" unique_id=1027555547]
 libraries/ = SubResource("AnimationLibrary_ojfgx")
 
-[node name="DockingShip" parent="." unique_id=602642202 instance=ExtResource("17_rfc3h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 102.56813, 0)
-visible = false
-
 [node name="Rover" parent="." unique_id=232793370 instance=ExtResource("16_ojfgx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.070694864, 71.40962, 3.4974837)
 
-[node name="DockingShip2" parent="." unique_id=2058088437 instance=ExtResource("17_rfc3h")]
-transform = Transform3D(0.9996095, 0.027956538, 0, -0.02795654, 0.99960935, 0, 0, 0, 1.0000005, -1.5623722, 77.067535, 0)
+[node name="DockingShip2" parent="." unique_id=1518933461 instance=ExtResource("17_rfc3h")]
+transform = Transform3D(0.9996095, 0.027956538, 0, -0.02795654, 0.99960935, 0, 0, 0, 1.0000005, -316.92267, 105.41008, 0)
 
 [node name="Backpack" parent="." unique_id=1097135241 instance=ExtResource("18_rfc3h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.144783, 70.339, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5112839, 70.78136, 0)
 
 [node name="Scrap" parent="." unique_id=248153912 instance=ExtResource("19_aot74")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4711, 69.97246, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4711, 69.83674, 0)
 
+[node name="Planet-Earth3" parent="." unique_id=58250303 instance=ExtResource("6_ypcqb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 396.76346, 0, 442.87854)
+
+[node name="ShootingStar" parent="." unique_id=578014890 instance=ExtResource("22_rcfup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 165.14984, -469.15057)
+
+[connection signal="body_entered" from="BlackHole/Area3D" to="BlackHole" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="BlackHole/Area3D" to="BlackHole" method="_on_area_3d_body_exited"]
 [connection signal="pressed" from="Settings2/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Settings2/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Settings2/Apply" to="." method="_on_apply_pressed"]

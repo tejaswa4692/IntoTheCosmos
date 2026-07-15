@@ -14,38 +14,36 @@ radius = 1.7094727
 script = ExtResource("1_jhae5")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=749667026]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.6796545, 1.7280552, -6.8071775)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.1605895, -7.1919155)
 collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1375952291]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.618227, -0.23251915, -0.27170992)
 shape = SubResource("SphereShape3D_3mcnk")
 
 [node name="RocketRebaser" type="Area3D" parent="." unique_id=647867402]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.016962, 1.7280552, -3.3256974)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.1605895, -7.1919155)
 collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RocketRebaser" unique_id=687640412]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23321533, 0)
 shape = SubResource("CylinderShape3D_jhae5")
 
 [node name="PlayerExitMarker" type="Marker3D" parent="." unique_id=318630130]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.5722315, 2.136521, -4.3392625)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.1605895, -7.1919155)
 
 [node name="Observatory" parent="." unique_id=1482636260 instance=ExtResource("2_jhae5")]
-transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -1.2892771, 0.8804581, -9.3099785)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 0, 1.1605895, -7.1919155)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1105046719]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.5476303, 5.2930408, -2.5537093)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.1605895, -7.1919155)
 visible = false
 light_color = Color(0.96694225, 0.6736407, 3.080368e-06, 1)
 light_energy = 4.11
 omni_range = 18.468401
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=1985720714]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.2898159, 2.1715488, -1.4265244)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1.1605895, -7.1919155)
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

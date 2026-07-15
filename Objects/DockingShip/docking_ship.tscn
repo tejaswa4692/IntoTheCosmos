@@ -1,34 +1,27 @@
 [gd_scene format=3 uid="uid://dhk7cv8g2j1gw"]
 
 [ext_resource type="Script" uid="uid://rptrgfmo5lao" path="res://Objects/DockingShip/docking_ship.gd" id="1_iygkp"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_vu4fl"]
-size = Vector3(4, 1, 2)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_iygkp"]
-radial_segments = 21
+[ext_resource type="PackedScene" uid="uid://7vybycu7us35" path="res://Assets/MotherShip/MotherShip.blend" id="2_afufn"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vu4fl"]
+height = 2.051239
+radius = 0.69189453
 
 [node name="DockingShip" type="Node3D" unique_id=602642202]
 script = ExtResource("1_iygkp")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1292383682]
-mesh = SubResource("BoxMesh_vu4fl")
-
 [node name="DockingPort" type="Marker3D" parent="." unique_id=1044226284]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 4.3215585, 0, 0)
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=114072562]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 1.4408548, 0, 0)
-mesh = SubResource("CylinderMesh_iygkp")
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 2.8522687, 0, 0)
 
 [node name="DockingArea" type="Area3D" parent="." unique_id=281784967]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9569194, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DockingArea" unique_id=1995204669]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -0.32557034, 0, 0)
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -0.29995036, -1.1198598e-09, 0)
 shape = SubResource("CylinderShape3D_vu4fl")
+
+[node name="MotherShip" parent="." unique_id=2024714124 instance=ExtResource("2_afufn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [connection signal="body_entered" from="DockingArea" to="." method="_on_docking_area_body_entered"]
 [connection signal="body_exited" from="DockingArea" to="." method="_on_docking_area_body_exited"]

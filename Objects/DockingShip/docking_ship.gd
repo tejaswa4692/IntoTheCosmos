@@ -11,10 +11,14 @@ var rocket: RigidBody3D = null
 
 #FIX THE R BUG WHERE ITS STILL FROZEN WHEN R IS PRESSED
 
+func _ready() -> void:
+	$MotherShip/AnimationPlayer.play_backwards("Grab")
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("dock") and rocket_docking and rocket != null:
 		if rocket_docked:
 			# Undock
+			$MotherShip/AnimationPlayer.play_backwards("Grab")
 			rocket.freeze = false
 			rocket_docked = false
 		elif docking_in_progress:
@@ -46,7 +50,7 @@ func _physics_process(delta: float) -> void:
 			rocket.global_transform = $DockingPort.global_transform
 			docking_in_progress = false
 			rocket_docked = true
-
+			$MotherShip/AnimationPlayer.play("Grab")
 
 func _on_docking_area_body_entered(body: Node3D) -> void:
 	if body.is_in_group("rocket"):

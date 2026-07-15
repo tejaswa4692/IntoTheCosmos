@@ -51,7 +51,17 @@ func on_item_list_item_clicked(index: int, _at_position: Vector2, _mouse_button_
 	current_observatory.assign_satellite(sat)
 	hide_satellite_ui()
 
-func on_main_menu_item_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
+
+func on_done_button_pressed() -> void:
+	if current_observatory != null and current_observatory.rocket != null:
+		current_observatory.dock_satellite_on_rocket(player.satellite_ui.get_node("SatelliteText/LineEdit").text)
+		hide_satellite_ui()
+	else:
+		hide_satellite_ui()
+
+
+func _on_main_menu_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
+	print(index)
 	match index:
 		0:
 			if current_observatory.satellite_target != null:
@@ -73,10 +83,3 @@ func on_main_menu_item_clicked(index: int, _at_position: Vector2, _mouse_button_
 			player.satellite_ui.get_node("SatelliteText").show()
 		4:
 			current_observatory.spawn_vehicle_rover()
-
-func on_done_button_pressed() -> void:
-	if current_observatory != null and current_observatory.rocket != null:
-		current_observatory.dock_satellite_on_rocket(player.satellite_ui.get_node("SatelliteText/LineEdit").text)
-		hide_satellite_ui()
-	else:
-		hide_satellite_ui()

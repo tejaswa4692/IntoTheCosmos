@@ -13,6 +13,7 @@ class_name PlanetSectorManager
 @export var max_planet_scale := 2.5
 @export var base_mass := 5000.0
 @export var base_gravity_strength := 9.8
+@export var atmosphere_intensity := 0.235
 
 var _spawned_sectors: Dictionary = {}  
 var _rng := RandomNumberGenerator.new()
@@ -84,7 +85,7 @@ func spawn_sector(coord: Vector3i) -> void:
 	planet.mass = base_mass * pow(scale_factor, 3.0)
 	planet.gravity_strength = base_gravity_strength * scale_factor
 	planet.planet_seed = seed_value
-
+	planet.atmosphere_intensity_multiplier = 0.235
 	var jitter := Vector3(
 		_rng.randf_range(-position_jitter, position_jitter),
 		_rng.randf_range(-position_jitter, position_jitter),

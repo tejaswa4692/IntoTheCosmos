@@ -13,6 +13,9 @@ func _ready() -> void:
 	CameraManager.register(self)
 	linear_damp = 0
 	gravity_scale = 0
+	contact_monitor = true
+	max_contacts_reported = 1
+	body_entered.connect(_on_body_entered)
 	$Control/YouDied.hide()
 	$Control/Help.hide()
 	flight_controller.setup()
@@ -20,6 +23,9 @@ func _ready() -> void:
 	landing_gear_controller.landing_gear = true
 	await $Rocket/AnimationPlayer.animation_finished
 	$LandingGearCollision.disabled = false
+
+func _on_body_entered(body: Node) -> void:
+	damage_controller.collision_impact(body)
 
 func _physics_process(_delta: float) -> void:
 	if canmove:
@@ -65,6 +71,8 @@ func _input(event: InputEvent) -> void:
 			flight_controller.throttleslider.value -= flight_controller.throttleslider.step
 
 func _on_proximity_entered(body: Node) -> void:
+	if body.is_in_group("planet"):
+		damage_controller.collision_impact(body)
 	if body.has_method("set_nearest_rocket"):
 		body.set_nearest_rocket(self)
 

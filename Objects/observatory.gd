@@ -41,12 +41,12 @@ func _on_rocket_rebaser_body_exited(body: Node3D) -> void:
 
 func dock_satellite_on_rocket(satname: String) -> void:
 	if rocket != null:
-		rocket.setup_sattelite(satname)
+		rocket.satellite_dock_controller.setup_sattelite(satname)
 
 func pleaserefuel() -> void:
 	if rocket != null:
-		rocket.fuel = 5000 #HERE TO CHANGE FUEL DONT FORGET IT LATER
-		rocket.fuel_guage.value = 5000
+		rocket.flight_controller.fuel = 5000 #HERE TO CHANGE FUEL DONT FORGET IT LATER
+		rocket.flight_controller.fuel_guage.value = 5000
 
 
 func spawn_vehicle_rover() -> void:
